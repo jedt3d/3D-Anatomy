@@ -1,0 +1,103 @@
+#!/usr/bin/env python3
+"""Render docs/product-design/th/*.md into HTML pages under anatomy-market-research/product-design/.
+
+Run: pip install markdown && python3 tools/build_product_design_pages.py
+"""
+import pathlib, re, html
+import markdown
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+SRC = ROOT / "docs" / "product-design" / "th"   # Thai only (site default language)
+OUT = ROOT / "anatomy-market-research" / "product-design"   # screen images live in OUT / "img"
+
+PAGES = [  # (source md, output html, nav label)
+    ("README.md", "index.html", "ภาพรวม"),
+    ("01-product-design.md", "product-design.html", "Product design"),
+    ("02-requirements.md", "requirements.html", "Requirements"),
+    ("03-features.md", "features.html", "Features"),
+    ("04-ui-design.md", "ui-design.html", "UI design"),
+    ("05-prototype.md", "prototype.html", "Prototype"),
+    ("06-verification.md", "verification.html", "ผลตรวจ"),
+]
+LINKMAP = {src: out for src, out, _ in PAGES}
+
+EXTRA_CSS = """
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
+.doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
+nav a.on{background:var(--ink);color:var(--bg)}
+.doc img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
+.doc td img{min-width:120px}
+.doc table td{vertical-align:top}
+"""
+
+def prep(text):
+    """Adapt GitHub-style Markdown to Python-Markdown rules."""
+    lines, out, fence = text.split("\n"), [], False
+    for ln in lines:
+        st = ln.lstrip()
+        if st.startswith("```"):
+            if not fence and out and out[-1].strip():
+                out.append("")
+            fence = not fence
+            out.append(st)          # fenced blocks at column 0
+            if not fence:
+                out.append("")
+            continue
+        if fence:
+            # strip the list indent the block had in the source
+            out.append(ln[2:] if ln.startswith("  ") else ln)
+            continue
+        ln = re.sub(r'(?<![<(\"`])(https?://[^\s)<>`]+)', r'<\1>', ln)  # autolink bare URLs
+        is_item = re.match(r"^\s*([-*]|\d+\.)\s", ln)
+        if is_item:
+            ind = len(ln) - len(st)
+            if 0 < ind < 4:
+                ln = "    " + st     # nested item needs 4 spaces
+            prev = out[-1] if out else ""
+            if prev.strip() and not re.match(r"^\s*([-*]|\d+\.)\s", prev) and not prev.startswith("    "):
+                out.append("")
+        out.append(ln)
+    return "\n".join(out)
+
+def render(src, out, label):
+    text = prep((SRC / src).read_text(encoding="utf-8"))
+    body = markdown.markdown(text, extensions=["tables", "fenced_code", "sane_lists"])
+    for s, o in LINKMAP.items():
+        body = body.replace(f'href="{s}"', f'href="{o}"')
+    body = re.sub(r'href="(https?://[^"]+)"', r'href="\1" target="_blank" rel="noopener"', body)
+    m = re.search(r"<h1>(.*?)</h1>", body)
+    title = re.sub("<[^>]+>", "", m.group(1)) if m else label
+    nav = '<a href="../../index.html">← หน้ารวมรายงาน</a>' + "".join(
+        f'<a href="{o}"{" class=\"on\"" if o == out else ""}>{html.escape(l)}</a>' for _, o, l in PAGES)
+    return f"""<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{html.escape(title)} · Product design</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>{EXTRA_CSS}</style>
+</head>
+<body>
+<header class="top"><nav>{nav}</nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · Product design และ UI · สร้างจาก <code>docs/product-design/th/{src}</code> · <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk" target="_blank" rel="noopener">เปิดไฟล์ Figma</a></p>
+{body}
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/product-design">docs/product-design</a> บน GitHub · ภาพหน้าจอส่งออกจาก Figma 27 พ.ย. 2026</footer>
+</main>
+</body>
+</html>
+"""
+
+OUT.mkdir(parents=True, exist_ok=True)
+for src, out, label in PAGES:
+    (OUT / out).write_text(render(src, out, label), encoding="utf-8")
+    print("wrote", OUT / out)

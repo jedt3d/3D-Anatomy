@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>04. UI design · Product design</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
+.doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
+nav a.on{background:var(--ink);color:var(--bg)}
+.doc img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
+.doc td img{min-width:120px}
+.doc table td{vertical-align:top}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../../index.html">← หน้ารวมรายงาน</a><a href="index.html">ภาพรวม</a><a href="product-design.html">Product design</a><a href="requirements.html">Requirements</a><a href="features.html">Features</a><a href="ui-design.html" class="on">UI design</a><a href="prototype.html">Prototype</a><a href="verification.html">ผลตรวจ</a></nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · Product design และ UI · สร้างจาก <code>docs/product-design/th/04-ui-design.md</code> · <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk" target="_blank" rel="noopener">เปิดไฟล์ Figma</a></p>
+<h1>04. UI design</h1>
+<p><img alt="Viewer 3D บน iPad สร้างจาก component ชุด Cupertino" src="img/ipad-20-viewer.webp" /></p>
+<h2>1. ฐานของ UI</h2>
+<ul>
+<li><strong>Flutter Cupertino widgets ทั้งหมด</strong> เพราะแอปหลักอยู่บน iPad และต้องการให้รู้สึกเหมือนแอปของระบบ หน้าจอทุกหน้าประกอบจาก component ที่ตั้งชื่อตาม widget ของ Flutter (เช่น <code>CupertinoListTile</code>, <code>CupertinoSlidingSegmentedControl</code>) เพื่อให้นักพัฒนาแปลงเป็นโค้ดได้ตรงตัว</li>
+<li><strong>ไม่ใช้ Apple iOS 26 UI kit</strong> เพราะ Liquid Glass ยังไม่มีใน Flutter Cupertino และ kit มีเงื่อนไข EULA ส่วนที่ต้องเป็นพื้นเบลอ (แผงบน viewport) ใช้ <code>BackdropFilter</code></li>
+<li><strong>Widget ที่สร้างเอง</strong> มีเฉพาะที่ Cupertino ไม่มี: ProgressBar, ProgressRing, NameTriple, LandmarkPin, ViewportToolButton, StatusBadge</li>
+</ul>
+<h2>2. สี</h2>
+<p>ตัวแปรสีอยู่ใน collection <code>CupertinoColors</code> มีโหมด Light และ Dark ค่าตรงกับ <code>CupertinoColors</code> ของ Flutter</p>
+<table>
+<thead>
+<tr>
+<th>กลุ่ม</th>
+<th>ตัวแปร</th>
+<th>ใช้ทำอะไร</th>
+<th>Flutter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>สีหลัก</td>
+<td><code>brand/primary</code> = systemBlue #007AFF / #0A84FF</td>
+<td>ปุ่ม ลิงก์ แท็บที่เลือก</td>
+<td><code>CupertinoColors.systemBlue</code> (Jedt เลือก 27 พ.ย. 2026 ให้เหมือน iOS ไม่ใช้ม่วง)</td>
+</tr>
+<tr>
+<td>สีระบบ</td>
+<td><code>system/green, red, orange, yellow, teal, pink, purple, grey</code></td>
+<td>ไอคอน ป้าย สถานะ</td>
+<td><code>CupertinoColors.system*</code></td>
+</tr>
+<tr>
+<td>ข้อความ</td>
+<td><code>label/label, secondaryLabel, tertiaryLabel, onPrimary</code></td>
+<td>ข้อความทุกระดับ</td>
+<td><code>CupertinoColors.label</code> ฯลฯ</td>
+</tr>
+<tr>
+<td>ข้อความสีที่อ่านง่าย</td>
+<td><code>text/success, warning, danger, info</code></td>
+<td>ป้ายสถานะและข้อความสีขนาดเล็ก</td>
+<td><code>CupertinoDynamicColor</code> (เพิ่มหลังตรวจ contrast)</td>
+</tr>
+<tr>
+<td>พื้น</td>
+<td><code>background/*</code>, <code>fill/*</code>, <code>separator</code>, <code>bar</code></td>
+<td>พื้นหลัง เซลล์ เส้นคั่น แถบ</td>
+<td><code>CupertinoColors.systemGroupedBackground</code> ฯลฯ</td>
+</tr>
+<tr>
+<td>สีอ่อน</td>
+<td><code>tint/*</code> (ฝังความโปร่งไว้ในค่า 15% / 26%)</td>
+<td>ปุ่ม tinted พื้นป้าย แถวที่เลือก</td>
+<td><code>color.withValues(alpha: …)</code></td>
+</tr>
+<tr>
+<td>Viewport</td>
+<td><code>viewport/background</code> #111217, <code>surface</code>, <code>bone</code></td>
+<td>พื้น 3D มืดเสมอ แผงบน viewport</td>
+<td>ค่าคงที่</td>
+</tr>
+<tr>
+<td>กายวิภาค</td>
+<td><code>anatomy/origin</code> แดง, <code>insertion</code> น้ำเงิน, <code>landmark</code> ส้ม, <code>clinical</code> เขียว</td>
+<td>สีหมุดและแผนที่จุดเกาะ</td>
+<td>ค่าคงที่ใน theme extension</td>
+</tr>
+<tr>
+<td>เลนส์</td>
+<td><code>lens/medicine, dentistry, nursing, pharmacy</code></td>
+<td>สีประจำเลนส์</td>
+<td>theme extension</td>
+</tr>
+</tbody>
+</table>
+<h2>3. ตัวอักษร</h2>
+<p>ฟอนต์ <strong>Noto Sans Thai UI</strong> ทุกข้อความ (SF Pro ไม่มีอักษรไทย) ขนาดตาม Apple text styles แต่เพิ่มระยะบรรทัดให้พอสำหรับสระบนล่างของไทย</p>
+<table>
+<thead>
+<tr>
+<th>Style</th>
+<th>ขนาด</th>
+<th>ระยะบรรทัด</th>
+<th>ใช้ที่</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iOS/Large Title</td>
+<td>34</td>
+<td>1.29</td>
+<td>หัวหน้าแท็บ</td>
+</tr>
+<tr>
+<td>iOS/Title 1–3</td>
+<td>28 / 22 / 20</td>
+<td>1.36 – 1.40</td>
+<td>หัวข้อในแผง</td>
+</tr>
+<tr>
+<td>iOS/Headline, Body</td>
+<td>17</td>
+<td>1.41</td>
+<td>เนื้อหาหลัก ชื่อในรายการ</td>
+</tr>
+<tr>
+<td>iOS/Callout, Subheadline</td>
+<td>16 / 15</td>
+<td>1.38 / 1.40</td>
+<td>คำอธิบาย</td>
+</tr>
+<tr>
+<td>iOS/Footnote, Caption 1–2</td>
+<td>13 / 12 / 11</td>
+<td>1.27 – 1.38</td>
+<td>ข้อความรอง หัว section</td>
+</tr>
+<tr>
+<td>Cupertino/tabLabel, navTitle</td>
+<td>10 / 17</td>
+<td>1.20 / 1.29</td>
+<td>แท็บ แถบนำทาง</td>
+</tr>
+<tr>
+<td>Web/Display, H1, H2, Body</td>
+<td>48 / 36 / 26 / 18</td>
+<td>1.25 – 1.67</td>
+<td>หน้าเว็บ</td>
+</tr>
+</tbody>
+</table>
+<h2>4. ระยะ มุมโค้ง และ layout</h2>
+<ul>
+<li>ระยะ <code>space/4, 8, 12, 16, 20, 24, 32, 48</code> มุมโค้ง <code>radius/6, 8, 10, 12, 14, 20</code></li>
+<li>iPad 1180 × 820 แนวนอน: แผงรายการซ้ายกว้าง 380–500 viewport หรือรายละเอียดอยู่ขวา (split view)</li>
+<li>Viewer: แถบเครื่องมือซ้ายประมาณ 64 pt, segmented control ด้านบนกลาง, แผงข้อมูลลอยด้านขวากว้างประมาณ 360 pt, คำแนะนำการใช้นิ้วอยู่ล่าง</li>
+<li>มือถือ 393 × 852: ขอบข้าง 16 pt, tab bar 4 แท็บ</li>
+<li>เว็บ 1440: ขอบข้าง 64 px, หน้าอ่านแบ่งภาพ 520 px กับเนื้อหา</li>
+</ul>
+<h2>5. Component และ Flutter widget</h2>
+<table>
+<thead>
+<tr>
+<th>Figma component</th>
+<th>Flutter</th>
+<th>หมายเหตุ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CupertinoTabBar / item</td>
+<td><code>CupertinoTabScaffold</code> + <code>CupertinoTabBar</code></td>
+<td>iPad 5 แท็บ มือถือ 4 แท็บ</td>
+</tr>
+<tr>
+<td>CupertinoNavigationBar</td>
+<td><code>CupertinoNavigationBar</code></td>
+<td>ช่องซ้ายขวายืดเท่ากัน ชื่อจึงอยู่กลางทั้งบน iPad และมือถือ</td>
+</tr>
+<tr>
+<td>CupertinoSliverNavigationBar</td>
+<td><code>CupertinoSliverNavigationBar</code></td>
+<td>หัวข้อใหญ่</td>
+</tr>
+<tr>
+<td>CupertinoButton (filled / tinted / plain × large / medium / small)</td>
+<td><code>CupertinoButton.filled</code>, <code>.tinted</code>, <code>CupertinoButton</code></td>
+<td><code>minSize</code> 44 ทุกขนาด</td>
+</tr>
+<tr>
+<td>CupertinoListTile + section</td>
+<td><code>CupertinoListSection.insetGrouped</code> + <code>CupertinoListTile</code></td>
+<td>trailing: chevron / ค่า / switch / check</td>
+</tr>
+<tr>
+<td>CupertinoSlidingSegmentedControl</td>
+<td><code>CupertinoSlidingSegmentedControl</code></td>
+<td>บน viewport ใช้พื้น <code>viewport/surface</code></td>
+</tr>
+<tr>
+<td>CupertinoSwitch, Checkbox, Slider</td>
+<td>ตรงชื่อ</td>
+<td></td>
+</tr>
+<tr>
+<td>CupertinoSearchTextField, TextField</td>
+<td>ตรงชื่อ</td>
+<td></td>
+</tr>
+<tr>
+<td>CupertinoAlertDialog, ActionSheet</td>
+<td><code>showCupertinoDialog</code>, <code>showCupertinoModalPopup</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Sheet แจ้งแก้</td>
+<td><code>showCupertinoSheet</code></td>
+<td>Flutter 3.29 ขึ้นไป</td>
+</tr>
+<tr>
+<td>NameTriple</td>
+<td>widget ของเรา</td>
+<td>ไทย / EN / LA + ปุ่มเสียง</td>
+</tr>
+<tr>
+<td>LandmarkPin</td>
+<td>widget ของเรา</td>
+<td>ชนิด landmark, origin, insertion, clinical, question, correct, wrong × เลือก/ไม่เลือก วางด้วยพิกัดที่ project จาก flutter_scene</td>
+</tr>
+<tr>
+<td>ViewportToolButton</td>
+<td><code>CupertinoButton</code> + ไอคอน</td>
+<td>ใช้ใน viewport</td>
+</tr>
+<tr>
+<td>StatusBadge</td>
+<td>widget ของเรา</td>
+<td>tone: neutral, info, success, warning, danger, brand</td>
+</tr>
+<tr>
+<td>ProgressBar, ProgressRing</td>
+<td>widget ของเรา / <code>CustomPaint</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>6. แนวทางเขียนข้อความ (UX copy)</h2>
+<ul>
+<li>ภาษาไทยสุภาพแต่สั้น ใช้คำกริยานำปุ่ม เช่น "เริ่มทบทวน" "ดูแบบ 3D" "แจ้งแก้"</li>
+<li>ชื่อกายวิภาค: ไทยก่อน ตามด้วย EN และ LA ตามการตั้งค่า ไม่แปลศัพท์ที่นักศึกษาใช้ทับศัพท์อยู่แล้ว (เช่น "โทรแคนเตอร์ใหญ่")</li>
+<li>เนื้อหาคลินิกทุกจุดมีข้อความ "เพื่อการศึกษาเท่านั้น"</li>
+<li>บอกตัวเลขจริงเมื่อมี เช่น ขนาดแพ็ก เวลาโดยประมาณ ความคืบหน้า</li>
+</ul>
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/product-design">docs/product-design</a> บน GitHub · ภาพหน้าจอส่งออกจาก Figma 27 พ.ย. 2026</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>05. Prototype · Product design</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
+.doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
+nav a.on{background:var(--ink);color:var(--bg)}
+.doc img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
+.doc td img{min-width:120px}
+.doc table td{vertical-align:top}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../../index.html">← หน้ารวมรายงาน</a><a href="index.html">ภาพรวม</a><a href="product-design.html">Product design</a><a href="requirements.html">Requirements</a><a href="features.html">Features</a><a href="ui-design.html">UI design</a><a href="prototype.html" class="on">Prototype</a><a href="verification.html">ผลตรวจ</a></nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · Product design และ UI · สร้างจาก <code>docs/product-design/th/05-prototype.md</code> · <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk" target="_blank" rel="noopener">เปิดไฟล์ Figma</a></p>
+<h1>05. Prototype</h1>
+<p>Prototype อยู่ในไฟล์ Figma เดียวกับ UI กด <strong>Present</strong> (▶) ในหน้า 03, 04 หรือ 05 แล้วเลือก flow ทางซ้าย หรือเปิดลิงก์ด้านล่างโดยตรง ปุ่ม "กลับ" บนแถบนำทางทุกหน้าย้อนไปหน้าก่อนหน้า และแท็บด้านล่างสลับหน้าได้จริง</p>
+<h2>1. Flow ที่เปิดได้</h2>
+<table>
+<thead>
+<tr>
+<th>Flow</th>
+<th>เริ่มที่</th>
+<th>เส้นทางที่คลิกได้</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iPad · 1 Onboarding → Home</td>
+<td><a href="https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=8-2&amp;starting-point-node-id=8%3A2" target="_blank" rel="noopener">เปิด</a></td>
+<td>ยินดีต้อนรับ → เลือกเลนส์ → ภาษาและความยินยอม → หน้าหลัก</td>
+</tr>
+<tr>
+<td>iPad · 2 Learn</td>
+<td><a href="https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=8-320&amp;starting-point-node-id=8%3A320" target="_blank" rel="noopener">เปิด</a></td>
+<td>หน้าหลัก → viewer → landmarks / จุดเกาะ / จุดคลินิก → แจ้งแก้ · คลัง → ค้นหา → landmark · การ์ดกะโหลก → FDI</td>
+</tr>
+<tr>
+<td>iPad · 3 Spot exam</td>
+<td><a href="https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=14-828&amp;starting-point-node-id=14%3A828" target="_blank" rel="noopener">เปิด</a></td>
+<td>ตั้งค่า → คำถาม → เฉลย → ผลสอบ → ทบทวนข้อผิด / สอบใหม่ · เฉลย → แจ้งแก้ · ตั้งค่า → โหมดอาจารย์</td>
+</tr>
+<tr>
+<td>iPad · 4 Me</td>
+<td><a href="https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1735&amp;starting-point-node-id=16%3A1735" target="_blank" rel="noopener">เปิด</a></td>
+<td>ฉัน → รายการที่ฉันแจ้ง · ฉัน → ข้อมูล offline → ดาวน์โหลด → alert ยืนยัน</td>
+</tr>
+<tr>
+<td>มือถือ · Daily review</td>
+<td><a href="https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=17-2&amp;starting-point-node-id=17%3A2" target="_blank" rel="noopener">เปิด</a></td>
+<td>ทบทวนวันนี้ → การ์ดหน้า → เฉลย → ให้คะแนน → การ์ดถัดไป</td>
+</tr>
+<tr>
+<td>มือถือ · Quick lookup</td>
+<td><a href="https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=17-358&amp;starting-point-node-id=17%3A358" target="_blank" rel="noopener">เปิด</a></td>
+<td>ค้นหา → รายละเอียดศัพท์</td>
+</tr>
+<tr>
+<td>เว็บ</td>
+<td><a href="https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=18-270&amp;starting-point-node-id=18%3A270" target="_blank" rel="noopener">เปิด</a></td>
+<td>ดัชนี → หน้าอ่าน Femur → viewer 3D บนเว็บ → กลับหน้าอ่าน</td>
+</tr>
+</tbody>
+</table>
+<p>ทั้งหมด 104 จุดที่คลิกได้ ใช้ Smart animate 300 ms สำหรับการไปหน้าถัดไป และ dissolve 200 ms สำหรับ sheet, alert และการสลับแท็บ</p>
+<h2>2. หน้าจอ iPad (1180 × 820)</h2>
+<h3>Onboarding</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="img/ipad-01-welcome.webp" /></td>
+<td><img alt="" src="img/ipad-02-lens.webp" /></td>
+<td><img alt="" src="img/ipad-03-language.webp" /></td>
+</tr>
+<tr>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-2" target="_blank" rel="noopener">01 ยินดีต้อนรับ</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-49" target="_blank" rel="noopener">02 เลือกเลนส์วิชาชีพ</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-132" target="_blank" rel="noopener">03 ภาษาและความยินยอม beta</a></td>
+</tr>
+</tbody>
+</table>
+<h3>หน้าหลัก คลัง และค้นหา</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="img/ipad-10-home.webp" /></td>
+<td><img alt="" src="img/ipad-11-library.webp" /></td>
+<td><img alt="" src="img/ipad-12-search.webp" /></td>
+</tr>
+<tr>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-320" target="_blank" rel="noopener">10 หน้าหลัก</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=11-204" target="_blank" rel="noopener">11 คลังกระดูก</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=11-554" target="_blank" rel="noopener">12 ผลค้นหา</a></td>
+</tr>
+</tbody>
+</table>
+<h3>Viewer 3D</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="img/ipad-20-viewer.webp" /></td>
+<td><img alt="" src="img/ipad-21-landmarks.webp" /></td>
+<td><img alt="" src="img/ipad-22-attachments.webp" /></td>
+</tr>
+<tr>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=11-759" target="_blank" rel="noopener">20 โครงกระดูก</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-519" target="_blank" rel="noopener">21 Landmarks (Femur)</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-706" target="_blank" rel="noopener">22 แผนที่จุดเกาะ</a></td>
+</tr>
+<tr>
+<td><img alt="" src="img/ipad-23-skull-fdi.webp" /></td>
+<td><img alt="" src="img/ipad-24-clinical.webp" /></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-870" target="_blank" rel="noopener">23 กะโหลกแยกชิ้นและฟัน FDI</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-1086" target="_blank" rel="noopener">24 จุดคลินิก (เลนส์พยาบาล)</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>ฝึกสอบ spot และโหมดอาจารย์</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="img/ipad-30-spot-setup.webp" /></td>
+<td><img alt="" src="img/ipad-31-spot-question.webp" /></td>
+<td><img alt="" src="img/ipad-32-spot-answer.webp" /></td>
+</tr>
+<tr>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-828" target="_blank" rel="noopener">30 ตั้งค่า</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-1151" target="_blank" rel="noopener">31 คำถามจับเวลา</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-1208" target="_blank" rel="noopener">32 เฉลย</a></td>
+</tr>
+<tr>
+<td><img alt="" src="img/ipad-33-spot-results.webp" /></td>
+<td><img alt="" src="img/ipad-34-teacher.webp" /></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-1275" target="_blank" rel="noopener">33 ผลสอบ</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-1446" target="_blank" rel="noopener">34 โหมดอาจารย์</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>แจ้งแก้ โน้ต offline และฉัน</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="img/ipad-40-report-sheet.webp" /></td>
+<td><img alt="" src="img/ipad-41-my-reports.webp" /></td>
+<td><img alt="" src="img/ipad-50-notes.webp" /></td>
+</tr>
+<tr>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=15-1164" target="_blank" rel="noopener">40 Sheet แจ้งแก้</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=15-1402" target="_blank" rel="noopener">41 รายการที่ฉันแจ้ง</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=15-1507" target="_blank" rel="noopener">50 โน้ตและ bookmark</a></td>
+</tr>
+<tr>
+<td><img alt="" src="img/ipad-60-offline.webp" /></td>
+<td><img alt="" src="img/ipad-61-offline-alert.webp" /></td>
+<td><img alt="" src="img/ipad-70-me.webp" /></td>
+</tr>
+<tr>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1361" target="_blank" rel="noopener">60 ข้อมูล offline</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1543" target="_blank" rel="noopener">61 ยืนยันดาวน์โหลด</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1735" target="_blank" rel="noopener">70 ฉันและสิทธิ์ beta</a></td>
+</tr>
+</tbody>
+</table>
+<h2>3. หน้าจอมือถือ (393 × 852)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="" src="img/phone-01-today.webp" /></td>
+<td><img alt="" src="img/phone-02-card-front.webp" /></td>
+<td><img alt="" src="img/phone-03-card-back.webp" /></td>
+<td><img alt="" src="img/phone-04-note.webp" /></td>
+<td><img alt="" src="img/phone-05-search.webp" /></td>
+<td><img alt="" src="img/phone-06-detail.webp" /></td>
+</tr>
+<tr>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=17-2" target="_blank" rel="noopener">01 ทบทวนวันนี้</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=17-142" target="_blank" rel="noopener">02 การ์ดหน้า</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=17-176" target="_blank" rel="noopener">03 เฉลยและให้คะแนน</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=17-230" target="_blank" rel="noopener">04 โน้ตสั้น</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=17-358" target="_blank" rel="noopener">05 ค้นหา</a></td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=17-516" target="_blank" rel="noopener">06 รายละเอียด</a></td>
+</tr>
+</tbody>
+</table>
+<h2>4. หน้าเว็บ (1440)</h2>
+<p><img alt="หน้าอ่านฟรี Femur" src="img/web-01-reading.webp" />
+<a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=18-2" target="_blank" rel="noopener">Web/01 หน้าอ่านฟรี (SEO)</a>: ภาพนิ่งพร้อมหมุด ตาราง landmark สามภาษา ปุ่มดูแบบ 3D และลิงก์แจ้งแก้</p>
+<p><img alt="Viewer 3D บนเว็บ" src="img/web-02-viewer.webp" />
+<a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=18-121" target="_blank" rel="noopener">Web/02 Viewer 3D บน Flutter Web</a>: layout เดียวกับ iPad พร้อมแถบบอกข้อจำกัดของเว็บ</p>
+<p><img alt="ดัชนีเว็บ" src="img/web-03-index.webp" />
+<a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=18-270" target="_blank" rel="noopener">Web/03 ดัชนี</a>: เลือกตามส่วนร่างกาย และ A–Z</p>
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/product-design">docs/product-design</a> บน GitHub · ภาพหน้าจอส่งออกจาก Figma 27 พ.ย. 2026</footer>
+</main>
+</body>
+</html>

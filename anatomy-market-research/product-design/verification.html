@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>06. ผลตรวจความสอดคล้อง · Product design</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
+.doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
+nav a.on{background:var(--ink);color:var(--bg)}
+.doc img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
+.doc td img{min-width:120px}
+.doc table td{vertical-align:top}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../../index.html">← หน้ารวมรายงาน</a><a href="index.html">ภาพรวม</a><a href="product-design.html">Product design</a><a href="requirements.html">Requirements</a><a href="features.html">Features</a><a href="ui-design.html">UI design</a><a href="prototype.html">Prototype</a><a href="verification.html" class="on">ผลตรวจ</a></nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · Product design และ UI · สร้างจาก <code>docs/product-design/th/06-verification.md</code> · <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk" target="_blank" rel="noopener">เปิดไฟล์ Figma</a></p>
+<h1>06. ผลตรวจความสอดคล้อง</h1>
+<p>ตรวจเมื่อ 27 พ.ย. 2026 ด้วยสคริปต์ที่อ่าน layer จริงในไฟล์ Figma (นับฟอนต์ text style สีที่ไม่ผูกตัวแปร และขนาดเป้าแตะ) และคำนวณ contrast ตามสูตร WCAG 2.1 จากค่าตัวแปรสีทั้งโหมด Light และ Dark ผลเดียวกันอยู่ในหน้า <strong>06 Verification</strong> ของไฟล์ Figma</p>
+<p><img alt="หน้า Verification ใน Figma" src="img/verification.webp" /></p>
+<h2>1. ผลตรวจ</h2>
+<table>
+<thead>
+<tr>
+<th>หัวข้อ</th>
+<th>เกณฑ์</th>
+<th>ผลที่วัดได้</th>
+<th>สถานะ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ฟอนต์</td>
+<td>ทุกข้อความใช้ Noto Sans Thai UI</td>
+<td>817 / 817 ข้อความบนหน้า iPad</td>
+<td>ผ่าน</td>
+</tr>
+<tr>
+<td>Text styles</td>
+<td>ข้อความใช้ text style ของไฟล์</td>
+<td>52 ข้อความบน iPad นอก component ปรับน้ำหนักหรือขนาดเฉพาะจุด (เช่นเลขฟัน FDI)</td>
+<td>ยอมรับได้ ทำเป็น style ตอนเขียนโค้ด</td>
+</tr>
+<tr>
+<td>สี</td>
+<td>ทุกสีผูกกับตัวแปร</td>
+<td>สีดิบ 1 จุด (เวกเตอร์ในหน้าฟัน FDI)</td>
+<td>ยอมรับได้</td>
+</tr>
+<tr>
+<td>Component</td>
+<td>ทุกหน้าประกอบจาก component ชุดเดียว</td>
+<td>iPad ใช้ ListTile 65, Button 35, ViewportToolButton 42, LandmarkPin 39, Segment 57 instance ฯลฯ มือถือและเว็บใช้ชุดเดียวกัน</td>
+<td>ผ่าน</td>
+</tr>
+<tr>
+<td>Contrast ข้อความหลัก</td>
+<td>≥ 4.5 : 1</td>
+<td>label บนเซลล์ 21 : 1 (Light), 17 : 1 (Dark), ข้อความขาวบนแผง viewport 14.8 : 1, ข้อความรองบนแผง viewport 6.3 : 1</td>
+<td>ผ่าน</td>
+</tr>
+<tr>
+<td>Contrast ข้อความรอง</td>
+<td>≥ 4.5 : 1</td>
+<td>secondaryLabel บนเซลล์ 3.4 : 1 (Light), 6.0 : 1 (Dark)</td>
+<td>เท่ากับ iOS · ใช้กับข้อความประกอบเท่านั้น</td>
+</tr>
+<tr>
+<td>Contrast ป้ายสถานะ</td>
+<td>≥ 4.5 : 1</td>
+<td>เดิมเขียว 2.2 : 1 และส้ม 2.2 : 1 บนพื้นขาว</td>
+<td><strong>แก้แล้ว</strong> เพิ่ม <code>text/success</code> #1A7230, <code>text/warning</code> #B83000, <code>text/danger</code> #B3000F, <code>text/info</code> #0050A8 ได้ 4.7 – 5.4 : 1 บนพื้นป้าย</td>
+</tr>
+<tr>
+<td>Contrast ปุ่มและลิงก์สีน้ำเงิน</td>
+<td>≥ 4.5 : 1</td>
+<td>systemBlue บนขาว 4.0 : 1, ปุ่ม tinted 3.3 : 1 (Light) · Dark 4.7 : 1</td>
+<td>เท่ากับ iOS · ในโค้ดใช้ <code>highContrastColor</code> #0040DD เมื่อผู้ใช้เปิด Increase Contrast</td>
+</tr>
+<tr>
+<td>เป้าแตะ</td>
+<td>≥ 44 × 44 pt</td>
+<td>ภาพปุ่ม small สูง 31, segment 29, แท็บ 42 + ขอบล่าง 20</td>
+<td>ผ่านในโค้ด (<code>CupertinoButton.minSize</code> 44) · segment สูงตามค่าเริ่มต้นของ Apple</td>
+</tr>
+<tr>
+<td>ระยะบรรทัดภาษาไทย</td>
+<td>ประมาณ 1.4 เท่า</td>
+<td>ข้อความเนื้อหา 1.33 – 1.41 · หัวข้อและป้ายบรรทัดเดียว 1.20 – 1.29</td>
+<td>เนื้อหาผ่าน · หัวข้อต้องทดสอบสระบนล่างใน Flutter</td>
+</tr>
+<tr>
+<td>Dark mode</td>
+<td>ทุกสีมีค่า Dark</td>
+<td>ตัวแปรสีครบ 2 โหมด viewport มืดเสมอ</td>
+<td>ผ่าน (ยังไม่มีภาพหน้าจอ Dark)</td>
+</tr>
+<tr>
+<td>Prototype</td>
+<td>ทุกปุ่มหลักไปหน้าที่ถูก</td>
+<td>104 จุดคลิก 7 flow ไม่มีปลายทางที่หาย</td>
+<td>ผ่าน</td>
+</tr>
+<tr>
+<td>ข้ามแพลตฟอร์ม</td>
+<td>ใช้ token และ widget ชุดเดียว</td>
+<td>viewer บนเว็บใช้ layout เดียวกับ iPad · หน้าอ่าน HTML ใช้ token สีและตัวอักษรเดียวกัน</td>
+<td>ผ่าน</td>
+</tr>
+</tbody>
+</table>
+<h2>2. สิ่งที่แก้ระหว่างตรวจ</h2>
+<ol>
+<li><strong>Contrast ป้ายสถานะ</strong> เพิ่มตัวแปร <code>text/*</code> แล้วเปลี่ยนข้อความสีเขียว ส้ม แดง และข้อความในป้ายสีน้ำเงิน ทั้งใน component และทุกหน้าจอ (15 จุด)</li>
+<li><strong>ชื่อบนแถบนำทางหายบนมือถือ</strong> ช่องซ้ายขวาของ <code>CupertinoNavigationBar</code> เดิมกว้างคงที่ 240 ทำให้ชื่อตรงกลางเหลือ 1 px บนจอ 393 เปลี่ยนเป็นยืดเท่ากัน ชื่อจึงอยู่กลางทุกขนาดจอ ตรงกับพฤติกรรม <code>NavigationToolbar</code> ของ Flutter</li>
+<li><strong>สีหลัก</strong> เปลี่ยนจากม่วงเป็น systemBlue ตามที่ Jedt ขอ (ทำก่อนตรวจ)</li>
+</ol>
+<h2>3. ช่องว่างที่ยังเหลือ</h2>
+<ul>
+<li>ภาพกระดูกเป็นภาพ AI ชั่วคราว ต้องแทนด้วย render จาก flutter_scene หลัง spike</li>
+<li>ศัพท์ไทย จุด landmark จุดเกาะ และเนื้อหาคลินิกเป็นตัวอย่าง ต้องให้อาจารย์คณะพาร์ตเนอร์ตรวจ</li>
+<li>ProgressBar ทุกจุดแสดงค่าเท่ากัน เพราะ component ยังไม่มี property ค่า</li>
+<li>ยังไม่มีหน้าจอ: ลงชื่อเข้าใช้และบัญชี, error และ empty state, iPad แนวตั้ง, ภาพหน้าจอ Dark mode, หน้ามือถือ "ฉัน"</li>
+<li>ยังไม่ได้ทดสอบกับผู้ใช้จริง แผนคือสัมภาษณ์นักศึกษา 15 คนในเดือนที่ 1 ตาม roadmap แล้วใช้ prototype นี้เป็นเครื่องมือทดสอบ</li>
+</ul>
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/product-design">docs/product-design</a> บน GitHub · ภาพหน้าจอส่งออกจาก Figma 27 พ.ย. 2026</footer>
+</main>
+</body>
+</html>
