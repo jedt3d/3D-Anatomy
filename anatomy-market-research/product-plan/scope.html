@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>01. Scope: niche ที่แคบที่สุดที่ทำจบได้ใน 1 ปี · แผนพัฒนา Product</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
+.doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
+nav a.on{background:var(--ink);color:var(--bg)}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../../index.html">← หน้ารวมรายงาน</a><a href="index.html">สรุป</a><a href="scope.html" class="on">Scope และ niche</a><a href="features.html">Feature และจุดขาย</a><a href="free-feedback.html">อ่านฟรีและ feedback</a><a href="roadmap.html">Roadmap 12 เดือน</a></nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · แผนพัฒนา Product ปีแรก · สร้างจาก <code>docs/product-plan/th/01-scope.md</code> · ตัวเลขที่ติดป้าย (ประมาณการ) คือการคาดคะเนของเรา</p>
+<h1>01. Scope: niche ที่แคบที่สุดที่ทำจบได้ใน 1 ปี</h1>
+<h2>1. เงื่อนไขที่บังคับ scope</h2>
+<ol>
+<li><strong>ปั้นเองทั้งหมด</strong> ทั้ง mesh และ texture ไม่ใช้โมเดล Creative Commons หรือโมเดลที่ซื้อ license มา ดังนั้นตัวจำกัดจริงคือ <strong>จำนวนวันทำงานของ 3D artist</strong> ไม่ใช่โค้ด</li>
+<li><strong>กลุ่มเป้าหมาย 4 วิชาชีพ</strong> แพทย์ ทันตะ พยาบาล เภสัช (นักศึกษาและคนทำงานช่วงแรก) ต้องเจอส่วนที่ตัวเองใช้</li>
+<li><strong>1 ปี</strong> ต้องมีเวอร์ชันที่ใช้ได้จริงในมือนักศึกษาเร็ว (ไม่เกินเดือนที่ 3) เพราะ feedback คือหัวใจ</li>
+<li>ต่อจาก pipeline ที่ตัดสินแล้ว: Flutter + flutter_scene, GLB, Blender เป็นศูนย์กลาง, LightWave/3D-Coat สำหรับปั้น (<a href="../3d-pipeline/index.html">ไปป์ไลน์ 3D</a>)</li>
+</ol>
+<h2>2. ตัวเลือกที่พิจารณา</h2>
+<table>
+<thead>
+<tr>
+<th>ตัวเลือก</th>
+<th>งานปั้น (ประมาณการ)</th>
+<th>ครอบคลุม 4 วิชาชีพ</th>
+<th>ความเสี่ยงถูก/ผิด</th>
+<th>ผล</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A. ทั้งตัวทุกระบบแบบหยาบ</td>
+<td>มากมาก (อวัยวะ กล้ามเนื้อ หลอดเลือด เส้นประสาท)</td>
+<td>ครบแต่ตื้น</td>
+<td>สูง</td>
+<td>ตัดทิ้ง: แข่งกับ Complete Anatomy ที่มี 700+ โมเดลไม่ได้</td>
+</tr>
+<tr>
+<td>B. ศีรษะและลำคอ (เน้นทันตะ)</td>
+<td>มาก: เส้นประสาทสมอง กล้ามเนื้อหน้า หลอดเลือดซับซ้อน</td>
+<td>ทันตะ + แพทย์</td>
+<td>สูง</td>
+<td>เก็บไว้ปีที่ 2</td>
+</tr>
+<tr>
+<td>C. กล้ามเนื้อทั้งตัว</td>
+<td>~600 มัด และต้องแก้ทับซ้อนกับกระดูก</td>
+<td>แพทย์ + PT</td>
+<td>กลาง</td>
+<td>เกินกำลังปีแรก</td>
+</tr>
+<tr>
+<td><strong>D. โครงกระดูก + landmarks + จุดเกาะกล้ามเนื้อ + กะโหลกและฟัน</strong></td>
+<td><strong>~120 mesh + ฟัน 16 ซี่</strong></td>
+<td><strong>ทั้ง 4</strong></td>
+<td><strong>ต่ำ-กลาง</strong></td>
+<td><strong>เลือก</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>เหตุผลที่เลือก D</h3>
+<ul>
+<li><strong>ทุกวิชาชีพเรียนกระดูก</strong> และจุดสังเกตบนกระดูกเป็นฐานของเรื่องที่แต่ละวิชาชีพใช้ทางคลินิก: ตำแหน่งฉีดยาเข้ากล้าม (พยาบาล เภสัช), กะโหลก รูเปิด และฟัน (ทันตะ), ตำแหน่งกระดูกหักและจุดคลำ (แพทย์)</li>
+<li><strong>กระดูกปั้นง่ายที่สุด</strong> เป็นวัตถุแข็ง ไม่ต้อง rig ไม่ต้องทำ blend shape และ texture ใช้ชุด material กระดูกร่วมกันได้</li>
+<li><strong>จุดเกาะกล้ามเนื้อเป็นแค่ texture/mask บนกระดูก</strong> (origin สีหนึ่ง insertion อีกสีหนึ่ง) จึงสอนเรื่องกล้ามเนื้อได้ก่อนจะปั้นกล้ามเนื้อจริง</li>
+<li><strong>ตรงกับ spike ที่วางไว้แล้ว</strong> (โครงกระดูก + กล้ามเนื้อแขน ~200–400 ชิ้น) ใน <a href="../3d-pipeline/pipeline.html">01-pipeline หัวข้อ 7</a> งาน spike จึงกลายเป็นเนื้อหาจริงชิ้นแรก</li>
+<li><strong>ใช้ต่อกับ SKU ศิลปิน</strong> ในอนาคตได้ (โครงกระดูกและกล้ามเนื้อแขนขาเป็นสิ่งที่ศิลปินต้องใช้ด้วย) ตามข้อสรุปรายงานตลาดว่า Med + Artist ใช้ engine เดียว</li>
+</ul>
+<h3>ข้อควรรู้: กระดูกฟรีมีอยู่แล้ว</h3>
+<p>Anatomyka ใน App Store ไทยให้ใช้ระบบโครงกระดูกฟรี และเก็บเงินระบบอื่น (รายปี ฿999, Pro ฿2,490, lifetime ฿5,990) แต่รายการภาษาในร้านมีแค่ภาษาอังกฤษ [S8] ดังนั้น <strong>"มีโมเดลกระดูก 3D" ไม่ใช่จุดขาย</strong> จุดขายต้องมาจากภาษาไทยที่ตรวจแล้ว, landmarks ละเอียดแบบที่ใช้สอบ, โหมดฝึกสอบ spot และเลนส์วิชาชีพ (ดู <a href="features.html">02-features</a>)</p>
+<h2>3. ขอบเขตงานปั้น 3D (asset scope)</h2>
+<p>ทุกตัวเลขในตารางนี้เป็น <strong>(ประมาณการ)</strong> ของเรา ต้องวัดจริงหลังปั้นกระดูก 3 ชิ้นแรก (femur, scapula, vertebra) แล้วปรับ</p>
+<table>
+<thead>
+<tr>
+<th>กลุ่ม</th>
+<th>จำนวน mesh ที่ไม่ซ้ำ</th>
+<th>วัน artist ต่อชิ้น</th>
+<th>รวมวัน</th>
+<th>หมายเหตุ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>กระดูกแขน (รวมมือ)</td>
+<td>~32</td>
+<td>0.5–3</td>
+<td>~35</td>
+<td>ชุดแรก ใช้ทำ spike</td>
+</tr>
+<tr>
+<td>กระดูกขาและเชิงกราน (รวมเท้า)</td>
+<td>~31</td>
+<td>0.5–3</td>
+<td>~35</td>
+<td></td>
+</tr>
+<tr>
+<td>กระดูกสันหลัง กระดูกเชิงกรานแกนกลาง ซี่โครง กระดูกอก</td>
+<td>~40</td>
+<td>1–1.5</td>
+<td>~50</td>
+<td>สันหลังแต่ละระดับต่างกัน ต้องปั้นแยก</td>
+</tr>
+<tr>
+<td>กะโหลก (แยกชิ้น) + hyoid + กระดูกหู</td>
+<td>~22</td>
+<td>1–5</td>
+<td>~45</td>
+<td>ชิ้นที่ยากที่สุด: sphenoid, temporal, ethmoid</td>
+</tr>
+<tr>
+<td>ฟันแท้ (mirror ซ้าย/ขวา)</td>
+<td>16</td>
+<td>1–1.5</td>
+<td>~20</td>
+<td>ใช้เลข FDI จุดดึงทันตะ</td>
+</tr>
+<tr>
+<td>Texture: material กระดูกร่วม + mask จุดเกาะกล้ามเนื้อ</td>
+<td>ทุกชิ้น</td>
+<td>-</td>
+<td>~60</td>
+<td>วาดเอง ไม่ใช้ texture สำเร็จรูป</td>
+</tr>
+<tr>
+<td>ตรวจแก้หลังอาจารย์รีวิว</td>
+<td>-</td>
+<td>-</td>
+<td>~40</td>
+<td>สำรองไว้ ~15%</td>
+</tr>
+<tr>
+<td><strong>รวม must-have</strong></td>
+<td><strong>~140</strong></td>
+<td></td>
+<td><strong>~285</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>กล้ามเนื้อแขน (should-have ปลายปี)</td>
+<td>~50 มัด</td>
+<td>~2</td>
+<td>~100</td>
+<td>ต้องปั้นให้พอดีกับกระดูก</td>
+</tr>
+<tr>
+<td><strong>รวมทั้งปี</strong></td>
+<td></td>
+<td></td>
+<td><strong>~385</strong></td>
+<td>artist 2 คน × ~200 วันทำงาน = ~400 วัน</td>
+</tr>
+</tbody>
+</table>
+<h3>reference โดยไม่ใช้โมเดลคนอื่น</h3>
+<ul>
+<li><strong>กระดูกแห้งของคณะพาร์ตเนอร์</strong> ถ่ายภาพหรือ photogrammetry ด้วยทีมเราเองเพื่อใช้เป็น reference (ไม่ใช่ mesh สุดท้าย) ต้องได้รับอนุญาตเป็นลายลักษณ์อักษรจากภาควิชา และเคารพธรรมเนียมเรื่องร่างอาจารย์ใหญ่</li>
+<li><strong>ตำรา atlas และภาพถ่าย</strong> ใช้ดูเป็น reference เท่านั้น ไม่ trace หรือคัดลอกภาพ</li>
+<li>ข้อมูล CT หรือสแกนจากฐานข้อมูลเปิด <strong>ไม่ใช้</strong> เพราะเงื่อนไข license หลายชุดเป็นแบบ Creative Commons ซึ่งขัดกับนโยบาย</li>
+</ul>
+<h2>4. ข้อมูลเนื้อหา (content DB) ที่ต้องทำคู่กัน</h2>
+<p>3D เป็นแค่ครึ่งเดียว ตาม <a href="../3d-pipeline/pipeline.html">ไปป์ไลน์ 3D หัวข้อ 5</a> GLB เก็บแค่ geometry กับ ID ส่วนสิ่งที่คนอ่านอยู่ใน content DB:</p>
+<ul>
+<li>ชื่อ 3 ภาษา: ไทย / อังกฤษ / ละติน (Terminologia Anatomica 2) ใช้ศัพท์ไทยตามที่อาจารย์ไทยใช้สอนจริง ถ้าศัพท์ไม่ตรงกันระหว่างคณะ เก็บทุกแบบพร้อมระบุแหล่ง</li>
+<li>landmarks <strong>(ประมาณการ)</strong> ~800–1,200 จุดในปีแรก เทียบ Anatomy Learning ที่มี 6,000+ จุดทั้งตัว (จากรายงานตลาด)</li>
+<li>จุดเกาะกล้ามเนื้อ, การกระทำ, เส้นประสาทที่ควบคุม (ข้อความ ไม่ต้องมี 3D ของเส้นประสาท)</li>
+<li>หมายเหตุคลินิกตามวิชาชีพ, ข้อสอบ spot</li>
+<li><strong>ต้องมีคนรับผิดชอบเต็มเวลา 1 คน</strong> (นักกายวิภาคหรือแพทย์จบใหม่ที่สนใจการสอน) เพราะนี่คือ moat จริงตามบทเรียนของ BioDigital</li>
+</ul>
+<h2>5. กำลังคนที่สมมติ (ประมาณการ)</h2>
+<table>
+<thead>
+<tr>
+<th>บทบาท</th>
+<th>คน</th>
+<th>หน้าที่</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3D artist</td>
+<td>2</td>
+<td>ปั้น, retopo, UV, bake, texture ตาม pipeline</td>
+</tr>
+<tr>
+<td>Content lead (กายวิภาค)</td>
+<td>1</td>
+<td>content DB, landmarks, ข้อสอบ, ประสานอาจารย์</td>
+</tr>
+<tr>
+<td>Flutter developer</td>
+<td>2</td>
+<td>แอป iPad + เว็บ, ระบบ pack offline, feedback, analytics</td>
+</tr>
+<tr>
+<td>Product/UX + community</td>
+<td>1 (Jedt)</td>
+<td>ทิศทาง, ออกแบบ, คณะพาร์ตเนอร์, ทูตนักศึกษา</td>
+</tr>
+<tr>
+<td>อาจารย์ที่ปรึกษา</td>
+<td>3–5 (พาร์ตไทม์)</td>
+<td>ตรวจความถูกต้อง, ใช้ในห้องเรียน</td>
+</tr>
+</tbody>
+</table>
+<p>ถ้ามี artist แค่ 1 คน ให้ตัดกล้ามเนื้อแขนออก และเลื่อนฟันไปไตรมาสสุดท้าย</p>
+<h2>6. สิ่งที่ไม่ทำในปีแรก (non-goals)</h2>
+<p>อวัยวะภายใน, หลอดเลือดและเส้นประสาทแบบ 3D, กล้ามเนื้อขาและลำตัว, AR, แอป Android แบบ native (เว็บ Flutter ใช้บน Android ได้อยู่แล้ว), ภาษาเวียดนาม/อินโดนีเซีย, ฟันน้ำนม, เวอร์ชันศิลปิน</p>
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/product-plan/th">docs/product-plan/th</a> บน GitHub</footer>
+</main>
+</body>
+</html>
