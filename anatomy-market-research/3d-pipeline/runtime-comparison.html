@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3D Pipeline &amp;amp; Runtime Recommendation: 3D Anatomy App · 3D Pipeline</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2)}
+.doc li{margin:3px 0}
+nav a.on{background:var(--ink);color:var(--bg)}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../index.html">← Market review</a><a href="index.html">Overview</a><a href="runtime-comparison.html" class="on">Runtime comparison</a><a href="pipeline.html">Pipeline</a><a href="setup-workflow.html">Setup &amp; workflow</a><a href="evidence.html">Evidence &amp; lessons</a></nav></header>
+<main class="doc">
+<p class="meta">3D Anatomy · Technical research · generated from <code>docs/3d-pipeline/00-initial-recommendation.md</code></p>
+<h1>3D Pipeline &amp; Runtime Recommendation: 3D Anatomy App</h1>
+<p><em>Date: 2026-11-27. Targets: iPad first, Web (WASM) second, Android later, phone companion app. Preferred stack: Flutter.</em></p>
+<blockquote>
+<p>Reading of the request: "LiveWeb 3D" is taken to mean <strong>LightWave 3D</strong>, and "Artisan ใช้ Godot" as "or should we use a game engine such as <strong>Godot</strong> instead of Flutter?"</p>
+</blockquote>
+<h2>1. Recommendation in one paragraph</h2>
+<p>Keep <strong>Flutter as the app</strong> (navigation, labels, notes, quizzes, search, purchases, offline downloads, phone companion). Do <strong>not</strong> move the whole product into a game engine. Put 3D behind one interface (<code>AnatomyViewport</code>) and fill it with one of two renderers, chosen by a 2-week spike on a real asset:</p>
+<ol>
+<li><strong>flutter_scene</strong> (preferred if it passes): pure Flutter, glTF, runs on iOS/Android/Web.</li>
+<li><strong>three.js inside the app</strong> (safe fallback): WKWebView on iPad, direct canvas on Flutter Web. Most mature glTF stack (KTX2, meshopt, picking, clipping planes, outlines).</li>
+</ol>
+<p>Either way there is <strong>one renderer for all platforms</strong>, never "three.js on web, Flutter on mobile". With flutter_scene, the same Dart 3D code runs on iPad/Android (Impeller + Flutter GPU) and on Flutter Web (WASM/Skwasm build, where flutter_scene uses its own WebGL2 backend, because Impeller itself does not run on web). With the three.js fallback, the same JS viewer runs in a WebView on iPad/Android and in the page on web. Default plan: Flutter + flutter_scene everywhere; three.js only if the spike fails.</p>
+<p>Make <strong>glTF 2.0 (GLB)</strong> the single delivery format, with <strong>Blender as the hub</strong> that every source tool (LightWave, 3D-Coat) feeds into. That keeps the renderer choice reversible: the asset pack does not change if you switch renderer.</p>
+<p>Why not a game engine: the app is mostly text-heavy UI and content, with 3D that is mostly static meshes plus layering, picking, transparency and cross-sections. Flutter is strong at the first; the 3D needs are modest. A game engine is strong where you do not need it (physics, game loop) and weak where you do (rich UI, accessibility, Thai text, forms, store/IAP, a companion phone app).</p>
+<h2>2. Runtime options compared</h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>iPad</th>
+<th>Web/WASM</th>
+<th>Android</th>
+<th>Maturity / risk</th>
+<th>License</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Flutter + flutter_scene</strong></td>
+<td>Impeller + Flutter GPU</td>
+<td>Own WebGL2 backend, CanvasKit &amp; Skwasm</td>
+<td>Yes</td>
+<td>Pre-1.0 (0.24.x, Oct 2026), breaking minor releases; needs Flutter 3.47+</td>
+<td>MIT</td>
+<td><strong>Preferred, verify in spike</strong></td>
+</tr>
+<tr>
+<td><strong>Flutter + thermion (Filament)</strong></td>
+<td>arm64</td>
+<td>WASM (multithreaded build needs COOP/COEP headers)</td>
+<td>arm64</td>
+<td>Small project (~222 GitHub stars), mostly one maintainer; thermion_dart 0.5.0 (Aug 2026)</td>
+<td>Apache-2.0</td>
+<td>Good engine, bus-factor risk</td>
+</tr>
+<tr>
+<td><strong>Flutter + three.js (WebView / HtmlElementView)</strong></td>
+<td>WKWebView; WebGPU in Safari 26 (WebGL2 fallback)</td>
+<td>Native fit</td>
+<td>WebView</td>
+<td>Most mature glTF ecosystem; cost is a JS↔Dart bridge and WebView memory</td>
+<td>MIT</td>
+<td><strong>Fallback / lowest technical risk</strong></td>
+</tr>
+<tr>
+<td><strong>Flutter + Unity embedded</strong></td>
+<td>flutter_embed_unity 2.0.0 (Apr 2026)</td>
+<td><strong>No web</strong> in that plugin; flutter_unity_widget is discontinued</td>
+<td>Yes</td>
+<td>One Unity instance, stays in memory</td>
+<td>Unity terms</td>
+<td>Not recommended</td>
+</tr>
+<tr>
+<td><strong>Godot 4 full app</strong></td>
+<td>Good native</td>
+<td>WebGL2 only; ~6.2 MB engine for 4.5.2 release build; slow loads and iOS-Safari crash reports in forums</td>
+<td>Good</td>
+<td>Mature engine, weak for app-style UI</td>
+<td>MIT</td>
+<td>Only if product becomes simulation-heavy</td>
+</tr>
+<tr>
+<td><strong>Unity full app</strong></td>
+<td>Good</td>
+<td>Large web builds</td>
+<td>Good</td>
+<td>Mature</td>
+<td>Unity terms</td>
+<td>Overkill for this product</td>
+</tr>
+<tr>
+<td><strong>Bevy</strong></td>
+<td>Possible</td>
+<td>WASM/WebGPU</td>
+<td>Possible</td>
+<td>Pre-1.0, Rust, API churn</td>
+<td>MIT/Apache</td>
+<td>Not for this team</td>
+</tr>
+</tbody>
+</table>
+<h3>What the spike must prove (pass/fail)</h3>
+<p>Use one real asset: full skeleton + major muscles, ~200–400 selectable parts, ~1M triangles, 2K textures.</p>
+<ul>
+<li>60 fps orbit on a base-model iPad (A-series, not only M-chip), 30 fps floor on mid-range Android.</li>
+<li>Tap-to-select a part by name (ray picking), highlight/outline, hide/isolate, per-layer opacity (x-ray).</li>
+<li>One clipping plane (cross-section).</li>
+<li>Label pins anchored to 3D points, drawn by Flutter on top.</li>
+<li>Load a downloaded GLB from disk (iPad) and from cache (web).</li>
+<li>Web: first view under ~5 s on a typical connection; check bundle size.</li>
+</ul>
+<p>If flutter_scene fails picking, transparency sorting or clipping, switch the viewport to three.js. The asset pack and Flutter UI stay the same.</p>
+<h2>3. Asset pipeline</h2>
+<pre><code>LightWave 2026 ──FBX/OBJ──┐
+3D-Coat (sculpt) ─retopo + bake─┐
+                        ▼   ▼
+                   Blender (hub, source of truth: .blend)
+                   - naming, hierarchy, custom properties
+                   - materials → glTF PBR (metal/rough)
+                   - LODs per part
+                        │ glTF exporter (GLB, + custom props as extras)
+                        ▼
+               gltf-transform CLI (CI script)
+               - dedup / prune / weld
+               - simplify (LOD1, LOD2)
+               - EXT_meshopt_compression
+               - KTX2 textures (KHR_texture_basisu)
+               - glTF Validator gate
+                        ▼
+       Asset packs per system (skeleton.glb, muscles.glb, …)
+       + manifest.json (version, hash, size, part IDs)
+                        ▼
+    CDN ──► iPad: app support dir │ Web: Cache Storage / OPFS
+</code></pre>
+<h3>Per tool</h3>
+<ul>
+<li><strong>LightWave 2026</strong> (released June 2026, Windows/macOS, £795): no glTF or USD export is mentioned in the release coverage. Export <strong>FBX or OBJ</strong> into Blender. Use LightWave for what it is good at (modeling, rendering marketing stills), not as the delivery exporter. <em>Verify FBX export options against your LightWave version.</em></li>
+<li><strong>3D-Coat</strong>: sculpt high-res organic forms, then retopo (low poly, clean UVs) and bake normal/AO/curvature maps. Export low-poly mesh + baked maps (FBX/OBJ + PNG) into Blender. 3D-Coat's API has a glTF exporter class, but use Blender as the single exporter so all parts share one convention.</li>
+<li><strong>Blender</strong>: the only place that writes GLB. Its glTF exporter writes custom properties to <code>extras</code> when "Include → Custom Properties" is on.</li>
+</ul>
+<h3>Compression and textures</h3>
+<ul>
+<li><strong>Geometry: meshopt over Draco.</strong> Meshopt decodes faster on mobile and web, and also compresses animation; Draco gives slightly smaller files but slower decode. Pick one; three.js, Filament and Godot all read meshopt (verify flutter_scene during the spike).</li>
+<li><strong>Textures: KTX2 / Basis Universal.</strong> UASTC for normal maps, ETC1S for albedo/AO. Stays compressed in GPU memory, which matters most on iPad.</li>
+<li><strong>Budget (starting point):</strong> ≤1.5M triangles visible at once on iPad, 2K textures per system (4K only for hero close-ups), one GLB per system ≤30 MB after compression.</li>
+<li><strong>LOD:</strong> export LOD0/1/2 per system; load LOD1 first, swap in LOD0 on zoom.</li>
+<li><strong>USDZ:</strong> optional, only for iOS "View in AR" (AR Quick Look). Not a runtime format.</li>
+</ul>
+<h3>Anatomy structure and metadata</h3>
+<p>The 3D file holds geometry and stable IDs only. Everything else lives in data.</p>
+<ul>
+<li><strong>Node naming:</strong> <code>sys.part.side</code>, e.g. <code>msk.biceps_brachii.L</code>. Never rename once shipped.</li>
+<li><strong>glTF extras per node:</strong> <code>{ "id": "biceps_brachii_L", "system": "muscular", "layer": 3 }</code>.</li>
+<li><strong>Content database (JSON or SQLite, separate from GLB):</strong> id → names (EN/TH/Latin), standard IDs (TA2 / FMA / SNOMED CT body structure), origin/insertion/innervation, notes, quiz items, artist notes (form, landmarks). This is what the phone companion app reuses without any 3D.</li>
+<li><strong>Layers:</strong> a layer number per part (skin → superficial muscle → deep muscle → bone → organs) drives peel-away and x-ray.</li>
+</ul>
+<h3>Offline</h3>
+<ul>
+<li>Manifest lists packs with SHA-256 and size. App downloads per system, verifies hash, stores in app support dir (iPad) or Cache Storage/OPFS (web), and updates by diff on manifest version.</li>
+</ul>
+<h2>4. Team effort (rough)</h2>
+<ul>
+<li>Flutter + flutter_scene/three.js: one Flutter dev + one part-time 3D/JS dev; spike 2 weeks; viewport MVP 6–8 weeks.</li>
+<li>Godot full app: rebuild all UI in Godot, plus a separate phone app; more effort for the same product.</li>
+<li>Pipeline automation (Blender export script + gltf-transform CI): ~1 week, then saves time on every asset change.</li>
+</ul>
+<h2>5. Open items to verify</h2>
+<ul>
+<li>flutter_scene: meshopt/KTX2 support, picking, clipping, transparency sorting (spike).</li>
+<li>Godot 4.x web: current threads/COOP-COEP and iOS Safari behaviour (docs page could not be read in this pass).</li>
+<li>Safari 26 WebGPU on by default on iPadOS: stated by a secondary source (VR.org, May 2026), not confirmed from Apple.</li>
+<li>LightWave 2026 export formats on your installed version.</li>
+</ul>
+<h2>Sources (accessed 2026-11-27)</h2>
+<ul>
+<li>flutter_scene on pub.dev: https://pub.dev/packages/flutter_scene and docs https://pub.dev/documentation/flutter_scene/latest/</li>
+<li>Flutter GPU intro (Aug 2024, now partly outdated): https://flutter.dev/blog/getting-started-with-flutter-gpu</li>
+<li>thermion: https://github.com/nmfisher/thermion · https://pub.dev/packages/thermion_dart</li>
+<li>flutter_embed_unity: https://pub.dev/packages/flutter_embed_unity · flutter_unity_widget (discontinued): https://pub.dev/packages/flutter_unity_widget</li>
+<li>Godot web export docs: https://docs.godotengine.org/en/4.5/tutorials/export/exporting_for_web.html · build sizes: https://github.com/JohannesDeml/Godot-Web-LoadingTest</li>
+<li>Godot forum, iOS web crashes: https://forum.godotengine.org/t/game-crashes-randomly-on-ios-devices-html-export/114043</li>
+<li>LightWave 2026 release: https://www.cgchannel.com/2026/06/lightwave-digital-releases-lightwave-2026/</li>
+<li>3DCoat glTF exporter class: https://3dcoat.com/files/docs/classgltf_1_1gltfExporter-members.html</li>
+<li>Blender glTF exporter: https://docs.blender.org/manual/en/latest/addons/scene_gltf2.html</li>
+<li>WebGPU / three.js status (secondary): https://vr.org/articles/webgpu-baseline-2026-three-js-webxr-default · https://web.dev/blog/webgpu-supported-major-browsers</li>
+</ul>
+<footer>Source: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/3d-pipeline">docs/3d-pipeline</a> on GitHub.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03. Evidence: what others did and what they learned · 3D Pipeline</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2)}
+.doc li{margin:3px 0}
+nav a.on{background:var(--ink);color:var(--bg)}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../index.html">← Market review</a><a href="index.html">Overview</a><a href="runtime-comparison.html">Runtime comparison</a><a href="pipeline.html">Pipeline</a><a href="setup-workflow.html">Setup &amp; workflow</a><a href="evidence.html" class="on">Evidence &amp; lessons</a></nav></header>
+<main class="doc">
+<p class="meta">3D Anatomy · Technical research · generated from <code>docs/3d-pipeline/03-evidence-and-lessons.md</code></p>
+<h1>03. Evidence: what others did and what they learned</h1>
+<p><em>Last updated: 2026-11-27. Every claim has a source and date. "Not verified" means I could not read the primary source in this pass.</em></p>
+<h2>1. flutter_scene (our main bet)</h2>
+<p><strong>What it is now.</strong> "A realtime 3D engine for Flutter, built on Flutter GPU and Impeller", by Brandon DeRosier, who also built Flutter GPU (fscene.dev). MIT. GitHub: ~760 stars, 82 forks, 22 open issues, 10 open PRs (read 2026-11-27). Latest on pub.dev: 0.24.x (0.24.3 dated 2026-10-09; docs show 0.24.6). Needs Flutter 3.47+. Platforms: iOS, Android, Web, macOS, Windows, Linux.</p>
+<p><strong>Features that matter to us (README):</strong> glTF import (.glb, .gltf), PBR, image-based lighting, LODs, instancing, custom <code>.fmat</code> GLSL materials (needed for clipping/x-ray), <strong>raycast picking</strong>, orbit camera, <strong>Flutter widgets on 3D surfaces</strong>, screen-reader semantics, hot reload of models and shaders, a desktop editor.
+Not mentioned: clipping planes, transparency sorting details, meshopt/KTX2 support. → test in the spike.</p>
+<p><strong>History (why older articles disagree):</strong>
+| Date | State | Source |
+|---|---|---|
+| Aug 2024 | Flutter GPU + flutter_scene in preview, main channel only, Impeller required, web not a target | flutter.dev blog "Getting started with Flutter GPU" (2024-08-06); Flutter Force Weekly 03a (2024-08-11) |
+| 2026 | Works on Flutter 3.47 stable; web via its own WebGL2 backend; pre-1.0 with breaking minor releases | pub.dev flutter_scene, GitHub README |</p>
+<p><strong>Who has built with it:</strong></p>
+<ul>
+<li><strong>KBTG (Kasikorn Business-Technology Group, Thailand)</strong>: Amorn Apichattanakul, "Bring 3D to Life in Flutter with flutter_scene and Flutter GPU" (2026-10-14): a 3D hotel tour and island, focused on "what each 3D effect actually costs on a phone". Full article could not be fetched (Medium blocked); worth reading directly, and worth contacting, since KBTG is local.</li>
+<li><strong>Showcase demos</strong> by the author: Dashsurfers (endless runner) and Dashmap (streaming 3D world map); site lists ~40 examples.</li>
+<li><strong>Community experiments</strong>: "flutter_scene experiments" (Chongqing miniature from OpenStreetMap data; real-time worm swarm), "best viewed on a laptop browser".</li>
+<li>I found <strong>no shipped medical/anatomy app</strong> on flutter_scene. We would likely be early.</li>
+</ul>
+<p><strong>Lessons from its open issues (GitHub, read 2026-11-27):</strong>
+| Issue | Lesson for us |
+|---|---|
+| #351 (2026-08-21) ~3x frame-rate drop on a branch vs 0.20.0, same scene | Pin the version; benchmark every upgrade with our own scene |
+| #285 (2026-08-01) GPU memory has no ownership/accounting/release story | Loading/unloading packs on iPad may leak; test in spike (item 8) |
+| #234 (2026-07-12) directional-light shadows show stripes on Android/mobile only | Avoid dynamic shadows; use baked AO (we want that anyway) |
+| #354, #355 (2026-08-23) shader bundles packaged twice; stale backend files shipped | App size may be bigger than needed; check IPA/APK size |
+| #382 (2026-09-03) widget-on-surface texture crushes dark colours | Don't put text on 3D surfaces; draw labels as normal Flutter overlay |
+| #314 Android emulator crash (SwANGLE) | Test on real Android devices |</p>
+<p><strong>Verdict:</strong> feature list fits an anatomy viewer, and the engine is active. The risks are maturity (pre-1.0, single main author, perf regressions, GPU memory) and no known medical app yet. That is why the spike is a gate, and why 3D stays behind one interface.</p>
+<h2>2. Other ways people put 3D in Flutter</h2>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Evidence</th>
+<th>Lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>model_viewer_plus</strong> (WebView + Google <code>&lt;model-viewer&gt;</code>)</td>
+<td>pub.dev 1.10.0, ~49k downloads. Needs cleartext localhost on Android 9+, an Info.plist flag on iOS, CORS headers on web; "AR View may not be available on iOS 16+"; low render quality on some phones (issue #44)</td>
+<td>Good for "show one product model". Too limited for picking hundreds of parts, layers, clipping</td>
+</tr>
+<tr>
+<td><strong>thermion</strong> (Filament engine for Flutter)</td>
+<td>GitHub nmfisher/thermion: iOS, Android, macOS, Windows, Web/WASM; Apache-2.0; ~220 stars; thermion_dart 0.5.0 (2026-08-20); multithreaded WASM needs COOP/COEP</td>
+<td>Strong renderer (Filament) but small project, mostly one maintainer</td>
+</tr>
+<tr>
+<td><strong>Unity embedded in Flutter</strong></td>
+<td>flutter_unity_widget: last release 2024-01-08, marked <strong>discontinued</strong> on pub.dev; Flutter widgets over Unity on web don't receive taps. flutter_embed_unity 2.0.0 (2026-04-13): Android/iOS only, <strong>no web</strong>, one Unity instance, Unity stays in memory after dispose</td>
+<td>Embedding a game engine into Flutter is fragile and breaks our web target</td>
+</tr>
+</tbody>
+</table>
+<h2>3. Game engines as the whole app</h2>
+<table>
+<thead>
+<tr>
+<th>Engine</th>
+<th>Evidence</th>
+<th>Lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Godot 4</strong></td>
+<td>Web export needs WebAssembly + WebGL 2.0 (Godot docs). Release web build ~6.2 MB for 4.5.2, ~6.3 MB for 4.6.2; grew ~15% from 4.3 to 4.4; author notes "loading times are really long for godot (compared to unity)" (JohannesDeml/Godot-Web-LoadingTest). Forum threads report random crashes of HTML exports on iOS devices (2025)</td>
+<td>Fine engine, but web on iPad is the weak spot, and we would rebuild all app UI (Thai text, forms, IAP) in Godot plus a separate phone app</td>
+</tr>
+<tr>
+<td><strong>Unity</strong></td>
+<td>Large web builds; licence terms; embedding issues above</td>
+<td>Overkill for mostly-static anatomy meshes</td>
+</tr>
+</tbody>
+</table>
+<h2>4. How established anatomy platforms did it</h2>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>What is documented</th>
+<th>Lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Google Body → ZygoteBody</strong></td>
+<td>Google Body launched 2010-12-15 using JavaScript + WebGL, no plugins; Google shut it 2011-10-13; Zygote relaunched it 2012-01-09 and open-sourced the core as open-3d-viewer. Layers can be removed or made transparent; parts are labelled and searchable (Wikipedia)</td>
+<td>Layers + transparency + labels + search is the core feature set, and it has run on plain WebGL since 2010. We don't need a game engine for it</td>
+</tr>
+<tr>
+<td><strong>BioDigital Human</strong></td>
+<td>Launched 2011 as web-based 3D body; "one of the early systems to leverage WebGL"; runs in browsers without plugins; &gt;1M users; offers APIs (Wikipedia)</td>
+<td>Web-first 3D anatomy is a proven business; their value is the content DB and API, not the renderer</td>
+</tr>
+<tr>
+<td>Complete Anatomy, Visible Body, etc.</td>
+<td>Rendering stack not publicly documented in sources I could read</td>
+<td>Not verified, so not used as evidence</td>
+</tr>
+</tbody>
+</table>
+<h2>5. Asset tools</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Evidence</th>
+<th>Lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LightWave 2026</strong></td>
+<td>Released 2026-06-15 coverage (CG Channel): Windows 10+/macOS 14.1+, £795; features are VFX/modelling/rendering (MotoRig, Fracture, RiPR 2, Gaussian-splat preview). No glTF/USD export mentioned. Reallusion forum (2025-12-26) user asking to restore a LightWave export path</td>
+<td>Treat LightWave as a modelling source; hand off FBX/OBJ to Blender</td>
+</tr>
+<tr>
+<td><strong>3D-Coat</strong></td>
+<td>Its API docs contain a <code>gltf::gltfExporter</code> class (docs generated 2025-12-25)</td>
+<td>glTF export exists in code; still route through Blender for one convention</td>
+</tr>
+<tr>
+<td><strong>Blender</strong></td>
+<td>Official glTF 2.0 importer/exporter in the manual, including custom properties → extras</td>
+<td>The de-facto hub for glTF pipelines</td>
+</tr>
+<tr>
+<td><strong>glTF Transform CLI</strong></td>
+<td>v4.5.0: <code>inspect</code>, <code>optimize</code>, <code>dedup</code>, <code>prune</code>, <code>weld</code>, <code>simplify</code>, <code>meshopt</code>, <code>draco</code>, <code>etc1s</code>, <code>uastc</code>, <code>webp</code>… Docs say <code>optimize</code> defaults "may not be ideal for all scenes", run <code>inspect</code> first</td>
+<td>Script individual steps, don't rely on one-shot optimize</td>
+</tr>
+<tr>
+<td><strong>Khronos 3D Commerce realtime guidelines</strong> v1.0.0 (2020-10-20)</td>
+<td>≤100k triangles and ideally &lt;5 MB per product asset; 1K/2K textures, power-of-two; PBR metal/rough; sRGB only for base colour/emissive; OpenGL normals, MikkTSpace; UVs 0–1; names a–z0–9_-; 1 unit = 1 m, +Y up</td>
+<td>Good base rules; our packs are bigger than one product, so we set per-pack budgets instead</td>
+</tr>
+</tbody>
+</table>
+<h2>6. Flutter Web reality check</h2>
+<p>Flutter docs (updated 2026-11-11): <code>flutter build web --wasm</code> needs WasmGC and newer Wasm features; Chromium 137+ runs Wasm by default; <strong>all iOS browsers fall back to the JS build by default</strong>; Safari 26.2+ can opt in. Multithreaded rendering needs COOP/COEP headers. <code>dart:html</code>/<code>package:js</code> are not supported under Wasm, so use <code>package:web</code> and <code>dart:js_interop</code>.
+<strong>Lesson:</strong> on iPad Safari, expect the JS + CanvasKit build unless we opt in. Budget for a larger first load and test both builds.</p>
+<h2>7. What this means for us</h2>
+<ol>
+<li>Flutter + flutter_scene is the right first bet: it matches the user's stack and covers iPad, Android and Web with one codebase. Nobody has shipped an anatomy app on it that I could find, so we prove it in a 2-week spike.</li>
+<li>Keep 3D behind <code>AnatomyViewport</code>. If the spike fails, three.js is the fallback; the asset packs do not change.</li>
+<li>Don't embed Unity or move to Godot: the evidence shows weak web on iPad and fragile embedding.</li>
+<li>Our real moat, like BioDigital's, is the <strong>content DB</strong> (IDs, names, relations, notes) and clean, well-named assets. Invest there first.</li>
+<li>Avoid dynamic shadows and text-on-3D; use baked AO and Flutter overlays.</li>
+<li>Pin versions and benchmark every engine upgrade with our own scene.</li>
+</ol>
+<h2>Sources (accessed 2026-11-27)</h2>
+<ul>
+<li>flutter_scene: https://pub.dev/packages/flutter_scene · https://github.com/bdero/flutter_scene · https://github.com/bdero/flutter_scene/issues · https://fscene.dev/</li>
+<li>KBTG article: https://medium.com/kbtg-life/bring-3d-to-life-in-flutter-with-flutter-scene-and-flutter-gpu-068c9421470a (teaser via https://flutterx.com/bring-3d-to-life-in-flutter-with-flutter-scene-and-flutter-gpu-2026-10-14)</li>
+<li>flutter_scene experiments: https://sourav-sonkar.github.io/flutter_scence_practice/</li>
+<li>Flutter GPU blog (2024): https://flutter.dev/blog/getting-started-with-flutter-gpu · https://flutterforce.substack.com/p/flutter-force-weekly-03a</li>
+<li>Flutter Web Wasm: https://docs.flutter.dev/platform-integration/web/wasm</li>
+<li>thermion: https://github.com/nmfisher/thermion · https://pub.dev/packages/thermion_dart</li>
+<li>model_viewer_plus: https://pub.dev/packages/model_viewer_plus</li>
+<li>Unity in Flutter: https://pub.dev/packages/flutter_unity_widget · https://pub.dev/packages/flutter_embed_unity</li>
+<li>Godot: https://docs.godotengine.org/en/4.5/tutorials/export/exporting_for_web.html · https://github.com/JohannesDeml/Godot-Web-LoadingTest · https://forum.godotengine.org/t/game-crashes-randomly-on-ios-devices-html-export/114043</li>
+<li>Anatomy platforms: https://en.wikipedia.org/wiki/ZygoteBody · https://en.wikipedia.org/wiki/BioDigital</li>
+<li>LightWave 2026: https://www.cgchannel.com/2026/06/lightwave-digital-releases-lightwave-2026/ · https://discussions.reallusion.com/t/iclone-and-cc5-to-lightwave3d-2025-6/16230</li>
+<li>3D-Coat glTF exporter class: https://3dcoat.com/files/docs/classgltf_1_1gltfExporter-members.html</li>
+<li>Blender glTF: https://docs.blender.org/manual/en/latest/addons/scene_gltf2.html</li>
+<li>glTF Transform CLI: https://gltf-transform.dev/cli</li>
+<li>Khronos realtime asset guidelines: https://github.com/mlimper/3DC-Asset-Creation/blob/main/asset-creation-guidelines/RealtimeAssetCreationGuidelines.md</li>
+</ul>
+<footer>Source: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/3d-pipeline">docs/3d-pipeline</a> on GitHub.</footer>
+</main>
+</body>
+</html>

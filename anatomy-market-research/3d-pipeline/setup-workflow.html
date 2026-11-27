@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>02. Setup and daily workflow · 3D Pipeline</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2)}
+.doc li{margin:3px 0}
+nav a.on{background:var(--ink);color:var(--bg)}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../index.html">← Market review</a><a href="index.html">Overview</a><a href="runtime-comparison.html">Runtime comparison</a><a href="pipeline.html">Pipeline</a><a href="setup-workflow.html" class="on">Setup &amp; workflow</a><a href="evidence.html">Evidence &amp; lessons</a></nav></header>
+<main class="doc">
+<p class="meta">3D Anatomy · Technical research · generated from <code>docs/3d-pipeline/02-setup-workflow.md</code></p>
+<h1>02. Setup and daily workflow</h1>
+<p><em>Last updated: 2026-11-27. Versions are what was current on that date; re-check before setup.</em></p>
+<h2>1. Tools to install</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Version</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Flutter</td>
+<td>3.47 stable or newer (flutter_scene needs 3.47+)</td>
+<td>App, all platforms</td>
+</tr>
+<tr>
+<td>flutter_scene</td>
+<td>0.24.x (pre-1.0, pin the exact version)</td>
+<td>3D renderer</td>
+</tr>
+<tr>
+<td>Blender</td>
+<td>current LTS (4.5 LTS) or 5.x</td>
+<td>Hub, only GLB exporter</td>
+</tr>
+<tr>
+<td>LightWave 3D</td>
+<td>2026</td>
+<td>Modelling (optional)</td>
+</tr>
+<tr>
+<td>3D-Coat</td>
+<td>current</td>
+<td>Sculpt, retopo, bake</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td>20+</td>
+<td>Runs gltf-transform</td>
+</tr>
+<tr>
+<td>@gltf-transform/cli</td>
+<td>4.5.x</td>
+<td>Optimize/compress GLB</td>
+</tr>
+<tr>
+<td>KTX-Software (<code>ktx</code> / <code>toktx</code>)</td>
+<td>latest</td>
+<td>KTX2 texture encoding (check whether gltf-transform needs it on your machine: run <code>gltf-transform etc1s</code> once)</td>
+</tr>
+<tr>
+<td>Khronos glTF Validator</td>
+<td>latest</td>
+<td>Fails the build on invalid files</td>
+</tr>
+<tr>
+<td>Git LFS</td>
+<td>latest</td>
+<td>Large source files</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-bash">npm install --global @gltf-transform/cli
+brew install git-lfs &amp;&amp; git lfs install
+# KTX-Software: download the macOS installer from the KhronosGroup/KTX-Software releases page
+</code></pre>
+<h2>2. Repo layout (proposal)</h2>
+<pre><code>3D-Anatomy/
+app/                         Flutter app (iPad, Android, Web)
+companion/                   Flutter phone app (content DB only)  [later]
+assets-src/                  Git LFS
+  lightwave/  *.lwo *.lws
+  3dcoat/     *.3b + baked maps
+  blender/    &lt;system&gt;.blend   ← source of truth
+assets-build/                generated, not committed (or published to CDN)
+  raw/        &lt;system&gt;.glb   (Blender export)
+  packs/      &lt;system&gt;.lod0.glb ...  + manifest.json
+content/
+  parts.json                 aid → names, IDs, layer, notes
+  schema/                    JSON schema for parts.json
+tools/
+  export_gltf.py             Blender headless export
+  optimize.sh                gltf-transform steps
+  check_ids.py               every pickable node has an aid in parts.json
+  make_manifest.py
+docs/3d-pipeline/            these documents
+</code></pre>
+<p><code>.gitattributes</code>:</p>
+<pre><code>*.blend filter=lfs diff=lfs merge=lfs -text
+*.3b    filter=lfs diff=lfs merge=lfs -text
+*.lwo   filter=lfs diff=lfs merge=lfs -text
+*.fbx   filter=lfs diff=lfs merge=lfs -text
+*.png   filter=lfs diff=lfs merge=lfs -text
+*.glb   filter=lfs diff=lfs merge=lfs -text
+</code></pre>
+<h2>3. Artist workflow per part</h2>
+<ol>
+<li><strong>Model / sculpt</strong><ul>
+<li>LightWave: model, set units to metres, export FBX (or OBJ) to <code>assets-src/lightwave/export/</code>.</li>
+<li>3D-Coat: sculpt → Retopo room → UV → bake normal/AO/curvature from sculpt → export low-poly FBX + PNG maps.</li>
+</ul>
+</li>
+<li><strong>Bring into Blender</strong> (<code>assets-src/blender/&lt;system&gt;.blend</code>)<ul>
+<li>Import, apply scale/rotation, check normals, triangulate n-gons if needed.</li>
+<li>Name object <code>&lt;system&gt;.&lt;part&gt;.&lt;side&gt;</code>.</li>
+<li>Add custom properties: <code>aid</code>, <code>system</code>, <code>layer</code>, <code>pick</code>.</li>
+<li>Material: Principled BSDF, hook up baked maps (normal map node set to Tangent Space).</li>
+<li>LODs: put LOD1/LOD2 in collections <code>LOD1</code>, <code>LOD2</code> (Decimate modifier is fine).</li>
+</ul>
+</li>
+<li><strong>Run the build</strong> (<code>tools/build.sh &lt;system&gt;</code>) and look at the result in the app's debug viewer or https://gltf-viewer.donmccurdy.com.</li>
+<li><strong>Add/update</strong> the part in <code>content/parts.json</code>. <code>check_ids.py</code> fails the build if an <code>aid</code> is missing.</li>
+</ol>
+<p>Checklist before commit: units in metres, +Y up after export, no n-gons, UVs 0–1, power-of-two textures, normal map PNG not JPG, unique <code>aid</code>, layer set.</p>
+<h2>4. Blender headless export (<code>tools/export_gltf.py</code>)</h2>
+<pre><code class="language-python"># blender -b assets-src/blender/skeleton.blend -P tools/export_gltf.py -- assets-build/raw/skeleton.glb
+import bpy, sys
+out = sys.argv[sys.argv.index(&quot;--&quot;) + 1]
+bpy.ops.export_scene.gltf(
+  filepath=out,
+  export_format='GLB',
+  export_extras=True,          # custom properties -&gt; glTF extras (aid, layer, ...)
+  export_apply=True,           # apply modifiers
+  export_yup=True,
+  export_texcoords=True,
+  export_normals=True,
+  export_tangents=True,
+  export_materials='EXPORT',
+  export_animations=False,
+)
+</code></pre>
+<p>Check option names against your Blender version's manual (<code>scene_gltf2</code> page); a few have been renamed across releases.</p>
+<h2>5. Optimize (<code>tools/optimize.sh</code>)</h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+IN=$1          # assets-build/raw/skeleton.glb
+NAME=$(basename &quot;$IN&quot; .glb)
+OUT=assets-build/packs
+mkdir -p &quot;$OUT&quot;; T=$(mktemp -d)
+
+gltf-transform inspect &quot;$IN&quot;                         # look before you squeeze
+gltf-transform dedup  &quot;$IN&quot;        &quot;$T/a.glb&quot;
+gltf-transform prune  &quot;$T/a.glb&quot;   &quot;$T/b.glb&quot;
+gltf-transform weld   &quot;$T/b.glb&quot;   &quot;$T/c.glb&quot;
+# textures: UASTC for normal maps, ETC1S for colour/AO (check slot flags with: gltf-transform help uastc)
+gltf-transform uastc  &quot;$T/c.glb&quot;   &quot;$T/d.glb&quot; --slots &quot;normalTexture&quot;
+gltf-transform etc1s  &quot;$T/d.glb&quot;   &quot;$T/e.glb&quot;
+cp &quot;$T/e.glb&quot; &quot;$T/lod0.glb&quot;
+gltf-transform simplify &quot;$T/e.glb&quot; &quot;$T/lod1.glb&quot; --ratio 0.5
+gltf-transform simplify &quot;$T/e.glb&quot; &quot;$T/lod2.glb&quot; --ratio 0.2
+for L in lod0 lod1 lod2; do
+gltf-transform meshopt &quot;$T/$L.glb&quot; &quot;$OUT/$NAME.$L.glb&quot;
+gltf_validator &quot;$OUT/$NAME.$L.glb&quot;                 # fail on errors
+done
+</code></pre>
+<p>Notes:</p>
+<ul>
+<li><code>prune</code> can drop nodes it thinks are unused; confirm <code>extras</code> and empty anchor nodes survive (keep label anchors as tiny meshes or check prune flags).</li>
+<li><code>simplify</code> must not merge separate parts; run it per pack and visually check silhouettes.</li>
+<li>If the spike shows flutter_scene cannot read meshopt or KTX2, drop those two steps and use <code>webp</code> textures instead until it can.</li>
+</ul>
+<h2>6. Flutter app setup</h2>
+<pre><code class="language-bash">flutter --version            # 3.47+
+flutter pub add flutter_scene
+</code></pre>
+<ul>
+<li><strong>Enable Flutter GPU</strong> on iOS/Android with the per-platform key described in the flutter_scene README (Info.plist / AndroidManifest). Desktop uses <code>--enable-flutter-gpu</code>. Web needs no flag.</li>
+<li>Pin <code>flutter_scene</code> to an exact version in <code>pubspec.yaml</code>; minor releases can break.</li>
+<li>Wrap all 3D calls behind one Dart interface, so the renderer can be swapped:</li>
+</ul>
+<pre><code class="language-dart">abstract class AnatomyViewport {
+  Future&lt;void&gt; loadPack(Uri glb);
+  Stream&lt;String&gt; get picked;               // emits aid
+  void setVisible(String aid, bool v);
+  void setLayerOpacity(int layer, double a);
+  void setClipPlane(Vector4? plane);
+  Offset? project(String aid);             // screen pos for Flutter label
+}
+</code></pre>
+<h3>Web build</h3>
+<pre><code class="language-bash">flutter build web --wasm     # also emits a JS fallback
+</code></pre>
+<ul>
+<li>Host with <code>Cross-Origin-Opener-Policy: same-origin</code> and <code>Cross-Origin-Embedder-Policy: credentialless</code> (needed for multithreaded rendering).</li>
+<li>iOS browsers use the JS fallback by default; Safari 26.2+ can opt in with <code>wasmAllowList: { webkit: true }</code> in <code>flutter_bootstrap.js</code>. Test both.</li>
+</ul>
+<h2>7. CI (GitHub Actions, outline)</h2>
+<ol>
+<li>On change in <code>assets-src/**</code> or <code>content/**</code>.</li>
+<li>Install Blender (headless), Node, gltf-transform, KTX-Software, glTF Validator.</li>
+<li>For each changed <code>.blend</code>: export → optimize → validate → <code>check_ids.py</code>.</li>
+<li><code>make_manifest.py</code> → upload packs + manifest to CDN under a version path.</li>
+<li>Post pack sizes and triangle counts as a job summary, so size growth is visible in every PR.</li>
+</ol>
+<h2>8. Setup order (first 3 weeks)</h2>
+<table>
+<thead>
+<tr>
+<th>Week</th>
+<th>Work</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Repo + LFS; one <code>.blend</code> (skeleton, upper limb) with names/IDs; export + optimize scripts run locally</td>
+</tr>
+<tr>
+<td>1–2</td>
+<td>Flutter spike app: load pack, orbit, pick, layers, clip plane, labels, on iPad + Safari + Android</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Measure (fps, memory, load time, sizes) and decide flutter_scene vs fallback</td>
+</tr>
+<tr>
+<td>3</td>
+<td>CI, manifest, offline download, content DB schema</td>
+</tr>
+</tbody>
+</table>
+<footer>Source: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/3d-pipeline">docs/3d-pipeline</a> on GitHub.</footer>
+</main>
+</body>
+</html>

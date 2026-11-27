@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>01. The pipeline we should build · 3D Pipeline</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2)}
+.doc li{margin:3px 0}
+nav a.on{background:var(--ink);color:var(--bg)}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../index.html">← Market review</a><a href="index.html">Overview</a><a href="runtime-comparison.html">Runtime comparison</a><a href="pipeline.html" class="on">Pipeline</a><a href="setup-workflow.html">Setup &amp; workflow</a><a href="evidence.html">Evidence &amp; lessons</a></nav></header>
+<main class="doc">
+<p class="meta">3D Anatomy · Technical research · generated from <code>docs/3d-pipeline/01-pipeline.md</code></p>
+<h1>01. The pipeline we should build</h1>
+<p><em>Last updated: 2026-11-27. Status: proposal, pending spike.</em></p>
+<h2>1. Goal</h2>
+<p>Ship one set of 3D anatomy assets that:</p>
+<ul>
+<li>renders on iPad (first), Web (Flutter Web), Android (later);</li>
+<li>can be downloaded per body system for offline use;</li>
+<li>has every part selectable, labelled, searchable and layerable;</li>
+<li>can be rebuilt automatically when an artist changes a source file.</li>
+</ul>
+<h2>2. Shape of the pipeline</h2>
+<pre><code> SOURCE (artists)                HUB                    BUILD (script / CI)                  RUNTIME
+ ──────────────────              ───────                ───────────────────                  ───────
+ LightWave 2026 ──FBX/OBJ──┐
+                         ├──► Blender (.blend) ──GLB──► gltf-transform ──► packs/*.glb ──► Flutter app
+ 3D-Coat ─sculpt→retopo→bake┘    names, IDs,             dedup, prune, weld   manifest.json    flutter_scene
+                               materials, LODs,        simplify (LOD)       + content DB     (iPad/Android:
+ Blender (direct modelling) ────► custom properties      meshopt              (JSON/SQLite)     Impeller;
+                                                       KTX2 (ETC1S/UASTC)                      Web: WebGL2)
+                                                       glTF Validator gate
+</code></pre>
+<p>Rule: <strong>only Blender writes GLB.</strong> Every source tool hands Blender plain geometry and baked maps. That gives one place where names, IDs, scale, axes and materials are made consistent.</p>
+<h2>3. Role of each tool</h2>
+<h3>LightWave 3D (2026, released June 2026, Windows/macOS)</h3>
+<ul>
+<li>Use for: hard-surface/base modelling the team already knows, layout, high-quality marketing renders.</li>
+<li>Hand-off: <strong>FBX</strong> (keeps hierarchy and names) or <strong>OBJ</strong> (geometry only). Release coverage of LightWave 2026 does not mention glTF or USD export, so do not rely on it for delivery.</li>
+<li>Watch for: unit scale (set 1 unit = 1 m on export or fix in Blender), Y-up vs Z-up, and n-gons (triangulate or quad-only before hand-off).</li>
+<li>Note: there is a <code>~/GitHub/lightwave3d-dev</code> folder on your Mac. If that is LightWave plugin work, a direct LightWave → glTF exporter is possible later, but it is not needed for v1.</li>
+</ul>
+<h3>3D-Coat</h3>
+<ul>
+<li>Use for: organic sculpting (muscles, organs, skin detail), then <strong>retopology</strong> to a clean low-poly mesh and <strong>baking</strong> normal, AO and curvature maps from the high-res sculpt.</li>
+<li>Hand-off: low-poly mesh (FBX/OBJ) + baked maps (16-bit PNG for normal maps, 8-bit PNG for others).</li>
+<li>3D-Coat has a glTF exporter in its codebase, but keep Blender as the single exporter.</li>
+</ul>
+<h3>Blender (hub)</h3>
+<ul>
+<li>Single source of truth per body system: <code>msk_upper_limb.blend</code>, <code>skeleton.blend</code>, etc.</li>
+<li>Holds: final names, part IDs (custom properties), layer numbers, PBR materials (Principled BSDF, metal/rough), LOD meshes, scale and orientation.</li>
+<li>Exports GLB with <strong>custom properties → glTF <code>extras</code></strong> and <strong>Apply Modifiers</strong> on.</li>
+</ul>
+<h2>4. Asset rules (start here, adjust after the spike)</h2>
+<p>Based on the Khronos 3D Commerce realtime guidelines (v1.0.0, 2020) scaled up for a full-body app:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Units / axes</td>
+<td>1 unit = 1 m; +Y up; body faces +Z (glTF convention)</td>
+</tr>
+<tr>
+<td>Triangles</td>
+<td>≤1.5M visible at once on iPad; per system pack target 150k–500k (LOD0)</td>
+</tr>
+<tr>
+<td>LODs</td>
+<td>LOD0 (full), LOD1 (~50%), LOD2 (~20%) per system</td>
+</tr>
+<tr>
+<td>Textures</td>
+<td>power-of-two; 2K default, 4K only for hero close-ups; base colour &amp; emissive in sRGB, others linear</td>
+</tr>
+<tr>
+<td>Normal maps</td>
+<td>OpenGL convention, MikkTSpace tangents, never JPG</td>
+</tr>
+<tr>
+<td>Materials</td>
+<td>PBR metal/rough; as few materials as possible; transparent parts on their own material</td>
+</tr>
+<tr>
+<td>UVs</td>
+<td>fully unwrapped, 0–1, no overlap (except deliberate mirroring with separate AO)</td>
+</tr>
+<tr>
+<td>Naming</td>
+<td><code>a–z 0–9 _ -</code>, starts with a letter, no spaces (see section 5)</td>
+</tr>
+<tr>
+<td>Pack size</td>
+<td>≤30 MB per system pack after compression</td>
+</tr>
+</tbody>
+</table>
+<h2>5. Part identity, labels and layers</h2>
+<p>The GLB carries <strong>geometry + stable IDs only</strong>. Everything a person reads lives in a content database.</p>
+<ul>
+<li><strong>Node name:</strong> <code>&lt;system&gt;.&lt;part&gt;.&lt;side&gt;</code> e.g. <code>msk.biceps_brachii.l</code>. Once shipped, never rename (it breaks saved notes and quizzes).</li>
+<li><strong>Custom properties on each object in Blender → <code>extras</code> in GLB:</strong></li>
+</ul>
+<pre><code class="language-json">{ &quot;aid&quot;: &quot;biceps_brachii_l&quot;, &quot;system&quot;: &quot;muscular&quot;, &quot;layer&quot;: 3, &quot;pick&quot;: true }
+</code></pre>
+<ul>
+<li>
+<p><strong>Content DB (JSON in repo → SQLite in app):</strong> keyed by <code>aid</code>:
+  names (EN, TH, Latin), standard IDs (TA2, FMA, SNOMED CT body structure), origin/insertion/innervation/blood supply, artist notes (form, landmarks), label anchor point, related parts, quiz items.</p>
+</li>
+<li>
+<p><strong>Layers:</strong> 0 skin, 1 fascia/fat, 2 superficial muscle, 3 deep muscle, 4 ligament/vessel/nerve, 5 bone, 6 organ. Drives peel-away and x-ray.</p>
+</li>
+<li>The phone companion app uses the content DB only. No 3D needed for short notes and review.</li>
+</ul>
+<h2>6. Packaging and offline</h2>
+<ul>
+<li>One GLB per body system and LOD: <code>skeleton.lod0.glb</code>, <code>skeleton.lod1.glb</code>, ...</li>
+<li><code>manifest.json</code>: pack id, version, LOD, byte size, SHA-256, required content-DB version.</li>
+<li>iPad/Android: download to app support dir, verify hash, then load. Update only packs whose hash changed.</li>
+<li>Web: Cache Storage (service worker) or OPFS; same manifest.</li>
+<li>Host on a CDN (e.g., Cloudflare R2 or S3 + CloudFront); serve <code>.glb</code> with long cache headers and a versioned path.</li>
+<li>Optional: USDZ export of selected models for iOS "View in AR" (AR Quick Look). Not a runtime format.</li>
+</ul>
+<h2>7. Spike: pass/fail before committing to flutter_scene</h2>
+<p>Use one real pack (skeleton + upper-limb muscles, ~200–400 parts, ~1M tris, 2K textures). Must pass on a base iPad (A-series), a mid-range Android phone, and Safari on iPad (Flutter Web):</p>
+<ol>
+<li>Loads meshopt + KTX2 GLB. If not, fall back to uncompressed geometry + PNG/WebP and measure the cost.</li>
+<li>60 fps orbit on iPad; ≥30 fps on mid Android and on web.</li>
+<li>Tap → raycast picks the right part and returns its <code>aid</code> from <code>extras</code>.</li>
+<li>Highlight/outline, hide, isolate, and per-layer opacity with correct transparency sorting.</li>
+<li>One clipping plane (cross-section) via a custom <code>.fmat</code> material.</li>
+<li>Flutter label widgets pinned to 3D anchor points while orbiting.</li>
+<li>Load a pack from local file (iPad) and from cache (web).</li>
+<li>GPU memory stays flat after loading/unloading packs 10 times (flutter_scene issue #285 says GPU memory has no release story yet).</li>
+</ol>
+<p>If 3–5 fail and cannot be fixed in a few days, switch the viewport to three.js (WebView on device, page on web). The asset packs and the Flutter UI do not change.</p>
+<h2>8. Web delivery note</h2>
+<p>Flutter Web can build to Wasm (<code>flutter build web --wasm</code>), but per the Flutter docs (updated 2026-11-11) <strong>iOS browsers fall back to the JS build (dart2js + CanvasKit) by default</strong>; Safari 26.2+ can opt in through <code>wasmAllowList</code>. flutter_scene ships its own WebGL2 backend and works under both CanvasKit and Skwasm, so this changes load size and speed, not features. Impeller itself does not run on web.</p>
+<footer>Source: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/3d-pipeline">docs/3d-pipeline</a> on GitHub.</footer>
+</main>
+</body>
+</html>
