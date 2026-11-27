@@ -11,4 +11,5 @@ relative_links:
   collections: false
 exclude:
   - .github
+  - tools
   - "**/README.md.bak"
