@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03. Features · Product design</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
+.doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
+nav a.on{background:var(--ink);color:var(--bg)}
+.doc img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
+.doc td img{min-width:120px}
+.doc table td{vertical-align:top}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../../index.html">← หน้ารวมรายงาน</a><a href="index.html">ภาพรวม</a><a href="product-design.html">Product design</a><a href="requirements.html">Requirements</a><a href="features.html" class="on">Features</a><a href="ui-design.html">UI design</a><a href="prototype.html">Prototype</a><a href="verification.html">ผลตรวจ</a></nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · Product design และ UI · สร้างจาก <code>docs/product-design/th/03-features.md</code> · <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk" target="_blank" rel="noopener">เปิดไฟล์ Figma</a></p>
+<h1>03. Features</h1>
+<p>ตาราง feature ด้านล่างเรียงตาม<a href="../product-plan/index.html">แผน product ปีแรก</a> แต่ละ feature ผูกกับหน้าจอใน Figma (คลิกชื่อหน้าจอเพื่อเปิด), รุ่นที่ปล่อยตาม roadmap และสถานะฟรีหรือ Pro หลังเปิดขาย</p>
+<h2>1. Must-have (v1.0)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Feature</th>
+<th>หน้าจอใน Figma</th>
+<th>ปล่อยใน</th>
+<th>หลังเดือน 12</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Viewer 3D: หมุน ซูม แตะเลือก isolate ซ่อน x-ray แยกชิ้น</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=11-759" target="_blank" rel="noopener">iPad/20 Viewer</a>, <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=18-121" target="_blank" rel="noopener">Web/02</a></td>
+<td>v0.1 Alpha</td>
+<td>ฟรีตลอด</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ชื่อ 3 ภาษา + เสียงอ่าน</td>
+<td>ทุกหน้า (NameTriple), <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=17-176" target="_blank" rel="noopener">Phone/03</a></td>
+<td>v0.1 Alpha</td>
+<td>ฟรีตลอด</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Landmarks</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-519" target="_blank" rel="noopener">iPad/21 Landmarks</a></td>
+<td>v0.1 Alpha</td>
+<td>พื้นฐานฟรี</td>
+</tr>
+<tr>
+<td>4</td>
+<td>แผนที่จุดเกาะกล้ามเนื้อ</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-706" target="_blank" rel="noopener">iPad/22 Attachments</a></td>
+<td>v0.1 Alpha (แขน)</td>
+<td>ฟรี</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ฝึกสอบ spot จับเวลา</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-828" target="_blank" rel="noopener">iPad/30</a> → <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-1151" target="_blank" rel="noopener">31</a> → <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-1208" target="_blank" rel="noopener">32</a> → <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-1275" target="_blank" rel="noopener">33</a></td>
+<td>v0.5 Beta</td>
+<td>คลังเต็ม + สถิติจุดอ่อนเป็น Pro</td>
+</tr>
+<tr>
+<td>6</td>
+<td>จุดคลินิกชุดเดียวทุก landmark + กะโหลก/ฟัน FDI</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-1086" target="_blank" rel="noopener">iPad/24 Clinical</a>, <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-870" target="_blank" rel="noopener">iPad/23 Skull &amp; FDI</a></td>
+<td>v0.9</td>
+<td>จุดคลินิกเต็มเป็น Pro</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Offline บน iPad</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1361" target="_blank" rel="noopener">iPad/60</a>, <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1543" target="_blank" rel="noopener">iPad/61</a></td>
+<td>v0.5 Beta</td>
+<td>Pro</td>
+</tr>
+<tr>
+<td>8</td>
+<td>เว็บอ่านฟรี</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=18-2" target="_blank" rel="noopener">Web/01</a>, <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=18-270" target="_blank" rel="noopener">Web/03</a></td>
+<td>v0.1 (แขน) → ครบใน v0.9</td>
+<td>ฟรีตลอด</td>
+</tr>
+<tr>
+<td>9</td>
+<td>ปุ่มแจ้งแก้ + สถานะ</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=15-1164" target="_blank" rel="noopener">iPad/40 Sheet</a>, <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=15-1402" target="_blank" rel="noopener">iPad/41 My reports</a></td>
+<td>v0.1 Alpha</td>
+<td>ฟรีตลอด</td>
+</tr>
+</tbody>
+</table>
+<h2>2. Should-have (ถ้าทันในปีแรก)</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>หน้าจอใน Figma</th>
+<th>หมายเหตุ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>โน้ตและ bookmark ซิงก์ข้ามเครื่อง</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=15-1507" target="_blank" rel="noopener">iPad/50 Notes</a>, <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=17-230" target="_blank" rel="noopener">Phone/04</a></td>
+<td>ซิงก์เป็น Pro หลังเปิดขาย</td>
+</tr>
+<tr>
+<td>แอปมือถือสำหรับทบทวน</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=17-2" target="_blank" rel="noopener">Phone/01–06</a></td>
+<td>flashcard มาจากข้อ spot ที่ผิดและโน้ต ไม่มี 3D เต็ม</td>
+</tr>
+<tr>
+<td>โหมดอาจารย์</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-1446" target="_blank" rel="noopener">iPad/34 Teacher</a></td>
+<td>ต่อยอดเป็น license คณะ</td>
+</tr>
+<tr>
+<td>กล้ามเนื้อแขน 3D</td>
+<td>ยังไม่ออกแบบ</td>
+<td>รอผลความเร็วปั้นที่ด่าน G1b</td>
+</tr>
+</tbody>
+</table>
+<h2>3. Feature ที่รองรับ product (ไม่อยู่ในรายการขาย แต่ต้องมี)</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>หน้าจอ</th>
+<th>เหตุผล</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Onboarding 2 ขั้น</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-2" target="_blank" rel="noopener">iPad/01</a>, <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-132" target="_blank" rel="noopener">02</a></td>
+<td>เก็บลำดับภาษาและความยินยอม PDPA ตั้งแต่แรก ไม่ต้องเลือกวิชาชีพ</td>
+</tr>
+<tr>
+<td>หน้าหลัก "เรียนต่อ"</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-320" target="_blank" rel="noopener">iPad/10 Home</a></td>
+<td>กลับไปจุดเดิมในแตะเดียว และชวนทำ spot วันละนิด</td>
+</tr>
+<tr>
+<td>คลังกระดูกแบบ split view</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=11-204" target="_blank" rel="noopener">iPad/11 Library</a></td>
+<td>หาเจอได้โดยไม่ต้องหมุนโมเดล</td>
+</tr>
+<tr>
+<td>ค้นหาสามภาษา</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=11-554" target="_blank" rel="noopener">iPad/12 Search</a>, <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=17-358" target="_blank" rel="noopener">Phone/05</a></td>
+<td>นักศึกษาจำได้บางภาษา</td>
+</tr>
+<tr>
+<td>สิทธิ์ผู้ทดสอบ beta</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1735" target="_blank" rel="noopener">iPad/70 ฉัน</a></td>
+<td>ตอบแทนผู้ช่วยแจ้งแก้และทำ spot ตามแผน feedback</td>
+</tr>
+</tbody>
+</table>
+<h2>4. ฟรีกับ Pro (หลังเดือนที่ 12)</h2>
+<p>ปีแรกฟรีทั้งหมด หน้า <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1735" target="_blank" rel="noopener">สิทธิ์ผู้ทดสอบ Beta</a> แสดงรายการนี้ให้ผู้ใช้เห็นตั้งแต่วันแรก</p>
+<table>
+<thead>
+<tr>
+<th>ฟรีตลอด</th>
+<th>Pro <strong>(ประมาณการ)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>viewer กระดูก 3D, ชื่อ 3 ภาษาและเสียงอ่าน, หน้าเว็บอ่านฟรี, landmarks พื้นฐาน, ปุ่มแจ้งแก้</td>
+<td>คลัง spot เต็มและสถิติจุดอ่อน, แพ็ก offline, จุดคลินิกเต็ม, โมดูลกล้ามเนื้อ 3D, ซิงก์โน้ต</td>
+</tr>
+</tbody>
+</table>
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/product-design">docs/product-design</a> บน GitHub · ภาพหน้าจอส่งออกจาก Figma 27 พ.ย. 2026</footer>
+</main>
+</body>
+</html>

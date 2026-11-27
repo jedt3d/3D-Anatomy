@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>01. Product design · Product design</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
+.doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
+nav a.on{background:var(--ink);color:var(--bg)}
+.doc img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
+.doc td img{min-width:120px}
+.doc table td{vertical-align:top}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../../index.html">← หน้ารวมรายงาน</a><a href="index.html">ภาพรวม</a><a href="product-design.html" class="on">Product design</a><a href="requirements.html">Requirements</a><a href="features.html">Features</a><a href="ui-design.html">UI design</a><a href="prototype.html">Prototype</a><a href="verification.html">ผลตรวจ</a></nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · Product design และ UI · สร้างจาก <code>docs/product-design/th/01-product-design.md</code> · <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk" target="_blank" rel="noopener">เปิดไฟล์ Figma</a></p>
+<h1>01. Product design</h1>
+<h2>1. ปัญหาที่แก้</h2>
+<p>นักศึกษาสายสุขภาพปี 1–2 ต้องจำกระดูก จุดสังเกต (landmark) และจุดเกาะกล้ามเนื้อจำนวนมาก แล้วไปสอบ spot ที่ต้องตอบชื่อจากชิ้นจริงภายในเวลาจำกัด แอป 3D ที่มีอยู่ส่วนใหญ่ไม่มีภาษาไทย และไม่ได้ลงรายละเอียดถึงระดับ landmark ที่ใช้สอบ (ดู <a href="../product-plan/index.html">แผน product ปีแรก</a>)</p>
+<p>แอปนี้จึงตั้งใจทำ 3 อย่างให้ดีที่สุด:</p>
+<ol>
+<li>ดูกระดูก 3D พร้อมชื่อไทย อังกฤษ และละติน ในทุกจุดที่มีชื่อ</li>
+<li>เห็น landmark และจุดเกาะกล้ามเนื้อบนผิวกระดูกในระดับที่ใช้สอบจริง</li>
+<li>ฝึกสอบ spot แบบจับเวลาบนโมเดล 3D แล้วทบทวนจุดที่ตอบผิดต่อบนมือถือ</li>
+</ol>
+<h2>2. ผู้ใช้</h2>
+<p>แอปออกแบบให้<strong>นักศึกษาแพทย์และบุคลากรด้านสุขภาพ</strong> ซึ่งต้องการรายละเอียดมากที่สุด ผู้ใช้ไม่ต้องเลือกบทบาทหรือวิชาชีพ ทุกคนเห็นเนื้อหาชุดเดียวกันในระดับละเอียดที่สุด (Jedt ตัดสินใจ 27 พ.ย. 2026) โหมดสำหรับศิลปินจะทำในภายหลัง</p>
+<p>จุดคลินิกจึงเป็นชุดเดียวที่ผูกกับ landmark ทุกจุด แบ่งเป็น 4 หมวดในหน้าจุดคลินิก:</p>
+<table>
+<thead>
+<tr>
+<th>หมวด</th>
+<th>ตัวอย่าง</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>กระดูกหัก</td>
+<td>ตำแหน่งที่หักบ่อย และเส้นประสาทหรือหลอดเลือดที่เสี่ยง</td>
+</tr>
+<tr>
+<td>ฟัน · รูเปิด</td>
+<td>ฟันแท้และเลข FDI รูเปิดของกะโหลกและสิ่งที่ผ่าน</td>
+</tr>
+<tr>
+<td>ฉีดยา</td>
+<td>ventrogluteal, deltoid, vastus lateralis หาตำแหน่งจาก landmark</td>
+</tr>
+<tr>
+<td>จุดคลำ</td>
+<td>landmark ที่คลำได้บนผิวกาย</td>
+</tr>
+</tbody>
+</table>
+<p>ผู้เริ่มเรียนไม่ต้องตั้งค่าอะไรเพิ่ม หน้าจอเปิดจากชื่อกระดูกก่อน แล้วค่อยลงไปที่ landmark และจุดคลินิกในหน้าเดียวกัน</p>
+<p>ผู้ใช้กลุ่มที่สองคือ <strong>อาจารย์</strong> ที่สร้างชุด spot ของตัวเองแล้วแชร์รหัสให้นักศึกษา (โหมดอาจารย์) และตรวจรายการแจ้งแก้ที่เป็นเนื้อหา</p>
+<h2>3. หลักการออกแบบ</h2>
+<ol>
+<li><strong>ภาษาไทยมาก่อน แต่ไม่ทิ้งศัพท์สากล</strong> ทุกชื่อแสดงเป็นชุด ไทย / EN / LA ลำดับเปลี่ยนได้ตามที่ผู้ใช้ตั้ง เพราะข้อสอบและตำราใช้ทั้งสามภาษา</li>
+<li><strong>โมเดลอยู่ตรงกลางเสมอ</strong> หน้าจอเรียนทุกหน้าใช้ viewport 3D เป็นพื้นที่หลัก ข้อมูลอยู่ในแผงด้านข้าง ไม่บังโมเดล</li>
+<li><strong>รู้สึกเหมือนแอปของ iPad</strong> ใช้ widget Cupertino และสี systemBlue ตาม iOS ผู้ใช้ไม่ต้องเรียนรู้วิธีใช้ใหม่</li>
+<li><strong>แจ้งแก้ได้ในสองแตะจากทุกที่</strong> ทุก label และทุกข้อสอบมีปุ่มแจ้งแก้ ระบบแนบชิ้นส่วนและมุมกล้องให้เอง และผู้แจ้งเห็นสถานะจนแก้เสร็จ</li>
+<li><strong>ใช้ได้โดยไม่มีเน็ต</strong> iPad โหลดแพ็กเนื้อหาไว้ใช้ offline ได้ เพราะห้องเรียนและหอพักหลายแห่งเน็ตไม่นิ่ง</li>
+<li><strong>ซื่อตรงเรื่องฟรีและ Pro</strong> ปีแรกฟรีทั้งหมด และบอกตั้งแต่วันแรกว่าหลังเปิดขายอะไรจะเป็น Pro</li>
+</ol>
+<h2>4. บทบาทของแต่ละแพลตฟอร์ม</h2>
+<table>
+<thead>
+<tr>
+<th>แพลตฟอร์ม</th>
+<th>บทบาท</th>
+<th>สิ่งที่ทำได้</th>
+<th>สิ่งที่ตั้งใจไม่ทำ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>iPad</strong> (หลัก)</td>
+<td>เรียนกับโมเดลและฝึกสอบ</td>
+<td>ทุก feature, offline, โหมดอาจารย์</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>มือถือ</strong> (companion)</td>
+<td>ทบทวนช่วงเวลาสั้น ๆ</td>
+<td>flashcard แบบ spaced repetition, โน้ตสั้น, ค้นศัพท์ offline, ภาพนิ่งพร้อมหมุด</td>
+<td>viewer 3D เต็ม, ฝึกสอบ spot แบบจับเวลา</td>
+</tr>
+<tr>
+<td><strong>เว็บ</strong></td>
+<td>อ่านฟรีและให้ค้นเจอ</td>
+<td>หน้าอ่าน HTML ทุกกระดูก (SEO), viewer 3D ด้วย Flutter Web</td>
+<td>offline, จุดคลินิกเต็ม</td>
+</tr>
+</tbody>
+</table>
+<h2>5. โครงสร้างแอป (information architecture)</h2>
+<h3>iPad: tab bar 5 แท็บ</h3>
+<table>
+<thead>
+<tr>
+<th>แท็บ</th>
+<th>หน้าแรก</th>
+<th>ไปต่อได้ที่</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>หน้าหลัก</td>
+<td>เรียนต่อจากครั้งก่อน, เลือกส่วนร่างกาย, spot วันนี้</td>
+<td>viewer, คลัง, ฝึกสอบ</td>
+</tr>
+<tr>
+<td>คลังกระดูก</td>
+<td>รายการกระดูกแบบ split view ตามส่วนร่างกาย และ A–Z</td>
+<td>ค้นหา, viewer</td>
+</tr>
+<tr>
+<td>ฝึกสอบ</td>
+<td>ตั้งค่าชุด spot</td>
+<td>คำถาม → เฉลย → ผลสอบ, โหมดอาจารย์</td>
+</tr>
+<tr>
+<td>โน้ต</td>
+<td>โน้ตและ bookmark</td>
+<td>เปิดมุมกล้องที่บันทึกไว้ใน viewer</td>
+</tr>
+<tr>
+<td>ฉัน</td>
+<td>โปรไฟล์ การตั้งค่า สิทธิ์ beta</td>
+<td>รายการที่ฉันแจ้ง, ข้อมูล offline</td>
+</tr>
+</tbody>
+</table>
+<p>viewer 3D เป็นหน้าเต็มจอที่เปิดจากแท็บใดก็ได้ มี segmented control สลับโหมด <strong>กระดูก / จุดสังเกต / จุดเกาะกล้ามเนื้อ / จุดคลินิก</strong></p>
+<h3>มือถือ: tab bar 4 แท็บ</h3>
+<p>ทบทวน · โน้ต · ค้นหา · ฉัน</p>
+<h3>เว็บ</h3>
+<p>ดัชนี (ส่วนร่างกาย + A–Z) → หน้าอ่านของแต่ละกระดูก → viewer 3D บนเว็บ</p>
+<h2>6. Flow หลัก</h2>
+<ol>
+<li><strong>เริ่มใช้ครั้งแรก:</strong> ยินดีต้อนรับ → เลือกลำดับภาษาและความยินยอม beta (แยก analytics กับการติดต่อกลับ ตาม PDPA) → หน้าหลัก</li>
+<li><strong>เรียน:</strong> หน้าหลักหรือคลัง → viewer โครงกระดูก → แตะกระดูก → landmark / จุดเกาะ / จุดคลินิก → แจ้งแก้ได้ทุกจุด</li>
+<li><strong>ฝึกสอบ spot:</strong> ตั้งค่า (ส่วนร่างกาย จำนวนข้อ เวลา ประเภทคำถาม) → คำถามจับเวลา → เฉลยพร้อมชื่อ 3 ภาษา → ผลสอบและจุดอ่อน → ทบทวนข้อผิดหรือสอบใหม่</li>
+<li><strong>ทบทวนบนมือถือ:</strong> ข้อที่ตอบผิดและโน้ตที่เปิด "ทำเป็น flashcard" กลายเป็นการ์ด → ทบทวนวันนี้ → ให้คะแนน ลืม / ยาก / ดี / ง่าย</li>
+<li><strong>วงจรแจ้งแก้:</strong> แตะแจ้งแก้ → เลือกเรื่อง → ส่ง → ติดตามสถานะในหน้า "รายการที่ฉันแจ้ง" → ได้รับแจ้งเมื่อแก้แล้ว นับเป็นสิทธิ์ผู้ทดสอบ beta</li>
+</ol>
+<h2>7. สิ่งที่ไม่ทำในปีแรก</h2>
+<p>ตามแผน product: อวัยวะภายใน หลอดเลือดและเส้นประสาทแบบ 3D กล้ามเนื้อขาและลำตัว AR/VR AI chat แอป Android แบบ native (ใช้เว็บแทน) ฟันน้ำนม</p>
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/product-design">docs/product-design</a> บน GitHub · ภาพหน้าจอส่งออกจาก Figma 27 พ.ย. 2026</footer>
+</main>
+</body>
+</html>

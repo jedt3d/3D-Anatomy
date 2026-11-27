@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product design: UI และ prototype ปีแรก · Product design</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
+.doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
+nav a.on{background:var(--ink);color:var(--bg)}
+.doc img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
+.doc td img{min-width:120px}
+.doc table td{vertical-align:top}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../../index.html">← หน้ารวมรายงาน</a><a href="index.html" class="on">ภาพรวม</a><a href="product-design.html">Product design</a><a href="requirements.html">Requirements</a><a href="features.html">Features</a><a href="ui-design.html">UI design</a><a href="prototype.html">Prototype</a><a href="verification.html">ผลตรวจ</a></nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · Product design และ UI · สร้างจาก <code>docs/product-design/th/README.md</code> · <a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk" target="_blank" rel="noopener">เปิดไฟล์ Figma</a></p>
+<h1>Product design: UI และ prototype ปีแรก</h1>
+<p><img alt="หน้าปกไฟล์ Figma" src="img/cover.webp" /></p>
+<p>เอกสารชุดนี้อธิบายการออกแบบแอป <strong>กระดูก 3D</strong> (ชื่อชั่วคราว) ตั้งแต่แนวคิด product, requirement, feature ไปจนถึง UI และ prototype ที่คลิกได้ใน Figma ทุกส่วนอิงจาก <a href="../product-plan/index.html">แผน product ปีแรก</a> (เสนอ 27 พ.ย. 2026, ยังรอ Jedt ยืนยัน scope) และแนวทางเทคนิคใน <a href="../3d-pipeline/index.html">ไปป์ไลน์ 3D</a></p>
+<blockquote>
+<p><strong>สถานะ:</strong> ร่างเพื่อรีวิว 27 พ.ย. 2026 · ภาพกระดูกในหน้าจอเป็นภาพ AI ชั่วคราว · ศัพท์ไทย จุดสังเกต และเนื้อหาคลินิกเป็นตัวอย่างที่ต้องให้อาจารย์ตรวจ</p>
+</blockquote>
+<h2>ลิงก์หลัก</h2>
+<table>
+<thead>
+<tr>
+<th>อะไร</th>
+<th>ลิงก์</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ไฟล์ Figma (ทุกหน้า)</td>
+<td><a href="https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk" target="_blank" rel="noopener">https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk</a></td>
+</tr>
+<tr>
+<td>Prototype iPad (เริ่มที่ onboarding)</td>
+<td><a href="https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=8-2&amp;starting-point-node-id=8%3A2" target="_blank" rel="noopener">https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=8-2&amp;starting-point-node-id=8%3A2</a></td>
+</tr>
+<tr>
+<td>Prototype มือถือ (ทบทวนวันนี้)</td>
+<td><a href="https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=17-2&amp;starting-point-node-id=17%3A2" target="_blank" rel="noopener">https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=17-2&amp;starting-point-node-id=17%3A2</a></td>
+</tr>
+<tr>
+<td>Prototype เว็บ (ดัชนี)</td>
+<td><a href="https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=18-270&amp;starting-point-node-id=18%3A270" target="_blank" rel="noopener">https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=18-270&amp;starting-point-node-id=18%3A270</a></td>
+</tr>
+</tbody>
+</table>
+<h2>สรุปในหน้าเดียว</h2>
+<ul>
+<li><strong>ผู้ใช้:</strong> นักศึกษาแพทย์และบุคลากรด้านสุขภาพที่เรียนกายวิภาคกระดูกเป็นภาษาไทย ไม่ต้องเลือกวิชาชีพ ทุกคนเห็นเนื้อหาระดับละเอียดที่สุดชุดเดียวกัน (โหมดศิลปินทำภายหลัง) และอาจารย์ที่สอน spot</li>
+<li><strong>แพลตฟอร์ม:</strong> iPad เป็นหลัก (เรียนกับโมเดล 3D และฝึกสอบ spot), มือถือเป็นตัวช่วยทบทวนสั้น ๆ (flashcard และโน้ต ไม่มี 3D เต็ม), เว็บสำหรับอ่านฟรีและให้ Google ค้นเจอ</li>
+<li><strong>เทคโนโลยี UI:</strong> Flutter ใช้ widget ชุด Cupertino เป็นฐานทั้งหมด สร้าง widget เองเฉพาะที่ Cupertino ไม่มี (หมุด landmark, ชื่อ 3 ภาษา, progress bar, ปุ่มเครื่องมือใน viewport) 3D ใช้ flutter_scene</li>
+<li><strong>หน้าตา:</strong> สีหลักเป็น systemBlue แบบเดียวกับ iOS/iPadOS ตามที่ Jedt ขอ, ฟอนต์ Noto Sans Thai UI เพราะ SF Pro ไม่มีอักษรไทย, viewport 3D พื้นมืดเสมอเพื่อให้กระดูกเด่น</li>
+<li><strong>ขนาดงานใน Figma:</strong> iPad 21 หน้าจอ, มือถือ 6, เว็บ 3, component 21 ชุดที่ตั้งชื่อตาม widget ของ Flutter, ไอคอน 44 ตัว, ตัวแปรสีมีโหมด Light และ Dark</li>
+<li><strong>Prototype:</strong> 102 จุดที่คลิกได้ใน 7 flow (iPad 4, มือถือ 2, เว็บ 1)</li>
+<li><strong>ผลตรวจ:</strong> ฟอนต์ สี และ component สอดคล้องกันทุกหน้า พบ contrast ของป้ายสถานะสีเขียวและส้มต่ำ (2.2 : 1) จึงเพิ่มสีข้อความชุด <code>text/*</code> แก้แล้ว ส่วนที่ยังขาดดูใน <a href="verification.html">ผลตรวจ</a></li>
+</ul>
+<h2>เอกสารในส่วนนี้</h2>
+<ol>
+<li><a href="product-design.html">Product design</a>: ผู้ใช้ ปัญหา หลักการออกแบบ บทบาทของแต่ละแพลตฟอร์ม และโครงสร้างแอป</li>
+<li><a href="requirements.html">Requirements</a>: requirement ด้าน function และด้านคุณภาพ พร้อมเกณฑ์ยอมรับ</li>
+<li><a href="features.html">Features</a>: feature ทั้งหมด ผูกกับหน้าจอ รุ่นที่ปล่อย และฟรีหรือ Pro</li>
+<li><a href="ui-design.html">UI design</a>: design system สี ตัวอักษร ระยะ component และการจับคู่กับ Flutter widget</li>
+<li><a href="prototype.html">Prototype</a>: flow ทั้งหมด วิธีเปิด และภาพทุกหน้าจอ</li>
+<li><a href="verification.html">ผลตรวจความสอดคล้อง</a>: ผลตรวจที่วัดได้ สิ่งที่แก้ไปแล้ว และช่องว่างที่ยังเหลือ</li>
+</ol>
+<h2>หน้าใน Figma</h2>
+<table>
+<thead>
+<tr>
+<th>หน้า</th>
+<th>เนื้อหา</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00 Cover</td>
+<td>หน้าปกและวิธีเปิด prototype</td>
+</tr>
+<tr>
+<td>01 Foundations</td>
+<td>สี ตัวอักษร ระยะ มุมโค้ง และภาพ render ตัวอย่าง</td>
+</tr>
+<tr>
+<td>02 Components · Flutter Cupertino</td>
+<td>component 21 ชุดและไอคอน 44 ตัว</td>
+</tr>
+<tr>
+<td>03 iPad (primary)</td>
+<td>21 หน้าจอ 1180 × 820 (iPad Air 11" แนวนอน)</td>
+</tr>
+<tr>
+<td>04 Phone companion</td>
+<td>6 หน้าจอ 393 × 852 (iPhone 15/16)</td>
+</tr>
+<tr>
+<td>05 Web</td>
+<td>3 หน้าจอ 1440 กว้าง</td>
+</tr>
+<tr>
+<td>06 Verification</td>
+<td>ตาราง widget mapping และผลตรวจ</td>
+</tr>
+</tbody>
+</table>
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/product-design">docs/product-design</a> บน GitHub · ภาพหน้าจอส่งออกจาก Figma 27 พ.ย. 2026</footer>
+</main>
+</body>
+</html>
