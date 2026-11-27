@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>02. Feature, จุดแข็ง, จุดอ่อน และจุดขาย · แผนพัฒนา Product</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
+.doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
+nav a.on{background:var(--ink);color:var(--bg)}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../../index.html">← หน้ารวมรายงาน</a><a href="index.html">สรุป</a><a href="scope.html">Scope และ niche</a><a href="features.html" class="on">Feature และจุดขาย</a><a href="free-feedback.html">อ่านฟรีและ feedback</a><a href="roadmap.html">Roadmap 12 เดือน</a></nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · แผนพัฒนา Product ปีแรก · สร้างจาก <code>docs/product-plan/th/02-features.md</code> · ตัวเลขที่ติดป้าย (ประมาณการ) คือการคาดคะเนของเรา</p>
+<h1>02. Feature, จุดแข็ง, จุดอ่อน และจุดขาย</h1>
+<h2>1. Feature ที่ต้องมี (must-have ใน v1.0)</h2>
+<p>ผู้ใช้ทุกคนคือนักศึกษาแพทย์หรือบุคลากรทางการแพทย์ แอปไม่มีขั้นตอนเลือกบทบาท และเปิดมาเจอเนื้อหาระดับละเอียดที่สุดทันที</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Feature</th>
+<th>ใช้ตอนไหน</th>
+<th>ทำไมต้องมี</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Viewer 3D</strong>: หมุน ซูม แตะเลือกชิ้น, isolate, ซ่อน, x-ray, แยกชิ้นกะโหลก (exploded view)</td>
+<td>ทุกครั้ง</td>
+<td>พื้นฐานที่ทุกแอปมี ไม่มีไม่ได้ ใช้ฟีเจอร์ที่ผ่าน spike แล้ว</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>ชื่อ 3 ภาษา ไทย / อังกฤษ / ละติน</strong> สลับได้ทุกจุด พร้อมเสียงอ่านออกเสียงศัพท์อังกฤษ/ละติน (อัดเสียงเอง)</td>
+<td>ทุกครั้ง โดยเฉพาะปีแรกของกายวิภาค</td>
+<td>ช่องว่างหลักจากรายงานตลาด: แอปรายใหญ่ไม่มีไทย และ Anatomyka / 3D Anatomy ใน App Store ไทยก็ไม่มีไทยในรายการภาษา [S8][S9]</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Landmarks</strong>: แตะกระดูก เห็นหมุดจุดสังเกตทั้งหมด แตะหมุดเห็นคำอธิบายสั้นและสิ่งที่มาเกาะ</td>
+<td>เรียนและทบทวน</td>
+<td>ระดับรายละเอียดที่ใช้สอบจริง ต่างจากแอปที่ label แค่ชื่อกระดูก</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>แผนที่จุดเกาะกล้ามเนื้อ</strong> บนผิวกระดูก (origin/insertion) พร้อมชื่อกล้ามเนื้อ การกระทำ เส้นประสาท</td>
+<td>เรียนและทบทวน</td>
+<td>ได้เนื้อหากล้ามเนื้อโดยไม่ต้องปั้นกล้ามเนื้อ (ดู <a href="scope.html">01-scope</a>)</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>โหมดฝึกสอบ spot</strong>: หมุดปักบนโมเดล 3D ถามชื่อ/ด้าน/สิ่งที่เกาะ จับเวลาต่อข้อ สรุปคะแนนและจุดที่พลาด</td>
+<td>ช่วงสอบ</td>
+<td>จำลองการสอบปฏิบัติการกายวิภาค <strong>(ประมาณการ: ต้องยืนยันรูปแบบสอบจริงกับคณะพาร์ตเนอร์)</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>ค้นหา 3 ภาษา</strong> พิมพ์ไทย อังกฤษ หรือละติน แล้วกระโดดไปที่ชิ้นส่วนหรือ landmark บนโมเดล</td>
+<td>ทุกครั้ง</td>
+<td>นักศึกษาเจอศัพท์ในชีทเป็นภาษาหนึ่งและต้องหาตำแหน่งบนโมเดลให้เร็ว</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>ความสัมพันธ์ทางคลินิก</strong> ติดกับแต่ละ landmark (ชุดเดียวสำหรับทุกคน): กระดูกหักที่พบบ่อยและเส้นประสาทที่เสี่ยง, จุดคลำ, ตำแหน่งฉีดยาเข้ากล้าม, รูเปิดของกะโหลกและสิ่งที่ผ่าน, ฟันและเลข FDI</td>
+<td>เรียนและทำงาน</td>
+<td>เชื่อมกระดูกกับงานจริงในระดับที่นักศึกษาแพทย์และแพทย์จบใหม่ใช้ คู่แข่งทั่วไปไม่ได้ทำเป็นภาษาไทย</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>ใช้ offline บน iPad</strong>: ดาวน์โหลดเป็นแพ็กตามส่วนร่างกาย ตรวจ hash อัปเดตเฉพาะแพ็กที่เปลี่ยน</td>
+<td>เรียนนอกห้อง</td>
+<td>Anatomy Learning พิสูจน์แล้วว่า offline + ราคาถูกขายได้ (รายงานตลาด)</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>เว็บอ่านฟรี</strong>: ทุกกระดูกและ landmark มีหน้าเว็บภาษาไทย (Flutter Web สำหรับ 3D + หน้า HTML ธรรมดาสำหรับอ่านและให้ Google ค้นเจอ)</td>
+<td>ก่อนติดตั้งแอป</td>
+<td>ช่องทางหาผู้ใช้ฟรี และตอบโจทย์ "ต้องได้อ่านฟรี"</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>ปุ่ม "แจ้งแก้" ทุก label และทุกข้อสอบ</strong> (ศัพท์ไทยผิด, ตำแหน่งผิด, อยากได้เพิ่ม) พร้อมสถานะว่าแก้แล้วหรือยัง</td>
+<td>ทุกครั้ง</td>
+<td>กลไก feedback หลัก (ดู <a href="free-feedback.html">03</a>)</td>
+</tr>
+</tbody>
+</table>
+<h3>ควรมี (should-have ถ้าทันในปีแรก)</h3>
+<ul>
+<li>โมดูลกล้ามเนื้อแขน 3D (~50 มัด) ซ้อนบนกระดูก</li>
+<li>โน้ตส่วนตัวและ bookmark ที่ซิงก์ระหว่าง iPad กับเว็บ</li>
+<li>แอปมือถือเล็กสำหรับทบทวน (flashcard จาก content DB ไม่มี 3D) ตามแนวคิด companion app ในหัวข้อโครงการ</li>
+<li>โหมดอาจารย์: สร้างชุด spot ของตัวเองแล้วแชร์ลิงก์ให้นักศึกษา</li>
+</ul>
+<h3>ไม่ทำในปีแรก</h3>
+<p>AI chat, AR, VR, แบบจำลองการเคลื่อนไหวข้อต่อ, ภาพ CT/MRI</p>
+<h2>2. จุดแข็ง (ของ product และทีม)</h2>
+<ol>
+<li><strong>ภาษาไทยที่อาจารย์ไทยตรวจ</strong> ยังไม่พบคู่แข่ง 3D กายวิภาคการแพทย์ที่รองรับไทย (รายงานตลาด และ [S8][S9])</li>
+<li><strong>เป็นเจ้าของ asset 100%</strong> เพราะปั้นเองทั้งหมด: ไม่มีค่า license รายปี, ขาย license ให้คณะได้, ทำต่อเป็น SKU ศิลปินหรือภาษาอื่นได้โดยไม่ต้องขออนุญาตใคร</li>
+<li><strong>ลึกในพื้นที่แคบ ระดับนักศึกษาแพทย์</strong>: landmarks และจุดเกาะละเอียดกว่าแอปทั่วไปที่ label แค่ชื่อกระดูก และไม่ต้องแบ่งเนื้อหาหลายระดับ จึงทำทีมเล็กได้</li>
+<li><strong>ใกล้ผู้ใช้</strong>: อยู่ในไทย เข้าถึงคณะ อาจารย์ และนักศึกษาได้โดยตรง แก้ตาม feedback ได้ทุกเดือน</li>
+<li><strong>ฐานเทคนิคเดียว</strong> Flutter ทุกแพลตฟอร์ม: iPad ก่อน เว็บได้ทันที Android ตามมาโดยไม่ต้องเขียนใหม่</li>
+<li><strong>ราคาเข้าถึงได้</strong> ตั้งเป้าประมาณ 1/5 ของเจ้าใหญ่ (Complete Anatomy นักศึกษา $74.99/ปี จากรายงานตลาด)</li>
+</ol>
+<h2>3. จุดอ่อน และวิธีรับมือ</h2>
+<table>
+<thead>
+<tr>
+<th>จุดอ่อน</th>
+<th>ผลกระทบ</th>
+<th>วิธีรับมือ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>เนื้อหาน้อยกว่าเจ้าใหญ่มาก (Complete Anatomy 700+ โมเดล)</td>
+<td>ผู้ใช้ที่อยากได้ทั้งตัวจะไม่เลือกเรา</td>
+<td>สื่อสารชัดว่า "เครื่องมือสอบกระดูกภาษาไทยที่ดีที่สุด" ไม่ใช่ "atlas ทั้งตัว" และใช้คู่กับแอปอื่นได้</td>
+</tr>
+<tr>
+<td>กระดูก 3D ฟรีมีอยู่แล้ว (Anatomyka) [S8]</td>
+<td>ต้องมีเหตุผลอื่นให้เลือกเรา</td>
+<td>จุดขายคือภาษาไทย, landmarks, spot, ความสัมพันธ์ทางคลินิก ไม่ใช่โมเดล</td>
+</tr>
+<tr>
+<td>กำลัง artist เป็นคอขวด</td>
+<td>ปั้นช้าแผนเลื่อน</td>
+<td>ปั้นตามลำดับหลักสูตร, ปล่อยทีละแพ็ก, วัดเวลาจริงหลัง 3 ชิ้นแรก</td>
+</tr>
+<tr>
+<td>ความถูกต้องทางกายวิภาค</td>
+<td>ผิดครั้งเดียวเสียความน่าเชื่อถือ</td>
+<td>บอร์ดอาจารย์ตรวจก่อนปล่อยทุกแพ็ก, ปุ่มแจ้งแก้, บันทึกการแก้แบบเปิดเผย</td>
+</tr>
+<tr>
+<td>flutter_scene ยังไม่มีใครใช้ทำแอปกายวิภาค</td>
+<td>อาจต้องเปลี่ยน renderer</td>
+<td>spike 2 สัปดาห์เดือนแรก, three.js เป็นแผนสำรอง, asset ไม่ต้องเปลี่ยน</td>
+</tr>
+<tr>
+<td>ตลาดไทยเล็กและจ่ายน้อย</td>
+<td>รายได้ปีแรกต่ำ</td>
+<td>ปีแรกวัดผลด้วยการใช้งานไม่ใช่รายได้, เตรียมขาย license ให้คณะ, ต่อยอด VN/ID ปีที่ 2</td>
+</tr>
+<tr>
+<td>เนื้อหาระดับนักศึกษาแพทย์อาจหนักเกินไปสำหรับผู้เริ่มเรียนหรือสายสุขภาพอื่น</td>
+<td>บางคนเลิกใช้เร็ว</td>
+<td>เรียงจากชื่อชิ้นไปหา landmark ทีละชั้นในหน้าจอเดียวกัน (ไม่แยกโหมด) และดูข้อมูลใน alpha ว่าใครหลุดตรงไหน</td>
+</tr>
+<tr>
+<td>ผู้ใช้ฟรีอาจไม่ยอมจ่าย</td>
+<td>conversion ต่ำ</td>
+<td>บอกตั้งแต่แรกว่าอะไรฟรีตลอด อะไรจะเป็นแบบจ่าย และให้สิทธิ์ผู้ร่วมทดสอบ (ดู <a href="free-feedback.html">03</a>)</td>
+</tr>
+</tbody>
+</table>
+<h2>4. จุดขายที่ต้องทำให้ได้ (selling points)</h2>
+<p>เรียงตามความสำคัญ แต่ละข้อมีวิธีพิสูจน์:</p>
+<ol>
+<li><strong>"กายวิภาคกระดูก 3D ภาษาไทย ที่อาจารย์ไทยตรวจ"</strong> พิสูจน์ด้วยรายชื่ออาจารย์ผู้ตรวจในแอป (ได้รับอนุญาตแล้ว)</li>
+<li><strong>"ฝึกสอบ spot ได้ทุกที่ แม้ไม่มีเน็ต"</strong> พิสูจน์ด้วยคะแนนก่อน/หลังของกลุ่มพาร์ตเนอร์ (ถ้าคณะยอมทำวิจัยร่วม)</li>
+<li><strong>"ละเอียดพอสำหรับสอบแพทย์ และใช้ต่อได้ตอนทำงาน"</strong> พิสูจน์ด้วยจำนวน landmarks และความสัมพันธ์ทางคลินิกที่อาจารย์ตรวจแล้ว</li>
+<li><strong>"อ่านฟรีบนเว็บ ทุกกระดูก"</strong> พิสูจน์ด้วยการไม่มี paywall บนหน้าอ่าน</li>
+<li><strong>"ราคานักศึกษาไทย"</strong> ตั้งราคาหลังเดือนที่ 12 จากข้อมูล willingness-to-pay ที่เก็บระหว่างปี</li>
+</ol>
+<h2>5. คู่แข่งที่เห็นใน App Store ไทย (อ่าน 2026-11-27)</h2>
+<table>
+<thead>
+<tr>
+<th>แอป</th>
+<th>ราคาในร้านไทย</th>
+<th>ภาษาไทยในรายการภาษา</th>
+<th>ข้อสังเกต</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anatomyka [S8]</td>
+<td>ฟรี + IAP: ฿199/เดือน, ฿999/ปี, Pro ฿2,490/ปี, lifetime ฿5,990</td>
+<td>ไม่มี (EN)</td>
+<td>ระบบกระดูกฟรี ทดลองทั้งหมด 3 วัน</td>
+</tr>
+<tr>
+<td>3D Anatomy (Education Mobile) [S9]</td>
+<td>฿99 ซื้อครั้งเดียว</td>
+<td>ไม่มี (FR, ES, EN, DE)</td>
+<td>4.9 ดาว จาก 19 รีวิว</td>
+</tr>
+<tr>
+<td>Complete Anatomy, Visible Body, Easy Anatomy ฯลฯ</td>
+<td>ดูรายงานตลาด</td>
+<td>ไม่มี</td>
+<td>เจ้าใหญ่ ราคาสูง</td>
+</tr>
+</tbody>
+</table>
+<p>ราคาใน App Store ไทยของ Anatomyka (฿999/ปี) เป็นจุดอ้างอิงที่ใช้ได้เมื่อถึงเวลาตั้งราคา</p>
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/product-plan/th">docs/product-plan/th</a> บน GitHub</footer>
+</main>
+</body>
+</html>

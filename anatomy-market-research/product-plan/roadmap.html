@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>04. Roadmap 12 เดือน, ตัวชี้วัด และความเสี่ยง · แผนพัฒนา Product</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
+.doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
+nav a.on{background:var(--ink);color:var(--bg)}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../../index.html">← หน้ารวมรายงาน</a><a href="index.html">สรุป</a><a href="scope.html">Scope และ niche</a><a href="features.html">Feature และจุดขาย</a><a href="free-feedback.html">อ่านฟรีและ feedback</a><a href="roadmap.html" class="on">Roadmap 12 เดือน</a></nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · แผนพัฒนา Product ปีแรก · สร้างจาก <code>docs/product-plan/th/04-roadmap.md</code> · ตัวเลขที่ติดป้าย (ประมาณการ) คือการคาดคะเนของเรา</p>
+<h1>04. Roadmap 12 เดือน, ตัวชี้วัด และความเสี่ยง</h1>
+<p>สมมติเริ่มเดือนธันวาคม 2026 (เดือนที่ 1) ถึงพฤศจิกายน 2027 (เดือนที่ 12) ถ้าเริ่มช้ากว่านี้ให้เลื่อนทั้งแผน และ <strong>ตรวจวันเปิดภาคและช่วงสอบกายวิภาคของคณะพาร์ตเนอร์จริง</strong> เพื่อวาง v0.9 ให้พร้อมก่อนเปิดภาคปีการศึกษาใหม่</p>
+<h2>1. Milestones</h2>
+<table>
+<thead>
+<tr>
+<th>ช่วง</th>
+<th>Release</th>
+<th>เนื้อหา 3D</th>
+<th>ซอฟต์แวร์</th>
+<th>ผู้ใช้และ feedback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>เดือน 1</strong> (ธ.ค. 2026)</td>
+<td>Spike</td>
+<td>femur, scapula, vertebra 1 ชิ้น ทำครบทั้ง pipeline เพื่อวัดเวลาจริง</td>
+<td>spike flutter_scene 2 สัปดาห์ ตามเกณฑ์ 8 ข้อใน <a href="../3d-pipeline/pipeline.html">ไปป์ไลน์ 3D</a>, schema content DB</td>
+<td>ทาบทามคณะพาร์ตเนอร์ 3 แห่ง, สัมภาษณ์นักศึกษาแพทย์และแพทย์จบใหม่ 15 คน</td>
+</tr>
+<tr>
+<td><strong>เดือน 2–3</strong> (ม.ค.–ก.พ. 2027)</td>
+<td><strong>v0.1 Alpha</strong> (TestFlight ปิด 30–50 คน)</td>
+<td>กระดูกแขนและมือครบ + landmarks + จุดเกาะ</td>
+<td>viewer, ชื่อ 3 ภาษา, landmarks, ปุ่มแจ้งแก้, analytics ขั้นต่ำ, หน้าเว็บอ่านฟรีของกระดูกแขน</td>
+<td>LINE OA + OpenChat, ทูตนักศึกษารุ่นแรก</td>
+</tr>
+<tr>
+<td><strong>เดือน 4–6</strong> (มี.ค.–พ.ค. 2027)</td>
+<td><strong>v0.5 Beta</strong> (TestFlight เปิด + เว็บ)</td>
+<td>ขา เชิงกราน กระดูกสันหลัง ซี่โครง กระดูกอก</td>
+<td>โหมด spot, แพ็ก offline, ค้นหา 3 ภาษา, เว็บ 3D</td>
+<td>ขยายทูตเป็น 10+ คณะ, ผู้ใช้ beta 500–1,000 คน <strong>(ประมาณการ)</strong></td>
+</tr>
+<tr>
+<td><strong>เดือน 7–9</strong> (มิ.ย.–ส.ค. 2027)</td>
+<td><strong>v0.9</strong> พร้อมห้องเรียน</td>
+<td>กะโหลกแยกชิ้น, ฟันแท้ (FDI), mask จุดเกาะครบทุกกระดูก</td>
+<td>ความสัมพันธ์ทางคลินิกครบทุก landmark (กระดูกหัก, จุดคลำ, ฉีดยา, รูเปิดกะโหลก, ฟัน), โหมดอาจารย์สร้างชุด spot</td>
+<td>คณะพาร์ตเนอร์ใช้ในการเรียนจริง, แบบสอบถาม WTP</td>
+</tr>
+<tr>
+<td><strong>เดือน 10–12</strong> (ก.ย.–พ.ย. 2027)</td>
+<td><strong>v1.0 App Store</strong> (ฟรี)</td>
+<td>กล้ามเนื้อแขน 3D (ถ้าทัน), ปิดงานแก้จากรีวิว</td>
+<td>ระบบ Pro พร้อมเปิด (ยังไม่บังคับจ่าย), ซิงก์โน้ต</td>
+<td>สรุปผลกับคณะ, หน้า "จองราคาผู้ก่อตั้ง", ตัดสินแผนปีที่ 2</td>
+</tr>
+</tbody>
+</table>
+<h3>ลำดับการปั้นตามหลักสูตร</h3>
+<p>ปั้น <strong>แขนก่อน</strong> เพราะเป็นชุด spike อยู่แล้วและมักเป็นบทแรกของกายวิภาคระบบกล้ามเนื้อและกระดูก ตามด้วยขา ลำตัว แล้วจึงกะโหลกและฟันซึ่งยากที่สุด (ต้องยืนยันลำดับกับคณะพาร์ตเนอร์ ถ้าหลักสูตรเริ่มที่ศีรษะ ให้สลับกะโหลกขึ้นมาก่อน)</p>
+<h2>2. ด่านตัดสิน (go / no-go)</h2>
+<table>
+<thead>
+<tr>
+<th>ด่าน</th>
+<th>เวลา</th>
+<th>ผ่านเมื่อ</th>
+<th>ถ้าไม่ผ่าน</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G1 เทคนิค</td>
+<td>สิ้นเดือน 1</td>
+<td>spike ผ่านเกณฑ์ข้อ 3–5 (picking, highlight/x-ray, clipping) บน iPad รุ่นพื้นฐาน</td>
+<td>เปลี่ยน viewport เป็น three.js ตามแผนสำรอง, asset ไม่เปลี่ยน</td>
+</tr>
+<tr>
+<td>G1b ความเร็วปั้น</td>
+<td>สิ้นเดือน 1</td>
+<td>3 ชิ้นแรกใช้เวลาไม่เกิน 1.5 เท่าของที่ประมาณ</td>
+<td>ตัดกล้ามเนื้อแขนและฟันออกจากปีแรก หรือเพิ่ม artist</td>
+</tr>
+<tr>
+<td>G2 ความต้องการ</td>
+<td>สิ้นเดือน 3</td>
+<td><strong>(ประมาณการ)</strong> ≥ 40% ของผู้ทดสอบ alpha ใช้ซ้ำทุกสัปดาห์ 4 สัปดาห์ติด และมีแจ้งแก้/ข้อเสนอ ≥ 50 รายการ</td>
+<td>สัมภาษณ์ใหม่, ปรับจุดขาย (เช่น เน้น spot มากขึ้น) ก่อนปั้นต่อ</td>
+</tr>
+<tr>
+<td>G3 ห้องเรียน</td>
+<td>สิ้นเดือน 9</td>
+<td>อย่างน้อย 2 ใน 3 คณะพาร์ตเนอร์ใช้ในการเรียนหรือการติวจริง</td>
+<td>ทบทวนว่าจะขายผ่านสถาบันหรือขายตรงนักศึกษา</td>
+</tr>
+<tr>
+<td>G4 ปีที่ 2</td>
+<td>เดือน 12</td>
+<td>ข้อมูล WTP + จำนวนจองราคาผู้ก่อตั้ง</td>
+<td>เลือกระบบถัดไป (กล้ามเนื้อทั้งตัว หรือ ศีรษะและลำคอ) และตลาดถัดไป (VN/ID)</td>
+</tr>
+</tbody>
+</table>
+<h2>3. ตัวชี้วัดที่ติดตาม</h2>
+<ul>
+<li><strong>ผู้เรียนที่ใช้งานรายสัปดาห์</strong> (หลัก) และอัตราใช้ซ้ำวันที่ 7 / 30</li>
+<li><strong>จำนวนการแจ้งแก้ต่อสัปดาห์</strong> และ <strong>เวลาเฉลี่ยจากแจ้งจนแก้</strong> (เป้า <strong>(ประมาณการ)</strong> &lt; 7 วัน สำหรับข้อเนื้อหา)</li>
+<li><strong>ความถูกต้อง</strong>: จำนวนข้อผิดพลาดทางเนื้อหาที่พบหลังอาจารย์ตรวจแล้ว (ควรลดลงทุกเดือน)</li>
+<li>จำนวนข้อ spot ที่ทำต่อคนต่อสัปดาห์ และอัตราตอบถูกที่ดีขึ้น</li>
+<li>NPS แยกตามชั้นปี (นักศึกษาชั้นปีต้น, ชั้นคลินิก, แพทย์จบใหม่) ดูจากคำถามในแบบสอบถาม ไม่ใช่การเลือกบทบาทในแอป</li>
+<li>สัดส่วนผู้ใช้จากเว็บ vs iPad, รุ่นอุปกรณ์</li>
+<li>ความเร็วปั้น: วัน artist ต่อชิ้นจริงเทียบกับประมาณการ</li>
+</ul>
+<h2>4. ความเสี่ยงหลัก</h2>
+<table>
+<thead>
+<tr>
+<th>ความเสี่ยง</th>
+<th>โอกาส</th>
+<th>ผลกระทบ</th>
+<th>การรับมือ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ปั้นช้ากว่าแผน</td>
+<td>กลาง</td>
+<td>สูง</td>
+<td>ด่าน G1b, ปล่อยทีละแพ็ก, กล้ามเนื้อแขนเป็น should-have</td>
+</tr>
+<tr>
+<td>เนื้อหาผิด</td>
+<td>กลาง</td>
+<td>สูง</td>
+<td>บอร์ดอาจารย์, ปุ่มแจ้งแก้, content DB อัปเดตได้ทันที</td>
+</tr>
+<tr>
+<td>หาคณะพาร์ตเนอร์ไม่ได้</td>
+<td>ต่ำ-กลาง</td>
+<td>สูง</td>
+<td>เริ่มจากเครือข่ายอาจารย์ที่รู้จัก, ให้ข้อเสนอด้านงานวิจัย, เริ่มจากทูตนักศึกษาก่อนถ้าจำเป็น</td>
+</tr>
+<tr>
+<td>flutter_scene ไม่ผ่าน</td>
+<td>กลาง</td>
+<td>กลาง</td>
+<td>three.js สำรอง, แยก <code>AnatomyViewport</code> ตั้งแต่แรก</td>
+</tr>
+<tr>
+<td>ผู้ใช้ฟรีไม่จ่าย</td>
+<td>กลาง</td>
+<td>กลาง</td>
+<td>ประกาศเงื่อนไขตั้งแต่แรก, license สถาบัน, ราคานักศึกษาไทย</td>
+</tr>
+<tr>
+<td>เจ้าใหญ่เพิ่มภาษาไทย</td>
+<td>ต่ำ</td>
+<td>สูง</td>
+<td>ความได้เปรียบเรื่องความสัมพันธ์ทางคลินิกที่อาจารย์ไทยตรวจ ข้อสอบ spot ตามคณะไทย และความสัมพันธ์กับคณะ ลอกยากกว่าการแปล</td>
+</tr>
+<tr>
+<td>PDPA / จริยธรรมการวิจัย</td>
+<td>ต่ำ</td>
+<td>กลาง</td>
+<td>consent แยกตามวัตถุประสงค์, ให้ที่ปรึกษากฎหมายตรวจ, ขอ IRB เมื่อทำวิจัยร่วมคณะ</td>
+</tr>
+</tbody>
+</table>
+<h2>5. สิ่งที่ต้องหาข้อมูลเพิ่ม</h2>
+<ol>
+<li>blueprint ข้อสอบ NL ขั้นตอนที่ 1 (ศรว.): ประกาศปี 2565 ระบุว่าขั้นที่ 1 เป็นวิทยาศาสตร์การแพทย์พื้นฐาน 300 ข้อ และให้ดูตารางเนื้อหาข้อสอบบนเว็บไซต์ ศรว. [S3] ยังไม่ได้สัดส่วนของกายวิภาค</li>
+<li>จำนวนรับนักศึกษาแพทย์ทุกช่องทาง (ไม่ใช่แค่ กสพท)</li>
+<li>ระดับรายละเอียดที่แพทย์จบใหม่ใช้จริงในงาน (สัมภาษณ์)</li>
+<li>รูปแบบสอบปฏิบัติการกายวิภาค (spot) ของคณะพาร์ตเนอร์</li>
+<li>ศัพท์กายวิภาคไทยที่เป็นมาตรฐาน (ฉบับราชบัณฑิตยสภา) และเงื่อนไขการนำมาใช้</li>
+</ol>
+<h2>แหล่งอ้างอิง (อ่านวันที่ 2026-11-27)</h2>
+<pre><code>- [S1] Wikipedia, List of medical schools in Thailand ("23 institutions offering medical programs") https://en.wikipedia.org/wiki/List_of_medical_schools_in_Thailand
+- [S2] กรุงเทพธุรกิจ, "เตรียมตัวให้พร้อม สอบ กสพท TCAS 67" (2023-08-08) https://www.bangkokbiznews.com/health/education/1082495
+- [S3] ศรว., ประกาศที่ 8/2565 การสอบ NL ขั้นตอนที่ 1–2 (2022-06-09) https://school.medicine.psu.ac.th/wp-content/uploads/2022/11/NLE1-2_2565_2.pdf
+- [S4] Relevant Audience, LINE Thailand 2026 (2026-08-12; ตัวเลขของ LINE เอง) https://www.relevantaudience.com/digital-marketing-en/line-thailand-business-solutions-2026/
+- [S5] VIR / Media OutReach, LINE OpenChat 24 million MAU in Thailand (2026-11-06) https://vir.com.vn/line-openchat-active-monthly-users-reach-24-million-in-thailand-164541.html
+- [S6] Suvarnabhumi et al., Smartphone and tablet usage among medical students in PSU, Thammasat Medical Journal 16(4) (2016-12-30) https://he02.tci-thaijo.org/index.php/tmj/article/view/73892
+- [S7] Apple Education, Manichaya Sukonpatip (Chulalongkorn Medicine) https://www.apple.com/sg/education/college-students/success-stories/sukonpatip/
+- [S8] Anatomyka, App Store ไทย https://apps.apple.com/th/app/anatomyka/id1435038724?l=th
+- [S9] 3D Anatomy (Education Mobile), App Store ไทย https://apps.apple.com/th/app/3d-anatomy/id695187101?l=th
+- [S10] Apple, App Store Small Business Program https://developer.apple.com/app-store/small-business-program/
+- [S11] Tilleke &amp; Gibbins, Thailand issues guidelines on PDPA consent and notification requirements (2022-09-21) https://www.tilleke.com/insights/thailand-issues-guidelines-on-pdpa-consent-and-notification-requirements
+- [S12] Apple, TestFlight overview (App Store Connect Help) https://developer.apple.com/help/app-store-connect/test-a-beta-version/testflight-overview/
+</code></pre>
+<ul>
+<li>รายงานภายในโครงการ: <a href="../index.html">ตลาดและการวางตำแหน่ง</a>, <a href="../3d-pipeline/index.html">ไปป์ไลน์ 3D</a></li>
+</ul>
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/product-plan/th">docs/product-plan/th</a> บน GitHub</footer>
+</main>
+</body>
+</html>

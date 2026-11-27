@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>แผนพัฒนา Product ปีแรก: กระดูกและจุดสังเกต 3D ภาษาไทย · แผนพัฒนา Product</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.doc{max-width:900px}
+.doc h2{margin-top:40px}
+.doc table{display:block;overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.doc pre{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.45}
+.doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+.doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
+.doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
+.doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
+nav a.on{background:var(--ink);color:var(--bg)}
+</style>
+</head>
+<body>
+<header class="top"><nav><a href="../../index.html">← หน้ารวมรายงาน</a><a href="index.html" class="on">สรุป</a><a href="scope.html">Scope และ niche</a><a href="features.html">Feature และจุดขาย</a><a href="free-feedback.html">อ่านฟรีและ feedback</a><a href="roadmap.html">Roadmap 12 เดือน</a></nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · แผนพัฒนา Product ปีแรก · สร้างจาก <code>docs/product-plan/th/README.md</code> · ตัวเลขที่ติดป้าย (ประมาณการ) คือการคาดคะเนของเรา</p>
+<h1>แผนพัฒนา Product ปีแรก: กระดูกและจุดสังเกต 3D ภาษาไทย</h1>
+<p><em>อัปเดตล่าสุด: 2026-11-27 (ปรับตาม Jedt: ผู้ใช้กลุ่มเดียว ไม่แยกวิชาชีพ) · สถานะ: ข้อเสนอ รอ Jedt ตัดสินใจ</em></p>
+<p>เอกสารนี้ตอบคำถามเดียว: <strong>ใน 1 ปี ทีมเล็กที่ปั้นโมเดลและ texture เองทั้งหมด ควรทำ product ที่แคบที่สุดแบบไหน ให้จบได้จริง ขายได้ และได้ feedback จากนักศึกษาแพทย์และบุคลากรสุขภาพไทยตั้งแต่วันแรก</strong></p>
+<p><strong>ผู้ใช้เป้าหมาย:</strong> นักศึกษาแพทย์และบุคลากรทางการแพทย์ ถือเป็นผู้ใช้กลุ่มเดียว แอปไม่ถามว่าผู้ใช้เป็นใคร และไม่แยกเนื้อหาตามวิชาชีพ ทุกคนเห็นเนื้อหาระดับละเอียดที่สุดชุดเดียวกัน (ระดับที่นักศึกษาแพทย์ต้องใช้สอบ) ผู้ใช้สายอื่นที่ต้องการรายละเอียดน้อยกว่าก็ใช้ชุดเดียวกันได้ ส่วนเวอร์ชันสำหรับศิลปินเลื่อนไปทำทีหลัง</p>
+<p>ต่อยอดจาก <a href="../index.html">รายงานตลาด</a> (ช่องว่างหลัก: แอป 3D กายวิภาครายใหญ่ไม่มีภาษาไทย) และ <a href="../3d-pipeline/index.html">ไปป์ไลน์ 3D</a> (Flutter + flutter_scene, GLB, Blender เป็นศูนย์กลาง) โดยไม่ทำซ้ำ</p>
+<h2>คำแนะนำในหน้าเดียว</h2>
+<table>
+<thead>
+<tr>
+<th>เรื่อง</th>
+<th>ข้อเสนอ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Niche ปีแรก</strong></td>
+<td><strong>ระบบโครงกระดูกทั้งตัว + จุดสังเกตบนกระดูก (bony landmarks) + แผนที่จุดเกาะกล้ามเนื้อ เป็นภาษาไทย/อังกฤษ/ละติน</strong> พร้อมโหมดฝึกสอบแบบ spot และความสัมพันธ์ทางคลินิก (clinical correlation) ของทุกจุด</td>
+</tr>
+<tr>
+<td><strong>ทำไมแคบแบบนี้</strong></td>
+<td>กระดูกเป็นของแข็ง ไม่ต้อง rig ไม่ต้อง deform ปั้นเองได้เร็วที่สุดในบรรดาระบบร่างกาย และเป็นฐานที่นักศึกษาแพทย์ต้องรู้ละเอียดระดับจุดสังเกตก่อนเรียนเรื่องอื่น จุดเกาะกล้ามเนื้อทำเป็นชั้น texture บนกระดูก จึงได้เนื้อหากล้ามเนื้อโดยยังไม่ต้องปั้นกล้ามเนื้อทุกมัด</td>
+</tr>
+<tr>
+<td><strong>ของที่ปั้นเอง</strong></td>
+<td>~120 mesh กระดูกที่ไม่ซ้ำกัน (ซ้าย/ขวาใช้ mirror) + ฟันแท้ 16 ซี่ที่ไม่ซ้ำ + กล้ามเนื้อแขน ~50 มัดเป็นของแถมปลายปี ประเมินไว้ ~400 วันทำงานของ artist 2 คน (ประมาณการ ดู <a href="scope.html">01-scope</a>)</td>
+</tr>
+<tr>
+<td><strong>จุดขายหลัก</strong></td>
+<td>(1) ภาษาไทยที่อาจารย์ไทยตรวจแล้ว (2) ละเอียดระดับนักศึกษาแพทย์ทุกจุด (3) ฝึกสอบ spot แบบจับเวลา (4) ใช้ offline บน iPad (5) อ่านเนื้อหาฟรีบนเว็บ (6) ราคาประมาณ 1/5 ของเจ้าใหญ่</td>
+</tr>
+<tr>
+<td><strong>อ่านฟรี + feedback</strong></td>
+<td>ปีแรกฟรีทั้งหมด: TestFlight + เว็บ, คณะแพทยศาสตร์พาร์ตเนอร์ 3 แห่ง, ทูตนักศึกษา, LINE OA/OpenChat, ปุ่ม "แจ้งแก้" ทุก label, บอร์ดอาจารย์ตรวจความถูกต้อง</td>
+</tr>
+<tr>
+<td><strong>การเปลี่ยนเป็นรายได้</strong></td>
+<td>หลังเดือนที่ 12: เนื้อหาอ่านบนเว็บและ viewer กระดูกฟรีตลอด จ่ายสำหรับคลังข้อสอบ spot, แพ็ก offline, เนื้อหาคลินิกเชิงลึก, โมดูลกล้ามเนื้อ และขาย license ให้คณะ</td>
+</tr>
+<tr>
+<td><strong>ด่านตัดสิน</strong></td>
+<td>เดือนที่ 1: spike flutter_scene ผ่านหรือไม่ · เดือนที่ 3: นักศึกษาใน alpha ใช้ซ้ำทุกสัปดาห์หรือไม่ · เดือนที่ 9: คณะพาร์ตเนอร์ใช้ในห้องเรียนจริงหรือไม่</td>
+</tr>
+</tbody>
+</table>
+<h2>เอกสารในส่วนนี้</h2>
+<table>
+<thead>
+<tr>
+<th>หน้า</th>
+<th>เนื้อหา</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="scope.html">01-scope.md</a></td>
+<td>เลือก niche อย่างไร, ตัวเลือกที่ตัดทิ้ง, ขอบเขตงานปั้น 3D, กำลังคน</td>
+</tr>
+<tr>
+<td><a href="features.html">02-features.md</a></td>
+<td>feature ที่ต้องมี, จุดแข็ง, จุดอ่อน, จุดขาย, เทียบคู่แข่งใน App Store ไทย</td>
+</tr>
+<tr>
+<td><a href="free-feedback.html">03-free-and-feedback.md</a></td>
+<td>กลยุทธ์ให้อ่านฟรี เก็บ feedback ต่อเนื่อง และเปลี่ยนผู้ใช้ฟรีเป็นรายได้</td>
+</tr>
+<tr>
+<td><a href="roadmap.html">04-roadmap.md</a></td>
+<td>roadmap 12 เดือน, milestone, ตัวชี้วัด, ด่านตัดสิน, ความเสี่ยง, แหล่งอ้างอิง</td>
+</tr>
+</tbody>
+</table>
+<h2>วิธีอ่านหลักฐาน</h2>
+<ul>
+<li>ข้อเท็จจริงทุกข้อมีลิงก์และวันที่ที่อ่าน (อ่านทั้งหมดวันที่ 2026-11-27)</li>
+<li>ข้อความที่ติดป้าย <strong>(ประมาณการ)</strong> คือการคาดคะเนของเราเอง ยังไม่มีหลักฐาน ต้องยืนยันด้วย spike หรือการสัมภาษณ์นักศึกษา</li>
+<li>ชื่อ product ในเอกสารนี้เป็นชื่อทำงานชั่วคราว</li>
+</ul>
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/product-plan/th">docs/product-plan/th</a> บน GitHub</footer>
+</main>
+</body>
+</html>
