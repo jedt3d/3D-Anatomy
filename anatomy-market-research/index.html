@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3D Anatomy Market Review</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top"><nav>
+  <a href="#summary">Summary</a><a href="#thai">สรุปไทย</a><a href="#market">Market size</a><a href="#demand">Demand</a>
+  <a href="#competitors">Competitors</a><a href="#features">Killer features</a><a href="#map">Positioning map</a>
+  <a href="#gaps">Gaps</a><a href="#countries">Country priority</a><a href="#positioning">Positioning</a>
+  <a href="#pricing">Pricing</a><a href="#gtm">Go-to-market</a><a href="#calc">Revenue model</a><a href="#risks">Risks</a><a href="#sources">Sources</a>
+</nav></header>
+<main>
+
+<p class="meta">Investor review draft · Research accessed <b>27 Nov 2026</b> · Every fact links to its source. Items tagged <span class="tag est">estimate</span> are our own judgement or calculation, not sourced facts.</p>
+<h1>Affordable, local-language 3D anatomy for students — market, competitors and positioning</h1>
+<p class="lede">A Flutter app for iPad + Web (WebAssembly), with offline download on iPad and a phone companion for short-note review. Two audiences on one 3D engine: healthcare students/professionals and artists. Strategy: cheap, high volume, many languages, many countries.</p>
+
+<section id="summary">
+<h2>Executive summary</h2>
+<div class="grid g4">
+  <div class="card kpi"><b>$171M–$438M</b><span>2025 core 3D/virtual anatomy software market (two reports). A third, broader report (incl. VR, hospitals) says $1.62B. <sup><a href="#s-ggi_vh">GGI</a> <a href="#s-vmr">VMR</a> <a href="#s-ggi_3dvr">GGI</a></sup></span></div>
+  <div class="card kpi"><b>9.5%–12.9%</b><span>CAGR in the two narrower reports (22.7% in the broad one). <sup><a href="#s-vmr">VMR</a> <a href="#s-ggi_vh">GGI</a></sup></span></div>
+  <div class="card kpi"><b>4,500+</b><span>operating medical schools worldwide (2026), before nursing, physio, dental, art schools. <sup><a href="#s-wiki_wdoms">Wiki/WDOMS</a></sup></span></div>
+  <div class="card kpi"><b>0 of 8</b><span>leading medical 3D apps we checked list Thai, Vietnamese or Indonesian in their store listing (teamLab claims ID in its description only). <sup><a href="#competitors">table</a></sup></span></div>
+</div>
+<div class="callout">
+<b>The opportunity in one line.</b> Market leaders charge <b>$75–$100 per year</b> (Complete Anatomy, Easy Anatomy) or sell only to institutions (Primal, and BioDigital since it retired its paid individual plan on 1 May 2026), and none speak the languages of South-East Asia. Meanwhile a cheap, offline, one-time-purchase app (Anatomy Learning, $16.99) shows the volume model works: third-party estimates put it at ~100K downloads and ~$100K revenue a month, led by Brazil. <sup><a href="#s-ca_store">1</a> <a href="#s-easy">2</a> <a href="#s-bd_2026">3</a> <a href="#s-al_adapty">4</a></sup>
+</div>
+<h3>Recommendation <span class="tag est">estimate</span></h3>
+<ul class="tight">
+  <li><b>Position:</b> "the 3D anatomy app students can afford, in their own language, that works offline", plus an <b>Artist edition</b> on the same 3D engine (écorché, posing, lighting).</li>
+  <li><b>Beachhead:</b> Thailand (home advantage, zero Thai-language competition), then Vietnam, Indonesia and the Philippines. Use Japan and Brazil/LatAm as phase-2 expansion. Enter the US/EU only through the artist niche.</li>
+  <li><b>Price:</b> about 1/5 of the leaders. Around $14.99/yr or a $19.99 one-time "edition" globally, with country-adjusted prices down to ~$3–6 in SEA and India using Apple's 900 price points (from $0.29). <sup><a href="#s-apple_price">Apple</a></sup></li>
+  <li><b>Moat:</b> localisation pipeline (terminology DB in Latin + English + local language), national-exam-aligned quizzes, and partnerships with faculties. Big Western players are unlikely to follow on price, because cutting it would cannibalise their $75–$100 users.</li>
+  <li><b>Key risk:</b> 3D content quality and medical accuracy cost more than the app. Flutter 3D on the web is still maturing: Flutter Scene is pre-1.0, and Safari Wasm needs opt-in on Safari 26.2+. <sup><a href="#s-fl_scene">1</a> <a href="#s-fl_wasm">2</a></sup></li>
+</ul>
+</section>
+
+<section id="thai" class="thai">
+<h2>สรุปสำหรับผู้ลงทุน (ภาษาไทย)</h2>
+<ul class="tight">
+  <li><b>ตลาด:</b> ซอฟต์แวร์กายวิภาค 3D ปี 2025 อยู่ที่ราว 171–438 ล้านดอลลาร์ (ตามนิยามแคบ) โตปีละ 9.5–12.9% ส่วนรายงานที่นับ VR และโรงพยาบาลด้วยให้ตัวเลขสูงถึง 1.62 พันล้านดอลลาร์ ตัวเลขจากรายงานต่างสำนักต่างกันเกือบ 10 เท่า เราจึงใช้การประเมินแบบ bottom-up จากจำนวนนักศึกษาเป็นหลัก</li>
+  <li><b>คู่แข่ง:</b> เจ้าใหญ่ (Complete Anatomy, Visible Body, Easy Anatomy) ขายแพง 75–100 ดอลลาร์ต่อปี และไม่มีภาษาไทย เวียดนาม หรืออินโดนีเซีย ส่วน BioDigital เลิกขายแพ็กเกจรายบุคคลตั้งแต่ 1 พ.ค. 2026 แอปราคาถูกอย่าง Anatomy Learning (16.99 ดอลลาร์ ซื้อครั้งเดียว ใช้ออฟไลน์ได้) พิสูจน์แล้วว่าโมเดล "ถูก เน้นจำนวน" ขายได้จริง</li>
+  <li><b>ฝั่งศิลปิน:</b> แอปส่วนใหญ่เก่าหรือทำแค่บางส่วน เช่น Skelly มีแค่โครงกระดูก และ Manikin มีแค่หุ่นโพส มีคู่แข่งใหม่ปี 2026 คือ Art Anatomy (6.99 ดอลลาร์ต่อปี มีภาษาไทย) ซึ่งต้องจับตา</li>
+  <li><b>ข้อเสนอ:</b> วางตำแหน่งเป็น "แอปกายวิภาค 3D ที่นักศึกษาจ่ายไหว เป็นภาษาของตัวเอง ใช้ออฟไลน์ได้" ทำ 2 SKU บน engine เดียว (Medical / Artist) เริ่มที่ไทย แล้วขยายไป VN, ID, PH ต่อด้วย JP และ BR/LatAm</li>
+  <li><b>ราคา:</b> ประมาณ 1 ใน 5 ของเจ้าใหญ่ ตั้งราคาตามประเทศ เช่น ไทยราว 199–299 บาทต่อปี (ตัวเลขประมาณการ) และขายใบอนุญาตรายหัวให้คณะ/มหาวิทยาลัยผ่านเว็บ</li>
+  <li><b>ความเสี่ยงหลัก:</b> ต้นทุนการทำโมเดล 3D และการตรวจความถูกต้องทางการแพทย์ รวมถึงความพร้อมของ Flutter 3D บนเว็บ ควรทำ spike ทางเทคนิคก่อนลงทุนเต็ม</li>
+</ul>
+</section>
+
+<section id="market">
+<h2>Market size (top-down)</h2>
+<p>Three published reports disagree by up to 10× because they define the market differently. Read them as a range, not a point.</p>
+<div id="marketBars" class="card"></div>
+<div class="callout blue"><b>How to read this.</b> The two narrow reports (software for anatomy education and clinical use) agree on <b>low hundreds of millions USD</b> growing ~10–13%/yr. North America holds ~35–38% and Asia-Pacific ~25%, and education is the largest application (42–52%). In the GGI reports, Visible Body (~18–21%) and Elsevier/3D4Medical (~16–18%) are the share leaders. <sup><a href="#s-vmr">VMR</a> <a href="#s-ggi_vh">GGI-VH</a> <a href="#s-ggi_3dvr">GGI-3DVR</a></sup><br><span class="meta">Caveat: GGI pages contain many unsourced percentages and apply one CAGR to every region. These are paid-report teasers, so treat them as directional only.</span></div>
+</section>
+
+<section id="demand">
+<h2>Demand (bottom-up anchors)</h2>
+<div class="grid g3">
+  <div class="card kpi"><b>4,500+</b><span>operating medical schools (2026); WDOMS itself said "more than 4,000" in 2024. <sup><a href="#s-wiki_wdoms">1</a> <a href="#s-wdoms">2</a></sup></span></div>
+  <div class="card kpi"><b>129,026</b><span>India MBBS seats in 2025-26, up from 117,750 in 2024. That's one new first-year anatomy cohort each year from India alone. <sup><a href="#s-in_mbbs">Careers360</a></sup></span></div>
+  <div class="card kpi"><b>~123K / ~22.6K</b><span>Thailand professional nurses / doctors (2023). <sup><a href="#s-th_statista">Statista</a></sup></span></div>
+  <div class="card kpi"><b>2,795</b><span>Thai government-scholarship medical graduates expected in FY2026 (a lower bound for one cohort). Thailand runs at 72% of its doctor staffing target. <sup><a href="#s-th_nation">Nation</a></sup></span></div>
+  <div class="card kpi"><b>New schools</b><span>Thailand is still opening private medical schools, e.g. St Luke (60 students/yr). <sup><a href="#s-th_bkkpost">Bangkok Post</a></sup></span></div>
+  <div class="card kpi"><b>Artists</b><span>Procreate (iPad-only) was the best-selling iPad app overall in 2018, which shows the iPad is a core tool for illustrators. <sup><a href="#s-procreate">1</a></sup> A sourced count of art students per country is still a gap. <span class="tag est">to verify</span></span></div>
+</div>
+<p class="meta">Anatomy is a first-year requirement in medicine, nursing, dentistry, pharmacy, physiotherapy, sports science and paramedic programmes, and is core to figure drawing, 3D character and sculpture courses. Each programme multiplies the medical-school base. <span class="tag est">estimate</span> We still need a sourced per-country count for these programmes; see the open questions at the end.</p>
+</section>
+
+<section id="competitors">
+<h2>Competitor landscape</h2>
+<p>Prices and features were read from official pages and App Store listings on 27 Nov 2026. Click a header to sort.</p>
+<div class="controls" id="segFilter">
+  <button data-f="all" class="on">All</button><button data-f="med">Healthcare</button><button data-f="art">Artist</button><button data-f="thai">Has Thai</button>
+  <input id="q" placeholder="Search…" aria-label="Search competitors">
+</div>
+<div class="table-wrap"><table id="compTable"><thead><tr>
+  <th data-k="name">Product</th><th data-k="seg">Seg</th><th data-k="price">Price</th><th data-k="priceUSDyr">≈$/yr*</th><th data-k="platforms">Platforms</th><th data-k="langs">Languages</th><th data-k="rating">Rating</th><th data-k="killer">Killer features</th><th data-k="weak">Weakness / note</th><th>Src</th>
+</tr></thead><tbody></tbody></table></div>
+<p class="meta">* ≈$/yr is our normalisation for an individual buyer (one-time prices are counted as one year) <span class="tag est">estimate</span>. Store ratings are storefront-specific.</p>
+</section>
+
+<section id="features">
+<h2>Killer features by group</h2>
+<div class="grid g2">
+  <div class="card"><h3><span class="tag med">Premium medical</span> Complete Anatomy · Visible Body · Easy Anatomy</h3>
+  <ul class="tight"><li>Huge validated model libraries: 700+ to 11,000+ structures</li><li>Virtual dissection and AR</li><li>Video lectures, clinical videos, radiology (CT/MRI) correlation</li><li>Courses, quizzes, flashcards; Easy Anatomy now has an AI assistant</li></ul>
+  <p class="meta">Win on depth and brand. Lose on price ($75–$100/yr) and language coverage. <sup><a href="#s-ca_app">1</a> <a href="#s-vb_ph">2</a> <a href="#s-easy">3</a></sup></p></div>
+  <div class="card"><h3><span class="tag med">Exam-prep / web</span> Kenhub · BioDigital · Primal</h3>
+  <ul class="tight"><li>Exam-style quizzes and spaced repetition (Kenhub has 490+ quizzes)</li><li>Web-embeddable 3D and LMS use (BioDigital)</li><li>Institutional library licences (Primal)</li></ul>
+  <p class="meta">Win on the institutional channel. BioDigital left the paid individual market in May 2026. <sup><a href="#s-kh_price">1</a> <a href="#s-bd_2026">2</a></sup></p></div>
+  <div class="card"><h3><span class="tag med">Value medical</span> Anatomy Learning · Catfish · Asian locals</h3>
+  <ul class="tight"><li>One-time or low price ($17–$30)</li><li>Works offline</li><li>Asian locals add culturally specific content, e.g. acupuncture and meridians (掌上3D解剖, ~$20/yr), and MRI-based motion (teamLab)</li></ul>
+  <p class="meta">Proves the volume model. Weak brand and design. <sup><a href="#s-al_app">1</a> <a href="#s-cn_zs">2</a> <a href="#s-teamlab">3</a></sup></p></div>
+  <div class="card"><h3><span class="tag art">Artist</span> Art Anatomy · Skelly · Manikin · 3D Anatomy for the Artist</h3>
+  <ul class="tight"><li>Posing (manual, or from a photo in Art Anatomy)</li><li>Studio lighting, rim light, clay or outline render</li><li>Écorché layers from skin to bone</li><li>Export cut-outs for drawing over</li></ul>
+  <p class="meta">The field is fragmented: no single app does posing, écorché, lighting and form simplification well. Prices are $7–$30. <sup><a href="#s-artanat">1</a> <a href="#s-skelly">2</a> <a href="#s-manikin">3</a> <a href="#s-cf_artist">4</a></sup></p></div>
+</div>
+</section>
+
+<section id="map">
+<h2>Positioning map</h2>
+<p>X axis: approximate yearly cost for an individual (log scale). Y axis: content depth, our 1–5 rating <span class="tag est">estimate</span>. The dashed box is our target zone.</p>
+<div class="card"><svg id="posMap" viewBox="0 0 760 400" width="100%" role="img" aria-label="Positioning map: price vs depth"></svg></div>
+</section>
+
+<section id="gaps">
+<h2>Gaps we can own</h2>
+<div class="grid g2">
+  <div class="card"><h3>1. Language gap (strongest)</h3>Complete Anatomy lists 6 languages, Visible Body 7, BioDigital 8, Easy Anatomy 8 and Anatomy Learning 10. None of them include Thai, Vietnamese or Indonesian. In our search, the only anatomy-adjacent apps with Thai are artist tools (Manikin, Art Anatomy). <sup><a href="#competitors">table</a> <a href="#s-th_search">search</a></sup></div>
+  <div class="card"><h3>2. Price gap</h3>Students outside the US/EU face $75–$100/yr, or a first-year discount that disappears at renewal. Asian local players price at about $20/yr. <sup><a href="#s-ca_store">1</a> <a href="#s-cn_zs">2</a></sup></div>
+  <div class="card"><h3>3. Individual-buyer gap</h3>BioDigital retired its paid individual plans on 1 May 2026, and Primal sells to institutions. Individual students are underserved. <sup><a href="#s-bd_2026">1</a></sup></div>
+  <div class="card"><h3>4. Medical + art crossover</h3>No player serves both audiences. A shared 3D asset pipeline lets us ship two SKUs for roughly the cost of one <span class="tag est">estimate</span>.</div>
+  <div class="card"><h3>5. Web + offline + phone companion</h3>The leaders are native apps of 1.3–1.5 GB. A Wasm web version reaches Android-heavy markets (India, Indonesia, Vietnam) before we build native Android, and a phone companion app for short notes and flashcards fits commuting students <span class="tag est">estimate</span>.</div>
+  <div class="card"><h3>6. National-exam alignment</h3>Quizzes mapped to each country's licensing and university anatomy syllabus are hard for global players to localise at our price <span class="tag est">estimate</span>.</div>
+</div>
+</section>
+
+<section id="countries">
+<h2>Segment and country prioritisation</h2>
+<p>All scores are our judgement on a 1–5 scale <span class="tag est">estimate</span>, linked to evidence where we have it. Adjust the weights to stress-test the ranking.</p>
+<div class="card controls" id="weights"></div>
+<div class="table-wrap"><table id="ctyTable"><thead><tr><th>Market</th><th>Size</th><th>Willingness to pay</th><th>Competitive gap</th><th>Home advantage</th><th>iPad fit</th><th>Score</th><th>Lang</th><th>Why</th></tr></thead><tbody></tbody></table></div>
+<h3>Segment priority <span class="tag est">estimate</span></h3>
+<ol class="tight">
+  <li><b>Pre-clinical medical, nursing and allied-health students</b> (year 1–2). Largest volume, they must learn anatomy, and they are price-sensitive. This is our core.</li>
+  <li><b>Art students and hobby illustrators on iPad.</b> Low CAC via creator content, global reach, little need for medical review, and fast to ship.</li>
+  <li><b>Faculties and institutions</b> (B2B2C bulk seats). Stabilises revenue and acts as a distribution channel.</li>
+  <li><b>Practising professionals</b> (physio, fitness, nursing CPD). Later, through a patient-education add-on.</li>
+</ol>
+</section>
+
+<section id="positioning">
+<h2>Positioning</h2>
+<div class="callout"><b>For</b> healthcare and art students who need to understand the body in 3D, <b>[Product]</b> is the anatomy app <b>they can afford, in their own language, that works offline on iPad and in any browser</b>. <b>Unlike</b> Complete Anatomy or Visible Body, it costs about a fifth as much, speaks Thai, Vietnamese, Indonesian and more, and has an Artist edition built on the same accurate 3D body.</div>
+<div class="grid g2">
+  <div class="card"><h3><span class="tag med">Medical edition</span></h3><ul class="tight"><li>Systems explorer, layers and isolate; offline packs per system</li><li>Terminology in Latin, English and the local language side by side</li><li>Quizzes aligned to each country's exams; spaced repetition on the phone companion</li><li>Short notes and flashcards synced to the phone</li><li>Teacher mode with shareable scenes for lectures</li></ul></div>
+  <div class="card"><h3><span class="tag art">Artist edition</span></h3><ul class="tight"><li>Écorché layers from skin to bone, with muscle names</li><li>Posing with anatomical joint limits, plus a pose library</li><li>Studio lighting, clay, outline and planar ("form simplification") render</li><li>Transparent-PNG export to draw over in Procreate</li><li>Proportion guides (heads-tall, Loomis-compatible)</li></ul></div>
+</div>
+</section>
+
+<section id="pricing">
+<h2>Pricing proposal <span class="tag est">recommendation</span></h2>
+<div class="table-wrap"><table><thead><tr><th>Tier</th><th>Global (US$)</th><th>Thailand</th><th>SEA / India</th><th>Includes</th></tr></thead><tbody>
+<tr><td>Free</td><td>$0</td><td>฿0</td><td>0</td><td>Skeleton and one system, limited quizzes, ads-free</td></tr>
+<tr><td>Student (yearly)</td><td>$14.99</td><td>฿199–299</td><td>≈$3–6</td><td>All systems, offline, phone companion, quizzes</td></tr>
+<tr><td>Edition (one-time)</td><td>$19.99</td><td>฿399–499</td><td>≈$6–9</td><td>The current year's edition forever; the next edition is a discounted upgrade</td></tr>
+<tr><td>Artist (one-time)</td><td>$9.99 or $4.99/yr</td><td>฿199</td><td>≈$3</td><td>Écorché, posing, lighting, export. Matches Art Anatomy ($6.99/yr, $9.99 lifetime)</td></tr>
+<tr><td>Faculty / institution</td><td>$3–5 per seat/yr</td><td>Per-faculty deal</td><td>Per-faculty deal</td><td>Web (Wasm) access, teacher dashboard, bulk codes</td></tr>
+</tbody></table></div>
+<p class="meta">Benchmarks: Complete Anatomy $74.99/yr student; Easy Anatomy $99.99/yr; Kenhub $39/mo; Anatomy Learning $16.99 one-time; 掌上3D解剖 $19.99/yr; Art Anatomy $6.99/yr. Apple offers 900 price points from $0.29 across 175 storefronts, which makes per-country pricing practical. <sup><a href="#s-ca_store">1</a> <a href="#s-easy">2</a> <a href="#s-kh_price">3</a> <a href="#s-al_app">4</a> <a href="#s-cn_zs">5</a> <a href="#s-artanat">6</a> <a href="#s-apple_price">7</a></sup></p>
+</section>
+
+<section id="gtm">
+<h2>Go-to-market plan by market <span class="tag est">recommendation</span></h2>
+<div class="grid g2">
+  <div class="card"><h3>🇹🇭 Phase 1 — Thailand (months 0–9)</h3><ul class="tight">
+    <li>Ship the iPad MVP in Thai and English: musculoskeletal system first, plus the Artist edition.</li>
+    <li>Run an ambassador programme in medical, nursing and physio student clubs and art faculties.</li>
+    <li>Get 2–3 anatomy lecturers as content advisers, and pilot faculty licences.</li>
+    <li>Short Thai anatomy content on TikTok, YouTube and Facebook (e.g. "1 muscle in 60 s").</li>
+    <li>Time launches to the academic calendar: back-to-school and pre-exam promos.</li>
+  </ul></div>
+  <div class="card"><h3>🇻🇳🇮🇩🇵🇭 Phase 2 — SEA (months 6–18)</h3><ul class="tight">
+    <li>Add Vietnamese and Indonesian. The Philippines can launch in English straight away, with a nursing focus.</li>
+    <li>Make web (Wasm) a first-class channel, because these markets are Android-heavy.</li>
+    <li>Partner with local study-content creators and nursing-review centres.</li>
+    <li>Set aggressive local price tiers.</li>
+  </ul></div>
+  <div class="card"><h3>🇯🇵🇧🇷 Phase 3 — Japan, Brazil/LatAm (months 12–24)</h3><ul class="tight">
+    <li>Japan: lead with the Artist edition (manga and illustration schools); medical second, against teamLab.</li>
+    <li>Brazil/LatAm: Portuguese and Spanish, competing on the proven one-time-purchase model.</li>
+    <li>Ship the Android native app in this phase.</li>
+  </ul></div>
+  <div class="card"><h3>🇮🇳🇺🇸 Opportunistic</h3><ul class="tight">
+    <li>India: web-first, very low price, and institutional deals. Huge volume but low ARPU (see the revenue model).</li>
+    <li>US/EU: Artist edition only, via App Store search and art YouTubers. Do not fight Elsevier head-on in medicine.</li>
+    <li>China: deprioritise, because of local players and payment and regulatory friction.</li>
+  </ul></div>
+</div>
+<h3>KPIs to report to investors <span class="tag est">recommendation</span></h3>
+<ul class="tight"><li>Downloads, free→paid conversion, and blended ARPU per country</li><li>D30 retention, and usage peaks around exams</li><li>Number of faculty partners and seats</li><li>CAC by channel (creator, ambassador, ASO)</li><li>Content coverage: systems and languages shipped</li></ul>
+</section>
+
+<section id="calc">
+<h2>Simple revenue model <span class="tag est">estimate</span></h2>
+<p>Revenue ≈ reachable students × paid conversion × net price after the store fee. Defaults show one country cohort; change them to test scenarios.</p>
+<div class="card calc grid g3">
+  <div><label>Preset</label><select id="preset" style="width:100%;font:inherit;padding:6px">
+    <option value="th">Thailand (est. 40K anatomy learners/yr)</option>
+    <option value="in">India (129K MBBS first-years only)</option>
+    <option value="sea">VN+ID+PH combined (est. 300K)</option>
+    <option value="art">Global iPad artists reached (est. 500K)</option></select></div>
+  <div><label>Reachable students / year: <output id="oN"></output></label><input id="n" type="range" min="5000" max="1000000" step="5000"></div>
+  <div><label>Paid conversion %: <output id="oC"></output></label><input id="c" type="range" min="0.5" max="20" step="0.5"></div>
+  <div><label>Price paid (US$): <output id="oP"></output></label><input id="p" type="range" min="1" max="40" step="0.5"></div>
+  <div><label>Store fee %: <output id="oF"></output></label><input id="f" type="range" min="15" max="30" step="15"></div>
+  <div class="kpi"><b id="rev">—</b><span>net revenue per year</span></div>
+</div>
+<p class="meta">Only the India seat count (129,026) is sourced. The other preset populations are placeholders to replace with verified enrolment data. The Apple Small Business Program rate (15%) applies to developers earning under $1M/yr (not re-verified in this pass).</p>
+</section>
+
+<section id="risks">
+<h2>Risks and mitigations</h2>
+<div class="table-wrap"><table><thead><tr><th>Risk</th><th>Evidence</th><th>Mitigation <span class="tag est">rec.</span></th></tr></thead><tbody>
+<tr><td>Flutter 3D on the web is immature</td><td>Flutter Scene is pre-1.0 with breaking minor releases. Wasm in Safari needs 26.2+ and opt-in. The 2026 roadmap names no 3D/GPU work. <sup><a href="#s-fl_scene">1</a> <a href="#s-fl_wasm">2</a> <a href="#s-fl_road">3</a></sup></td><td>Run a 4–6 week tech spike: Flutter UI plus a 3D view (Flutter Scene, or a WebGL/three.js view in a platform view on the web). Benchmark on an iPad 9th gen.</td></tr>
+<tr><td>3D content cost and accuracy</td><td>Leaders have 700–11,000+ structures.</td><td>Start with musculoskeletal (shared by med and art); license base meshes, then refine; add a paid medical-reviewer board.</td></tr>
+<tr><td>Cheap new entrants</td><td>Art Anatomy launched in 2026 at $6.99/yr with 17 languages incl. Thai. <sup><a href="#s-artanat">1</a></sup></td><td>Compete on medical depth plus localisation; bundle Med and Art.</td></tr>
+<tr><td>Incumbent price response</td><td>Complete Anatomy already offers $29.99 for the first year. <sup><a href="#s-ca_store">1</a></sup></td><td>Our cost structure and local language are hard to copy; build the institutional channel early.</td></tr>
+<tr><td>Low ARPU in volume markets</td><td>Asian local apps charge about $20/yr. <sup><a href="#s-cn_zs">1</a></sup></td><td>Use B2B faculty seats and add-ons (patient education, exam packs).</td></tr>
+<tr><td>Market data quality</td><td>Reports differ by about 10×.</td><td>Use bottom-up enrolment data; commission local enrolment research.</td></tr>
+</tbody></table></div>
+<h3>Open questions to close next</h3>
+<ul class="tight"><li>Verified annual enrolment for medicine, nursing, allied health and art in TH, VN, ID and PH (from ministry statistics)</li><li>iPad share among students per country (a student survey)</li><li>3D asset licensing costs (Zygote and others)</li><li>Interviews with 10–15 Thai students and lecturers to validate price and features</li></ul>
+</section>
+
+<section id="sources">
+<h2>Sources</h2>
+<p class="meta">All accessed 27 Nov 2026. Dates in brackets are the page's own date where shown.</p>
+<ol class="sources" id="srcList"></ol>
+</section>
+
+<footer>Prepared for investor review. This is a draft: estimates are tagged, and facts are linked. Built as a static site that runs locally.</footer>
+</main>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
