@@ -61,12 +61,12 @@ nav a.on{background:var(--ink);color:var(--bg)}
 </table>
 <h2>สรุปในหน้าเดียว</h2>
 <ul>
-<li><strong>ผู้ใช้:</strong> นักศึกษาแพทย์ ทันตแพทย์ พยาบาล เภสัช ปี 1–2 ที่เรียนกายวิภาคกระดูกเป็นภาษาไทย และอาจารย์ที่สอน spot</li>
+<li><strong>ผู้ใช้:</strong> นักศึกษาแพทย์และบุคลากรด้านสุขภาพที่เรียนกายวิภาคกระดูกเป็นภาษาไทย ไม่ต้องเลือกวิชาชีพ ทุกคนเห็นเนื้อหาระดับละเอียดที่สุดชุดเดียวกัน (โหมดศิลปินทำภายหลัง) และอาจารย์ที่สอน spot</li>
 <li><strong>แพลตฟอร์ม:</strong> iPad เป็นหลัก (เรียนกับโมเดล 3D และฝึกสอบ spot), มือถือเป็นตัวช่วยทบทวนสั้น ๆ (flashcard และโน้ต ไม่มี 3D เต็ม), เว็บสำหรับอ่านฟรีและให้ Google ค้นเจอ</li>
 <li><strong>เทคโนโลยี UI:</strong> Flutter ใช้ widget ชุด Cupertino เป็นฐานทั้งหมด สร้าง widget เองเฉพาะที่ Cupertino ไม่มี (หมุด landmark, ชื่อ 3 ภาษา, progress bar, ปุ่มเครื่องมือใน viewport) 3D ใช้ flutter_scene</li>
 <li><strong>หน้าตา:</strong> สีหลักเป็น systemBlue แบบเดียวกับ iOS/iPadOS ตามที่ Jedt ขอ, ฟอนต์ Noto Sans Thai UI เพราะ SF Pro ไม่มีอักษรไทย, viewport 3D พื้นมืดเสมอเพื่อให้กระดูกเด่น</li>
-<li><strong>ขนาดงานใน Figma:</strong> iPad 22 หน้าจอ, มือถือ 6, เว็บ 3, component 21 ชุดที่ตั้งชื่อตาม widget ของ Flutter, ไอคอน 44 ตัว, ตัวแปรสีมีโหมด Light และ Dark</li>
-<li><strong>Prototype:</strong> 104 จุดที่คลิกได้ใน 7 flow (iPad 4, มือถือ 2, เว็บ 1)</li>
+<li><strong>ขนาดงานใน Figma:</strong> iPad 21 หน้าจอ, มือถือ 6, เว็บ 3, component 21 ชุดที่ตั้งชื่อตาม widget ของ Flutter, ไอคอน 44 ตัว, ตัวแปรสีมีโหมด Light และ Dark</li>
+<li><strong>Prototype:</strong> 102 จุดที่คลิกได้ใน 7 flow (iPad 4, มือถือ 2, เว็บ 1)</li>
 <li><strong>ผลตรวจ:</strong> ฟอนต์ สี และ component สอดคล้องกันทุกหน้า พบ contrast ของป้ายสถานะสีเขียวและส้มต่ำ (2.2 : 1) จึงเพิ่มสีข้อความชุด <code>text/*</code> แก้แล้ว ส่วนที่ยังขาดดูใน <a href="verification.html">ผลตรวจ</a></li>
 </ul>
 <h2>เอกสารในส่วนนี้</h2>
@@ -101,7 +101,7 @@ nav a.on{background:var(--ink);color:var(--bg)}
 </tr>
 <tr>
 <td>03 iPad (primary)</td>
-<td>22 หน้าจอ 1180 × 820 (iPad Air 11" แนวนอน)</td>
+<td>21 หน้าจอ 1180 × 820 (iPad Air 11" แนวนอน)</td>
 </tr>
 <tr>
 <td>04 Phone companion</td>

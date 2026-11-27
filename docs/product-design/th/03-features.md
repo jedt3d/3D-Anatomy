@@ -11,11 +11,10 @@
 | 3 | Landmarks | [iPad/21 Landmarks](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-519) | v0.1 Alpha | พื้นฐานฟรี |
 | 4 | แผนที่จุดเกาะกล้ามเนื้อ | [iPad/22 Attachments](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-706) | v0.1 Alpha (แขน) | ฟรี |
 | 5 | ฝึกสอบ spot จับเวลา | [iPad/30](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-828) → [31](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-1151) → [32](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-1208) → [33](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=14-1275) | v0.5 Beta | คลังเต็ม + สถิติจุดอ่อนเป็น Pro |
-| 6 | เลนส์วิชาชีพ | [iPad/02 Onboarding](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-49), [iPad/70 ฉัน](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1735) | v0.5 Beta | ฟรี |
-| 7 | จุดคลินิก + กะโหลก/ฟัน FDI | [iPad/24 Clinical](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-1086), [iPad/23 Skull & FDI](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-870) | v0.9 | เลนส์คลินิกเต็มเป็น Pro |
-| 8 | Offline บน iPad | [iPad/60](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1361), [iPad/61](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1543) | v0.5 Beta | Pro |
-| 9 | เว็บอ่านฟรี | [Web/01](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=18-2), [Web/03](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=18-270) | v0.1 (แขน) → ครบใน v0.9 | ฟรีตลอด |
-| 10 | ปุ่มแจ้งแก้ + สถานะ | [iPad/40 Sheet](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=15-1164), [iPad/41 My reports](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=15-1402) | v0.1 Alpha | ฟรีตลอด |
+| 6 | จุดคลินิกชุดเดียวทุก landmark + กะโหลก/ฟัน FDI | [iPad/24 Clinical](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-1086), [iPad/23 Skull & FDI](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-870) | v0.9 | จุดคลินิกเต็มเป็น Pro |
+| 7 | Offline บน iPad | [iPad/60](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1361), [iPad/61](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1543) | v0.5 Beta | Pro |
+| 8 | เว็บอ่านฟรี | [Web/01](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=18-2), [Web/03](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=18-270) | v0.1 (แขน) → ครบใน v0.9 | ฟรีตลอด |
+| 9 | ปุ่มแจ้งแก้ + สถานะ | [iPad/40 Sheet](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=15-1164), [iPad/41 My reports](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=15-1402) | v0.1 Alpha | ฟรีตลอด |
 
 ## 2. Should-have (ถ้าทันในปีแรก)
 
@@ -30,7 +29,7 @@
 
 | Feature | หน้าจอ | เหตุผล |
 |---|---|---|
-| Onboarding 3 ขั้น | [iPad/01](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-2), [02](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-49), [03](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-132) | เก็บเลนส์ ชั้นปี ลำดับภาษา และความยินยอม PDPA ตั้งแต่แรก |
+| Onboarding 2 ขั้น | [iPad/01](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-2), [02](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-132) | เก็บลำดับภาษาและความยินยอม PDPA ตั้งแต่แรก ไม่ต้องเลือกวิชาชีพ |
 | หน้าหลัก "เรียนต่อ" | [iPad/10 Home](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-320) | กลับไปจุดเดิมในแตะเดียว และชวนทำ spot วันละนิด |
 | คลังกระดูกแบบ split view | [iPad/11 Library](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=11-204) | หาเจอได้โดยไม่ต้องหมุนโมเดล |
 | ค้นหาสามภาษา | [iPad/12 Search](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=11-554), [Phone/05](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=17-358) | นักศึกษาจำได้บางภาษา |
@@ -41,4 +40,4 @@
 
 | ฟรีตลอด | Pro **(ประมาณการ)** |
 |---|---|
-| viewer กระดูก 3D, ชื่อ 3 ภาษาและเสียงอ่าน, หน้าเว็บอ่านฟรี, landmarks พื้นฐาน, ปุ่มแจ้งแก้ | คลัง spot เต็มและสถิติจุดอ่อน, แพ็ก offline, เลนส์คลินิกเต็ม, โมดูลกล้ามเนื้อ 3D, ซิงก์โน้ต |
+| viewer กระดูก 3D, ชื่อ 3 ภาษาและเสียงอ่าน, หน้าเว็บอ่านฟรี, landmarks พื้นฐาน, ปุ่มแจ้งแก้ | คลัง spot เต็มและสถิติจุดอ่อน, แพ็ก offline, จุดคลินิกเต็ม, โมดูลกล้ามเนื้อ 3D, ซิงก์โน้ต |

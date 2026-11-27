@@ -6,7 +6,7 @@ Prototype อยู่ในไฟล์ Figma เดียวกับ UI ก�
 
 | Flow | เริ่มที่ | เส้นทางที่คลิกได้ |
 |---|---|---|
-| iPad · 1 Onboarding → Home | [เปิด](https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=8-2&starting-point-node-id=8%3A2) | ยินดีต้อนรับ → เลือกเลนส์ → ภาษาและความยินยอม → หน้าหลัก |
+| iPad · 1 Onboarding → Home | [เปิด](https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=8-2&starting-point-node-id=8%3A2) | ยินดีต้อนรับ → ภาษาและความยินยอม → หน้าหลัก |
 | iPad · 2 Learn | [เปิด](https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=8-320&starting-point-node-id=8%3A320) | หน้าหลัก → viewer → landmarks / จุดเกาะ / จุดคลินิก → แจ้งแก้ · คลัง → ค้นหา → landmark · การ์ดกะโหลก → FDI |
 | iPad · 3 Spot exam | [เปิด](https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=14-828&starting-point-node-id=14%3A828) | ตั้งค่า → คำถาม → เฉลย → ผลสอบ → ทบทวนข้อผิด / สอบใหม่ · เฉลย → แจ้งแก้ · ตั้งค่า → โหมดอาจารย์ |
 | iPad · 4 Me | [เปิด](https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=16-1735&starting-point-node-id=16%3A1735) | ฉัน → รายการที่ฉันแจ้ง · ฉัน → ข้อมูล offline → ดาวน์โหลด → alert ยืนยัน |
@@ -14,15 +14,15 @@ Prototype อยู่ในไฟล์ Figma เดียวกับ UI ก�
 | มือถือ · Quick lookup | [เปิด](https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=17-358&starting-point-node-id=17%3A358) | ค้นหา → รายละเอียดศัพท์ |
 | เว็บ | [เปิด](https://www.figma.com/proto/6wrlr1quIhFyyvoT0bJGgk?node-id=18-270&starting-point-node-id=18%3A270) | ดัชนี → หน้าอ่าน Femur → viewer 3D บนเว็บ → กลับหน้าอ่าน |
 
-ทั้งหมด 104 จุดที่คลิกได้ ใช้ Smart animate 300 ms สำหรับการไปหน้าถัดไป และ dissolve 200 ms สำหรับ sheet, alert และการสลับแท็บ
+ทั้งหมด 102 จุดที่คลิกได้ ใช้ Smart animate 300 ms สำหรับการไปหน้าถัดไป และ dissolve 200 ms สำหรับ sheet, alert และการสลับแท็บ
 
 ## 2. หน้าจอ iPad (1180 × 820)
 
 ### Onboarding
 | | | |
 |---|---|---|
-| ![](img/ipad-01-welcome.webp) | ![](img/ipad-02-lens.webp) | ![](img/ipad-03-language.webp) |
-| [01 ยินดีต้อนรับ](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-2) | [02 เลือกเลนส์วิชาชีพ](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-49) | [03 ภาษาและความยินยอม beta](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-132) |
+| ![](img/ipad-01-welcome.webp) | ![](img/ipad-02-language.webp) | |
+| [01 ยินดีต้อนรับ](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-2) | [02 ภาษาและความยินยอม beta](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=8-132) | |
 
 ### หน้าหลัก คลัง และค้นหา
 | | | |
@@ -36,7 +36,7 @@ Prototype อยู่ในไฟล์ Figma เดียวกับ UI ก�
 | ![](img/ipad-20-viewer.webp) | ![](img/ipad-21-landmarks.webp) | ![](img/ipad-22-attachments.webp) |
 | [20 โครงกระดูก](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=11-759) | [21 Landmarks (Femur)](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-519) | [22 แผนที่จุดเกาะ](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-706) |
 | ![](img/ipad-23-skull-fdi.webp) | ![](img/ipad-24-clinical.webp) | |
-| [23 กะโหลกแยกชิ้นและฟัน FDI](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-870) | [24 จุดคลินิก (เลนส์พยาบาล)](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-1086) | |
+| [23 กะโหลกแยกชิ้นและฟัน FDI](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-870) | [24 จุดคลินิก (หมวดฉีดยา)](https://www.figma.com/design/6wrlr1quIhFyyvoT0bJGgk?node-id=13-1086) | |
 
 ### ฝึกสอบ spot และโหมดอาจารย์
 | | | |

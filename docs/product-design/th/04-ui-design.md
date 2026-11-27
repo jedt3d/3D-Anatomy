@@ -22,7 +22,6 @@
 | สีอ่อน | `tint/*` (ฝังความโปร่งไว้ในค่า 15% / 26%) | ปุ่ม tinted พื้นป้าย แถวที่เลือก | `color.withValues(alpha: …)` |
 | Viewport | `viewport/background` #111217, `surface`, `bone` | พื้น 3D มืดเสมอ แผงบน viewport | ค่าคงที่ |
 | กายวิภาค | `anatomy/origin` แดง, `insertion` น้ำเงิน, `landmark` ส้ม, `clinical` เขียว | สีหมุดและแผนที่จุดเกาะ | ค่าคงที่ใน theme extension |
-| เลนส์ | `lens/medicine, dentistry, nursing, pharmacy` | สีประจำเลนส์ | theme extension |
 
 ## 3. ตัวอักษร
 
