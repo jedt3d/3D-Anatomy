@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="th">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>3D Pipeline docs · 3D Pipeline</title>
+<title>เอกสาร 3D Pipeline · 3D Pipeline</title>
 <link rel="stylesheet" href="../assets/style.css">
 <style>
 .doc{max-width:900px}
@@ -13,60 +13,62 @@
 .doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
 .doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
 .doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.doc a{color:var(--accent2)}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
 .doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
 nav a.on{background:var(--ink);color:var(--bg)}
 </style>
 </head>
 <body>
-<header class="top"><nav><a href="../index.html">← Market review</a><a href="index.html" class="on">Overview</a><a href="runtime-comparison.html">Runtime comparison</a><a href="pipeline.html">Pipeline</a><a href="setup-workflow.html">Setup &amp; workflow</a><a href="evidence.html">Evidence &amp; lessons</a></nav></header>
-<main class="doc">
-<p class="meta">3D Anatomy · Technical research · generated from <code>docs/3d-pipeline/README.md</code></p>
-<h1>3D Pipeline docs</h1>
-<p><em>Last updated: 2026-11-27</em></p>
-<p>Research and working notes for how 3D anatomy models get from the art tools (LightWave 3D, 3D-Coat, Blender) into the app (Flutter on iPad, Android, and Web).</p>
+<header class="top"><nav><a href="../../index.html">← หน้ารวมรายงาน</a><a href="index.html" class="on">ภาพรวม</a><a href="runtime-comparison.html">เปรียบเทียบ runtime</a><a href="pipeline.html">Pipeline</a><a href="setup-workflow.html">การตั้งค่าและ workflow</a><a href="evidence.html">หลักฐานและบทเรียน</a></nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · งานวิจัยด้านเทคนิค · สร้างจาก <code>docs/3d-pipeline/th/README.md</code> · <a href="https://github.com/jedt3d/3D-Anatomy/blob/main/docs/3d-pipeline/README.md">ต้นฉบับภาษาอังกฤษ</a></p>
+<h1>เอกสาร 3D Pipeline</h1>
+<p><em>อัปเดตล่าสุด: 2026-11-27</em></p>
+<p>งานวิจัยและบันทึกการทำงานว่าโมเดล 3D กายวิภาคจะเดินทางจากโปรแกรมสร้างงาน (LightWave 3D, 3D-Coat, Blender) ไปเข้าแอป (Flutter บน iPad, Android และ Web) อย่างไร</p>
 <table>
 <thead>
 <tr>
-<th>File</th>
-<th>What it covers</th>
+<th>ไฟล์</th>
+<th>เนื้อหา</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="runtime-comparison.html">00-initial-recommendation.md</a></td>
-<td>First comparison of runtimes (flutter_scene, thermion, three.js, Unity, Godot, Bevy)</td>
+<td>เปรียบเทียบ runtime รอบแรก (flutter_scene, thermion, three.js, Unity, Godot, Bevy)</td>
 </tr>
 <tr>
 <td><a href="pipeline.html">01-pipeline.md</a></td>
-<td>The pipeline we should build: tools, formats, compression, metadata, packaging, offline</td>
+<td>pipeline ที่ควรสร้าง: เครื่องมือ, ฟอร์แมต, การบีบอัด, metadata, การแพ็ก, การใช้งาน offline</td>
 </tr>
 <tr>
 <td><a href="setup-workflow.html">02-setup-workflow.md</a></td>
-<td>How to set it up: tool versions, repo layout, export and optimize scripts, Flutter setup, CI, artist checklist</td>
+<td>วิธีตั้งค่า: เวอร์ชันเครื่องมือ, โครงสร้าง repo, สคริปต์ export และ optimize, การตั้งค่า Flutter, CI, checklist สำหรับ artist</td>
 </tr>
 <tr>
 <td><a href="evidence.html">03-evidence-and-lessons.md</a></td>
-<td>What others did, what worked, what went wrong, and what that means for us</td>
+<td>คนอื่นทำอย่างไร อะไรได้ผล อะไรพัง และมีความหมายอย่างไรกับเรา</td>
 </tr>
 </tbody>
 </table>
-<h2>Decision so far</h2>
+<h2>สิ่งที่ตัดสินใจแล้ว</h2>
 <ul>
-<li><strong>One app, one renderer:</strong> Flutter everywhere (iPad, Android, Web) with <strong>flutter_scene</strong> for 3D. No separate three.js web pipeline.</li>
-<li><strong>One asset format:</strong> glTF 2.0 binary (<strong>GLB</strong>), exported only from <strong>Blender</strong>. LightWave and 3D-Coat feed Blender.</li>
-<li><strong>Gate:</strong> a 2-week spike must pass before we commit (see 01-pipeline.md, section 7). three.js stays a documented fallback only.</li>
-<li><strong>No full game engine</strong> (Godot/Unity) for now. See 03-evidence-and-lessons.md for why.</li>
+<li><strong>แอปเดียว ตัวเรนเดอร์เดียว:</strong> ใช้ Flutter ทุกแพลตฟอร์ม (iPad, Android, Web) และใช้ <strong>flutter_scene</strong> สำหรับ 3D ไม่มี pipeline three.js แยกสำหรับเว็บ</li>
+<li><strong>ฟอร์แมต asset เดียว:</strong> glTF 2.0 แบบ binary (<strong>GLB</strong>) ที่ export จาก <strong>Blender</strong> เท่านั้น LightWave และ 3D-Coat ส่งงานเข้า Blender</li>
+<li><strong>ด่านตัดสิน:</strong> ต้องผ่าน spike 2 สัปดาห์ก่อนจะ commit จริง (ดู 01-pipeline.md หัวข้อ 7) three.js เป็นแค่แผนสำรองที่บันทึกไว้</li>
+<li><strong>ยังไม่ใช้ game engine เต็มตัว</strong> (Godot/Unity) เหตุผลอยู่ใน 03-evidence-and-lessons.md</li>
 </ul>
-<h2>Words used here</h2>
+<h2>คำศัพท์ที่ใช้</h2>
 <ul>
-<li><strong>GLB</strong>: one-file glTF 2.0. Geometry, materials, textures, node tree, custom data.</li>
-<li><strong>meshopt</strong>: <code>EXT_meshopt_compression</code>, geometry compression that decodes fast.</li>
-<li><strong>KTX2 / Basis</strong>: <code>KHR_texture_basisu</code>, GPU-compressed textures that stay small in GPU memory.</li>
-<li><strong>LOD</strong>: lower-detail copies of a mesh, used when zoomed out.</li>
-<li><strong>Spike</strong>: a short throwaway build to answer one risky question.</li>
+<li><strong>GLB</strong>: glTF 2.0 แบบไฟล์เดียว มีทั้ง geometry, material, texture, โครงสร้าง node และข้อมูล custom</li>
+<li><strong>meshopt</strong>: <code>EXT_meshopt_compression</code> การบีบอัด geometry ที่ถอดรหัสได้เร็ว</li>
+<li><strong>KTX2 / Basis</strong>: <code>KHR_texture_basisu</code> texture แบบบีบอัดสำหรับ GPU ที่ยังเล็กอยู่แม้อยู่ในหน่วยความจำ GPU</li>
+<li><strong>LOD</strong>: สำเนาของ mesh ที่ละเอียดน้อยลง ใช้ตอนซูมออก</li>
+<li><strong>Spike</strong>: การทำ build ทดลองสั้นๆ แบบทิ้งได้ เพื่อตอบคำถามเสี่ยงข้อเดียว</li>
 </ul>
-<footer>Source: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/3d-pipeline">docs/3d-pipeline</a> on GitHub.</footer>
+<p><em>ต้นฉบับภาษาอังกฤษอยู่ที่ <code>docs/3d-pipeline/*.md</code></em></p>
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/3d-pipeline">docs/3d-pipeline</a> บน GitHub</footer>
 </main>
 </body>
 </html>

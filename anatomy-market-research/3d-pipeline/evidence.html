@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="th">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>03. Evidence: what others did and what they learned · 3D Pipeline</title>
+<title>03. หลักฐาน: คนอื่นทำอย่างไรและได้บทเรียนอะไร · 3D Pipeline</title>
 <link rel="stylesheet" href="../assets/style.css">
 <style>
 .doc{max-width:900px}
@@ -13,187 +13,196 @@
 .doc code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
 .doc :not(pre)>code{background:var(--chip);padding:1px 5px;border-radius:4px}
 .doc blockquote{border-left:4px solid var(--accent2);background:var(--card);margin:14px 0;padding:8px 16px;border-radius:0 8px 8px 0}
-.doc a{color:var(--accent2)}
+.doc a{color:var(--accent2);overflow-wrap:anywhere}
 .doc li{margin:3px 0}
+.doc p,.doc li{overflow-wrap:anywhere}
 nav a.on{background:var(--ink);color:var(--bg)}
 </style>
 </head>
 <body>
-<header class="top"><nav><a href="../index.html">← Market review</a><a href="index.html">Overview</a><a href="runtime-comparison.html">Runtime comparison</a><a href="pipeline.html">Pipeline</a><a href="setup-workflow.html">Setup &amp; workflow</a><a href="evidence.html" class="on">Evidence &amp; lessons</a></nav></header>
-<main class="doc">
-<p class="meta">3D Anatomy · Technical research · generated from <code>docs/3d-pipeline/03-evidence-and-lessons.md</code></p>
-<h1>03. Evidence: what others did and what they learned</h1>
-<p><em>Last updated: 2026-11-27. Every claim has a source and date. "Not verified" means I could not read the primary source in this pass.</em></p>
-<h2>1. flutter_scene (our main bet)</h2>
-<p><strong>What it is now.</strong> "A realtime 3D engine for Flutter, built on Flutter GPU and Impeller", by Brandon DeRosier, who also built Flutter GPU (fscene.dev). MIT. GitHub: ~760 stars, 82 forks, 22 open issues, 10 open PRs (read 2026-11-27). Latest on pub.dev: 0.24.x (0.24.3 dated 2026-10-09; docs show 0.24.6). Needs Flutter 3.47+. Platforms: iOS, Android, Web, macOS, Windows, Linux.</p>
-<p><strong>Features that matter to us (README):</strong> glTF import (.glb, .gltf), PBR, image-based lighting, LODs, instancing, custom <code>.fmat</code> GLSL materials (needed for clipping/x-ray), <strong>raycast picking</strong>, orbit camera, <strong>Flutter widgets on 3D surfaces</strong>, screen-reader semantics, hot reload of models and shaders, a desktop editor.
-Not mentioned: clipping planes, transparency sorting details, meshopt/KTX2 support. → test in the spike.</p>
-<p><strong>History (why older articles disagree):</strong>
-| Date | State | Source |
+<header class="top"><nav><a href="../../index.html">← หน้ารวมรายงาน</a><a href="index.html">ภาพรวม</a><a href="runtime-comparison.html">เปรียบเทียบ runtime</a><a href="pipeline.html">Pipeline</a><a href="setup-workflow.html">การตั้งค่าและ workflow</a><a href="evidence.html" class="on">หลักฐานและบทเรียน</a></nav></header>
+<main class="doc thai">
+<p class="meta">3D Anatomy · งานวิจัยด้านเทคนิค · สร้างจาก <code>docs/3d-pipeline/th/03-evidence-and-lessons.md</code> · <a href="https://github.com/jedt3d/3D-Anatomy/blob/main/docs/3d-pipeline/03-evidence-and-lessons.md">ต้นฉบับภาษาอังกฤษ</a></p>
+<h1>03. หลักฐาน: คนอื่นทำอย่างไรและได้บทเรียนอะไร</h1>
+<p><em>อัปเดตล่าสุด: 2026-11-27 ทุกข้อมูลมีแหล่งอ้างอิงและวันที่ "ยังไม่ยืนยัน" หมายถึงรอบนี้อ่านแหล่งข้อมูลต้นทางไม่ได้</em></p>
+<h2>1. flutter_scene (ตัวเลือกหลักของเรา)</h2>
+<p><strong>ตอนนี้คืออะไร</strong> "A realtime 3D engine for Flutter, built on Flutter GPU and Impeller" โดย Brandon DeRosier ซึ่งเป็นคนสร้าง Flutter GPU ด้วย (fscene.dev) License MIT บน GitHub มี ~760 stars, 82 forks, 22 open issues, 10 open PRs (อ่านเมื่อ 2026-11-27) เวอร์ชันล่าสุดบน pub.dev: 0.24.x (0.24.3 ลงวันที่ 2026-10-09; หน้าเอกสารแสดง 0.24.6) ต้องใช้ Flutter 3.47+ แพลตฟอร์ม: iOS, Android, Web, macOS, Windows, Linux</p>
+<p><strong>ฟีเจอร์ที่สำคัญกับเรา (README):</strong> import glTF (.glb, .gltf), PBR, image-based lighting, LOD, instancing, material GLSL แบบ custom <code>.fmat</code> (จำเป็นสำหรับ clipping/x-ray), <strong>raycast picking</strong>, orbit camera, <strong>Flutter widget บนพื้นผิว 3D</strong>, semantics สำหรับ screen reader, hot reload ของโมเดลและ shader, editor บน desktop</p>
+<p>ที่ไม่ได้กล่าวถึง: clipping plane, รายละเอียดการเรียงลำดับความโปร่งใส, การรองรับ meshopt/KTX2 → ต้องทดสอบใน spike</p>
+<p><strong>ประวัติ (ทำไมบทความเก่าถึงพูดไม่ตรงกัน):</strong>
+| วันที่ | สถานะ | แหล่ง |
 |---|---|---|
-| Aug 2024 | Flutter GPU + flutter_scene in preview, main channel only, Impeller required, web not a target | flutter.dev blog "Getting started with Flutter GPU" (2024-08-06); Flutter Force Weekly 03a (2024-08-11) |
-| 2026 | Works on Flutter 3.47 stable; web via its own WebGL2 backend; pre-1.0 with breaking minor releases | pub.dev flutter_scene, GitHub README |</p>
-<p><strong>Who has built with it:</strong></p>
+| ส.ค. 2024 | Flutter GPU + flutter_scene ยังเป็น preview ใช้ได้เฉพาะ main channel ต้องใช้ Impeller และเว็บยังไม่ใช่เป้าหมาย | บล็อก flutter.dev "Getting started with Flutter GPU" (2024-08-06); Flutter Force Weekly 03a (2024-08-11) |
+| 2026 | ใช้ได้บน Flutter 3.47 stable; เว็บใช้ backend WebGL2 ของตัวเอง; ยังก่อน 1.0 และ minor release อาจ breaking | pub.dev flutter_scene, README บน GitHub |</p>
+<p><strong>ใครเคยสร้างงานด้วยมันบ้าง:</strong></p>
 <ul>
-<li><strong>KBTG (Kasikorn Business-Technology Group, Thailand)</strong>: Amorn Apichattanakul, "Bring 3D to Life in Flutter with flutter_scene and Flutter GPU" (2026-10-14): a 3D hotel tour and island, focused on "what each 3D effect actually costs on a phone". Full article could not be fetched (Medium blocked); worth reading directly, and worth contacting, since KBTG is local.</li>
-<li><strong>Showcase demos</strong> by the author: Dashsurfers (endless runner) and Dashmap (streaming 3D world map); site lists ~40 examples.</li>
-<li><strong>Community experiments</strong>: "flutter_scene experiments" (Chongqing miniature from OpenStreetMap data; real-time worm swarm), "best viewed on a laptop browser".</li>
-<li>I found <strong>no shipped medical/anatomy app</strong> on flutter_scene. We would likely be early.</li>
+<li><strong>KBTG (กสิกร บิซิเนส-เทคโนโลยี กรุ๊ป)</strong>: คุณ Amorn Apichattanakul, "Bring 3D to Life in Flutter with flutter_scene and Flutter GPU" (2026-10-14) ทำ 3D hotel tour และเกาะ โดยเน้นว่า "เอฟเฟกต์ 3D แต่ละอย่างมีต้นทุนเท่าไรบนมือถือ" อ่านบทความเต็มไม่ได้ (Medium บล็อก) ควรไปอ่านโดยตรง และควรติดต่อเพราะ KBTG อยู่ในไทย</li>
+<li><strong>Showcase demo</strong> ของผู้สร้าง: Dashsurfers (endless runner) และ Dashmap (แผนที่โลก 3D แบบ streaming) เว็บไซต์ระบุว่ามีตัวอย่าง ~40 ตัว</li>
+<li><strong>การทดลองจากชุมชน</strong>: "flutter_scene experiments" (เมือง Chongqing จิ๋วจากข้อมูล OpenStreetMap; ฝูงหนอนแบบ real-time) ระบุว่า "ดูบนเบราว์เซอร์ laptop ดีที่สุด"</li>
+<li>ผม <strong>ไม่พบแอปการแพทย์/กายวิภาคที่ ship แล้ว</strong> บน flutter_scene เราน่าจะเป็นกลุ่มแรกๆ</li>
 </ul>
-<p><strong>Lessons from its open issues (GitHub, read 2026-11-27):</strong>
-| Issue | Lesson for us |
+<p><strong>บทเรียนจาก open issues (GitHub อ่านเมื่อ 2026-11-27):</strong>
+| Issue | บทเรียนสำหรับเรา |
 |---|---|
-| #351 (2026-08-21) ~3x frame-rate drop on a branch vs 0.20.0, same scene | Pin the version; benchmark every upgrade with our own scene |
-| #285 (2026-08-01) GPU memory has no ownership/accounting/release story | Loading/unloading packs on iPad may leak; test in spike (item 8) |
-| #234 (2026-07-12) directional-light shadows show stripes on Android/mobile only | Avoid dynamic shadows; use baked AO (we want that anyway) |
-| #354, #355 (2026-08-23) shader bundles packaged twice; stale backend files shipped | App size may be bigger than needed; check IPA/APK size |
-| #382 (2026-09-03) widget-on-surface texture crushes dark colours | Don't put text on 3D surfaces; draw labels as normal Flutter overlay |
-| #314 Android emulator crash (SwANGLE) | Test on real Android devices |</p>
-<p><strong>Verdict:</strong> feature list fits an anatomy viewer, and the engine is active. The risks are maturity (pre-1.0, single main author, perf regressions, GPU memory) and no known medical app yet. That is why the spike is a gate, and why 3D stays behind one interface.</p>
-<h2>2. Other ways people put 3D in Flutter</h2>
+| #351 (2026-08-21) เฟรมเรตตก ~3 เท่าในบาง branch เทียบกับ 0.20.0 ด้วย scene เดียวกัน | pin เวอร์ชัน; benchmark ทุกครั้งที่อัปเกรดด้วย scene ของเราเอง |
+| #285 (2026-08-01) หน่วยความจำ GPU ยังไม่มีระบบ ownership/การนับ/การคืน | การโหลด/ปลดแพ็กบน iPad อาจรั่ว; ทดสอบใน spike (ข้อ 8) |
+| #234 (2026-07-12) เงาจาก directional light เป็นลายบน Android/มือถือเท่านั้น | หลีกเลี่ยงเงาแบบ dynamic; ใช้ AO ที่ bake ไว้ (ซึ่งเราต้องการอยู่แล้ว) |
+| #354, #355 (2026-08-23) shader bundle ถูกแพ็กซ้ำสองครั้ง; ไฟล์ backend เก่าถูก ship ไปด้วย | ขนาดแอปอาจใหญ่เกินจำเป็น; ตรวจขนาด IPA/APK |
+| #382 (2026-09-03) texture ของ widget บนพื้นผิวทำให้สีมืดถูกกด | อย่าวางตัวหนังสือบนพื้นผิว 3D; วาด label เป็น overlay ของ Flutter ตามปกติ |
+| #314 Android emulator แครช (SwANGLE) | ทดสอบบนเครื่อง Android จริง |</p>
+<p><strong>สรุป:</strong> ฟีเจอร์ตรงกับ viewer กายวิภาค และ engine ยังพัฒนาอย่างต่อเนื่อง ความเสี่ยงคือความ mature (ก่อน 1.0, มีผู้เขียนหลักคนเดียว, ประสิทธิภาพถดถอย, หน่วยความจำ GPU) และยังไม่มีแอปการแพทย์ที่รู้จัก นี่คือเหตุผลที่ spike เป็นด่านตัดสิน และที่ 3D ต้องอยู่หลัง interface เดียว</p>
+<h2>2. วิธีอื่นที่คนใช้ใส่ 3D ใน Flutter</h2>
 <table>
 <thead>
 <tr>
-<th>Approach</th>
-<th>Evidence</th>
-<th>Lesson</th>
+<th>วิธี</th>
+<th>หลักฐาน</th>
+<th>บทเรียน</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>model_viewer_plus</strong> (WebView + Google <code>&lt;model-viewer&gt;</code>)</td>
-<td>pub.dev 1.10.0, ~49k downloads. Needs cleartext localhost on Android 9+, an Info.plist flag on iOS, CORS headers on web; "AR View may not be available on iOS 16+"; low render quality on some phones (issue #44)</td>
-<td>Good for "show one product model". Too limited for picking hundreds of parts, layers, clipping</td>
+<td><strong>model_viewer_plus</strong> (WebView + <code>&lt;model-viewer&gt;</code> ของ Google)</td>
+<td>pub.dev 1.10.0, ~49k ดาวน์โหลด ต้องเปิด cleartext localhost บน Android 9+, ตั้ง flag ใน Info.plist บน iOS, ต้องมี CORS header บนเว็บ; "AR View อาจใช้ไม่ได้บน iOS 16+"; คุณภาพการเรนเดอร์ต่ำบนมือถือบางรุ่น (issue #44)</td>
+<td>ดีสำหรับ "โชว์โมเดลสินค้าหนึ่งชิ้น" แต่จำกัดเกินไปสำหรับการเลือกชิ้นส่วนหลายร้อยชิ้น, layer, clipping</td>
 </tr>
 <tr>
-<td><strong>thermion</strong> (Filament engine for Flutter)</td>
-<td>GitHub nmfisher/thermion: iOS, Android, macOS, Windows, Web/WASM; Apache-2.0; ~220 stars; thermion_dart 0.5.0 (2026-08-20); multithreaded WASM needs COOP/COEP</td>
-<td>Strong renderer (Filament) but small project, mostly one maintainer</td>
+<td><strong>thermion</strong> (engine Filament สำหรับ Flutter)</td>
+<td>GitHub nmfisher/thermion: iOS, Android, macOS, Windows, Web/WASM; Apache-2.0; ~220 stars; thermion_dart 0.5.0 (2026-08-20); WASM แบบ multithread ต้องมี COOP/COEP</td>
+<td>ตัวเรนเดอร์แข็ง (Filament) แต่โปรเจกต์เล็ก ดูแลหลักโดยคนเดียว</td>
 </tr>
 <tr>
-<td><strong>Unity embedded in Flutter</strong></td>
-<td>flutter_unity_widget: last release 2024-01-08, marked <strong>discontinued</strong> on pub.dev; Flutter widgets over Unity on web don't receive taps. flutter_embed_unity 2.0.0 (2026-04-13): Android/iOS only, <strong>no web</strong>, one Unity instance, Unity stays in memory after dispose</td>
-<td>Embedding a game engine into Flutter is fragile and breaks our web target</td>
+<td><strong>ฝัง Unity ใน Flutter</strong></td>
+<td>flutter_unity_widget: release ล่าสุด 2024-01-08 ถูกระบุว่า <strong>discontinued</strong> บน pub.dev; บนเว็บ widget ของ Flutter ที่อยู่เหนือ Unity รับการแตะไม่ได้ flutter_embed_unity 2.0.0 (2026-04-13): Android/iOS เท่านั้น <strong>ไม่รองรับเว็บ</strong>, Unity ได้ instance เดียว และค้างในหน่วยความจำหลัง dispose</td>
+<td>การฝัง game engine ใน Flutter เปราะบาง และทำให้เป้าหมายเว็บของเราพัง</td>
 </tr>
 </tbody>
 </table>
-<h2>3. Game engines as the whole app</h2>
+<h2>3. ใช้ game engine เป็นทั้งแอป</h2>
 <table>
 <thead>
 <tr>
 <th>Engine</th>
-<th>Evidence</th>
-<th>Lesson</th>
+<th>หลักฐาน</th>
+<th>บทเรียน</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Godot 4</strong></td>
-<td>Web export needs WebAssembly + WebGL 2.0 (Godot docs). Release web build ~6.2 MB for 4.5.2, ~6.3 MB for 4.6.2; grew ~15% from 4.3 to 4.4; author notes "loading times are really long for godot (compared to unity)" (JohannesDeml/Godot-Web-LoadingTest). Forum threads report random crashes of HTML exports on iOS devices (2025)</td>
-<td>Fine engine, but web on iPad is the weak spot, and we would rebuild all app UI (Thai text, forms, IAP) in Godot plus a separate phone app</td>
+<td>export เว็บต้องใช้ WebAssembly + WebGL 2.0 (เอกสาร Godot) release build สำหรับเว็บ ~6.2 MB สำหรับ 4.5.2, ~6.3 MB สำหรับ 4.6.2; โตขึ้น ~15% จาก 4.3 ไป 4.4; ผู้ทดสอบระบุว่า "เวลาโหลดของ Godot นานมาก (เทียบกับ Unity)" (JohannesDeml/Godot-Web-LoadingTest) มีกระทู้ในฟอรัมรายงานว่า HTML export แครชแบบสุ่มบนอุปกรณ์ iOS (2025)</td>
+<td>engine ดี แต่เว็บบน iPad คือจุดอ่อน และเราต้องสร้าง UI ทั้งหมด (ภาษาไทย, ฟอร์ม, IAP) ใหม่ใน Godot บวกแอปมือถือแยกอีกตัว</td>
 </tr>
 <tr>
 <td><strong>Unity</strong></td>
-<td>Large web builds; licence terms; embedding issues above</td>
-<td>Overkill for mostly-static anatomy meshes</td>
+<td>build เว็บใหญ่; เงื่อนไข license; ปัญหาการฝังตามข้างบน</td>
+<td>เกินความจำเป็นสำหรับ mesh กายวิภาคที่ส่วนใหญ่อยู่นิ่ง</td>
 </tr>
 </tbody>
 </table>
-<h2>4. How established anatomy platforms did it</h2>
+<h2>4. แพลตฟอร์มกายวิภาคที่มีชื่อเสียงทำอย่างไร</h2>
 <table>
 <thead>
 <tr>
-<th>Product</th>
-<th>What is documented</th>
-<th>Lesson</th>
+<th>ผลิตภัณฑ์</th>
+<th>สิ่งที่มีบันทึกไว้</th>
+<th>บทเรียน</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Google Body → ZygoteBody</strong></td>
-<td>Google Body launched 2010-12-15 using JavaScript + WebGL, no plugins; Google shut it 2011-10-13; Zygote relaunched it 2012-01-09 and open-sourced the core as open-3d-viewer. Layers can be removed or made transparent; parts are labelled and searchable (Wikipedia)</td>
-<td>Layers + transparency + labels + search is the core feature set, and it has run on plain WebGL since 2010. We don't need a game engine for it</td>
+<td>Google Body เปิดตัว 2010-12-15 ใช้ JavaScript + WebGL ไม่ต้องใช้ปลั๊กอิน; Google ปิดเว็บ 2011-10-13; Zygote เปิดใหม่ 2012-01-09 และเปิดซอร์สแกนหลักเป็น open-3d-viewer ถอด layer หรือทำให้โปร่งใสได้; ชิ้นส่วนมี label และค้นหาได้ (Wikipedia)</td>
+<td>layer + ความโปร่งใส + label + การค้นหา คือชุดฟีเจอร์หลัก และรันบน WebGL ธรรมดามาตั้งแต่ 2010 เราไม่ต้องใช้ game engine เพื่อทำสิ่งนี้</td>
 </tr>
 <tr>
 <td><strong>BioDigital Human</strong></td>
-<td>Launched 2011 as web-based 3D body; "one of the early systems to leverage WebGL"; runs in browsers without plugins; &gt;1M users; offers APIs (Wikipedia)</td>
-<td>Web-first 3D anatomy is a proven business; their value is the content DB and API, not the renderer</td>
+<td>เปิดตัว 2011 เป็นร่างกาย 3D บนเว็บ; "หนึ่งในระบบแรกๆ ที่ใช้ WebGL"; รันในเบราว์เซอร์ไม่ต้องใช้ปลั๊กอิน; ผู้ใช้กว่า 1 ล้านคน; มี API (Wikipedia)</td>
+<td>3D กายวิภาคแบบ web-first เป็นธุรกิจที่พิสูจน์แล้ว คุณค่าของเขาอยู่ที่ฐานข้อมูลเนื้อหาและ API ไม่ใช่ตัวเรนเดอร์</td>
 </tr>
 <tr>
-<td>Complete Anatomy, Visible Body, etc.</td>
-<td>Rendering stack not publicly documented in sources I could read</td>
-<td>Not verified, so not used as evidence</td>
+<td>Complete Anatomy, Visible Body ฯลฯ</td>
+<td>ไม่มีเอกสารสาธารณะเรื่อง stack การเรนเดอร์ในแหล่งที่ผมอ่านได้</td>
+<td>ยังไม่ยืนยัน จึงไม่ใช้เป็นหลักฐาน</td>
 </tr>
 </tbody>
 </table>
-<h2>5. Asset tools</h2>
+<h2>5. เครื่องมือสร้าง asset</h2>
 <table>
 <thead>
 <tr>
-<th>Tool</th>
-<th>Evidence</th>
-<th>Lesson</th>
+<th>เครื่องมือ</th>
+<th>หลักฐาน</th>
+<th>บทเรียน</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>LightWave 2026</strong></td>
-<td>Released 2026-06-15 coverage (CG Channel): Windows 10+/macOS 14.1+, £795; features are VFX/modelling/rendering (MotoRig, Fracture, RiPR 2, Gaussian-splat preview). No glTF/USD export mentioned. Reallusion forum (2025-12-26) user asking to restore a LightWave export path</td>
-<td>Treat LightWave as a modelling source; hand off FBX/OBJ to Blender</td>
+<td>ข่าวเปิดตัว 2026-06-15 (CG Channel): Windows 10+/macOS 14.1+, £795; ฟีเจอร์เน้น VFX/modelling/เรนเดอร์ (MotoRig, Fracture, RiPR 2, preview Gaussian splat) ไม่มีการพูดถึง export glTF/USD กระทู้ฟอรัม Reallusion (2025-12-26) มีผู้ใช้ขอให้กลับมามีช่องทาง export ไป LightWave</td>
+<td>ใช้ LightWave เป็นต้นทางงาน modelling; ส่งต่อเป็น FBX/OBJ เข้า Blender</td>
 </tr>
 <tr>
 <td><strong>3D-Coat</strong></td>
-<td>Its API docs contain a <code>gltf::gltfExporter</code> class (docs generated 2025-12-25)</td>
-<td>glTF export exists in code; still route through Blender for one convention</td>
+<td>เอกสาร API มีคลาส <code>gltf::gltfExporter</code> (เอกสารสร้างเมื่อ 2025-12-25)</td>
+<td>มี glTF export ในโค้ด แต่ยังให้ผ่าน Blender เพื่อใช้ convention เดียว</td>
 </tr>
 <tr>
 <td><strong>Blender</strong></td>
-<td>Official glTF 2.0 importer/exporter in the manual, including custom properties → extras</td>
-<td>The de-facto hub for glTF pipelines</td>
+<td>มี glTF 2.0 importer/exporter อย่างเป็นทางการในคู่มือ รวมถึง custom properties → extras</td>
+<td>ศูนย์กลางมาตรฐานโดยพฤตินัยของ pipeline glTF</td>
 </tr>
 <tr>
 <td><strong>glTF Transform CLI</strong></td>
-<td>v4.5.0: <code>inspect</code>, <code>optimize</code>, <code>dedup</code>, <code>prune</code>, <code>weld</code>, <code>simplify</code>, <code>meshopt</code>, <code>draco</code>, <code>etc1s</code>, <code>uastc</code>, <code>webp</code>… Docs say <code>optimize</code> defaults "may not be ideal for all scenes", run <code>inspect</code> first</td>
-<td>Script individual steps, don't rely on one-shot optimize</td>
+<td>v4.5.0: <code>inspect</code>, <code>optimize</code>, <code>dedup</code>, <code>prune</code>, <code>weld</code>, <code>simplify</code>, <code>meshopt</code>, <code>draco</code>, <code>etc1s</code>, <code>uastc</code>, <code>webp</code>… เอกสารบอกว่าค่าเริ่มต้นของ <code>optimize</code> "อาจไม่เหมาะกับทุก scene" ให้รัน <code>inspect</code> ก่อน</td>
+<td>เขียนสคริปต์เป็นขั้นตอนแยก อย่าพึ่ง optimize ครั้งเดียวจบ</td>
 </tr>
 <tr>
 <td><strong>Khronos 3D Commerce realtime guidelines</strong> v1.0.0 (2020-10-20)</td>
-<td>≤100k triangles and ideally &lt;5 MB per product asset; 1K/2K textures, power-of-two; PBR metal/rough; sRGB only for base colour/emissive; OpenGL normals, MikkTSpace; UVs 0–1; names a–z0–9_-; 1 unit = 1 m, +Y up</td>
-<td>Good base rules; our packs are bigger than one product, so we set per-pack budgets instead</td>
+<td>ไม่เกิน 100k triangles และควรเล็กกว่า 5 MB ต่อ asset สินค้าหนึ่งชิ้น; texture 1K/2K ขนาดยกกำลังสอง; PBR metal/rough; sRGB เฉพาะ base colour/emissive; normal แบบ OpenGL, MikkTSpace; UV อยู่ใน 0–1; ชื่อใช้ a–z0–9_-; 1 unit = 1 m, +Y ขึ้น</td>
+<td>เป็นกฎพื้นฐานที่ดี แต่แพ็กของเราใหญ่กว่าสินค้าหนึ่งชิ้น จึงตั้งงบต่อแพ็กแทน</td>
 </tr>
 </tbody>
 </table>
-<h2>6. Flutter Web reality check</h2>
-<p>Flutter docs (updated 2026-11-11): <code>flutter build web --wasm</code> needs WasmGC and newer Wasm features; Chromium 137+ runs Wasm by default; <strong>all iOS browsers fall back to the JS build by default</strong>; Safari 26.2+ can opt in. Multithreaded rendering needs COOP/COEP headers. <code>dart:html</code>/<code>package:js</code> are not supported under Wasm, so use <code>package:web</code> and <code>dart:js_interop</code>.
-<strong>Lesson:</strong> on iPad Safari, expect the JS + CanvasKit build unless we opt in. Budget for a larger first load and test both builds.</p>
-<h2>7. What this means for us</h2>
+<h2>6. ความจริงของ Flutter Web</h2>
+<p>เอกสาร Flutter (อัปเดต 2026-11-11): <code>flutter build web --wasm</code> ต้องใช้ WasmGC และฟีเจอร์ Wasm ใหม่ๆ; Chromium 137+ รัน Wasm เป็นค่าเริ่มต้น; <strong>เบราว์เซอร์ทุกตัวบน iOS จะ fallback ไปใช้ build แบบ JS เป็นค่าเริ่มต้น</strong>; Safari 26.2+ เลือก opt in ได้ การเรนเดอร์แบบ multithread ต้องมี header COOP/COEP ส่วน <code>dart:html</code>/<code>package:js</code> ใช้กับ Wasm ไม่ได้ ให้ใช้ <code>package:web</code> และ <code>dart:js_interop</code></p>
+<p><strong>บทเรียน:</strong> บน Safari ของ iPad ให้คาดว่าจะได้ build แบบ JS + CanvasKit ถ้าไม่ opt in เผื่องบสำหรับการโหลดครั้งแรกที่ใหญ่ขึ้น และทดสอบทั้งสอง build</p>
+<h2>7. ความหมายสำหรับเรา</h2>
 <ol>
-<li>Flutter + flutter_scene is the right first bet: it matches the user's stack and covers iPad, Android and Web with one codebase. Nobody has shipped an anatomy app on it that I could find, so we prove it in a 2-week spike.</li>
-<li>Keep 3D behind <code>AnatomyViewport</code>. If the spike fails, three.js is the fallback; the asset packs do not change.</li>
-<li>Don't embed Unity or move to Godot: the evidence shows weak web on iPad and fragile embedding.</li>
-<li>Our real moat, like BioDigital's, is the <strong>content DB</strong> (IDs, names, relations, notes) and clean, well-named assets. Invest there first.</li>
-<li>Avoid dynamic shadows and text-on-3D; use baked AO and Flutter overlays.</li>
-<li>Pin versions and benchmark every engine upgrade with our own scene.</li>
+<li>Flutter + flutter_scene เป็นตัวเลือกแรกที่ถูกต้อง เพราะตรงกับ stack ของผู้ใช้และครอบคลุม iPad, Android และ Web ด้วยโค้ดชุดเดียว ยังไม่มีใคร ship แอปกายวิภาคบนมันเท่าที่ผมหาเจอ จึงต้องพิสูจน์ด้วย spike 2 สัปดาห์</li>
+<li>เก็บ 3D ไว้หลัง <code>AnatomyViewport</code> ถ้า spike ไม่ผ่าน three.js คือแผนสำรอง โดย asset pack ไม่เปลี่ยน</li>
+<li>อย่าฝัง Unity หรือย้ายไป Godot: หลักฐานแสดงว่าเว็บบน iPad อ่อน และการฝังเปราะบาง</li>
+<li>จุดแข็งที่แท้จริงของเรา เหมือนของ BioDigital คือ <strong>ฐานข้อมูลเนื้อหา</strong> (ID, ชื่อ, ความสัมพันธ์, โน้ต) และ asset ที่สะอาดและตั้งชื่อดี ลงทุนตรงนั้นก่อน</li>
+<li>หลีกเลี่ยงเงาแบบ dynamic และตัวหนังสือบน 3D ใช้ AO ที่ bake ไว้และ overlay ของ Flutter แทน</li>
+<li>pin เวอร์ชัน และ benchmark ทุกครั้งที่อัปเกรด engine ด้วย scene ของเราเอง</li>
 </ol>
-<h2>Sources (accessed 2026-11-27)</h2>
+<h2>แหล่งอ้างอิง (เข้าถึงเมื่อ 2026-11-27)</h2>
 <ul>
-<li>flutter_scene: https://pub.dev/packages/flutter_scene · https://github.com/bdero/flutter_scene · https://github.com/bdero/flutter_scene/issues · https://fscene.dev/</li>
-<li>KBTG article: https://medium.com/kbtg-life/bring-3d-to-life-in-flutter-with-flutter-scene-and-flutter-gpu-068c9421470a (teaser via https://flutterx.com/bring-3d-to-life-in-flutter-with-flutter-scene-and-flutter-gpu-2026-10-14)</li>
+<li>flutter_scene: <a href="https://pub.dev/packages/flutter_scene" target="_blank" rel="noopener">https://pub.dev/packages/flutter_scene</a> · <a href="https://github.com/bdero/flutter_scene" target="_blank" rel="noopener">https://github.com/bdero/flutter_scene</a> · <a href="https://github.com/bdero/flutter_scene/issues" target="_blank" rel="noopener">https://github.com/bdero/flutter_scene/issues</a> · <a href="https://fscene.dev/" target="_blank" rel="noopener">https://fscene.dev/</a></li>
+<li>KBTG article: <a href="https://medium.com/kbtg-life/bring-3d-to-life-in-flutter-with-flutter-scene-and-flutter-gpu-068c9421470a" target="_blank" rel="noopener">https://medium.com/kbtg-life/bring-3d-to-life-in-flutter-with-flutter-scene-and-flutter-gpu-068c9421470a</a> (teaser via <a href="https://flutterx.com/bring-3d-to-life-in-flutter-with-flutter-scene-and-flutter-gpu-2026-10-14" target="_blank" rel="noopener">https://flutterx.com/bring-3d-to-life-in-flutter-with-flutter-scene-and-flutter-gpu-2026-10-14</a>)<ul>
 <li>flutter_scene experiments: https://sourav-sonkar.github.io/flutter_scence_practice/</li>
-<li>Flutter GPU blog (2024): https://flutter.dev/blog/getting-started-with-flutter-gpu · https://flutterforce.substack.com/p/flutter-force-weekly-03a</li>
+</ul>
+</li>
+<li>Flutter GPU blog (2024): <a href="https://flutter.dev/blog/getting-started-with-flutter-gpu" target="_blank" rel="noopener">https://flutter.dev/blog/getting-started-with-flutter-gpu</a> · <a href="https://flutterforce.substack.com/p/flutter-force-weekly-03a" target="_blank" rel="noopener">https://flutterforce.substack.com/p/flutter-force-weekly-03a</a><ul>
 <li>Flutter Web Wasm: https://docs.flutter.dev/platform-integration/web/wasm</li>
-<li>thermion: https://github.com/nmfisher/thermion · https://pub.dev/packages/thermion_dart</li>
+</ul>
+</li>
+<li>thermion: <a href="https://github.com/nmfisher/thermion" target="_blank" rel="noopener">https://github.com/nmfisher/thermion</a> · <a href="https://pub.dev/packages/thermion_dart" target="_blank" rel="noopener">https://pub.dev/packages/thermion_dart</a><ul>
 <li>model_viewer_plus: https://pub.dev/packages/model_viewer_plus</li>
-<li>Unity in Flutter: https://pub.dev/packages/flutter_unity_widget · https://pub.dev/packages/flutter_embed_unity</li>
-<li>Godot: https://docs.godotengine.org/en/4.5/tutorials/export/exporting_for_web.html · https://github.com/JohannesDeml/Godot-Web-LoadingTest · https://forum.godotengine.org/t/game-crashes-randomly-on-ios-devices-html-export/114043</li>
-<li>Anatomy platforms: https://en.wikipedia.org/wiki/ZygoteBody · https://en.wikipedia.org/wiki/BioDigital</li>
-<li>LightWave 2026: https://www.cgchannel.com/2026/06/lightwave-digital-releases-lightwave-2026/ · https://discussions.reallusion.com/t/iclone-and-cc5-to-lightwave3d-2025-6/16230</li>
+</ul>
+</li>
+<li>Unity in Flutter: <a href="https://pub.dev/packages/flutter_unity_widget" target="_blank" rel="noopener">https://pub.dev/packages/flutter_unity_widget</a> · <a href="https://pub.dev/packages/flutter_embed_unity" target="_blank" rel="noopener">https://pub.dev/packages/flutter_embed_unity</a></li>
+<li>Godot: <a href="https://docs.godotengine.org/en/4.5/tutorials/export/exporting_for_web.html" target="_blank" rel="noopener">https://docs.godotengine.org/en/4.5/tutorials/export/exporting_for_web.html</a> · <a href="https://github.com/JohannesDeml/Godot-Web-LoadingTest" target="_blank" rel="noopener">https://github.com/JohannesDeml/Godot-Web-LoadingTest</a> · <a href="https://forum.godotengine.org/t/game-crashes-randomly-on-ios-devices-html-export/114043" target="_blank" rel="noopener">https://forum.godotengine.org/t/game-crashes-randomly-on-ios-devices-html-export/114043</a></li>
+<li>Anatomy platforms: <a href="https://en.wikipedia.org/wiki/ZygoteBody" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/ZygoteBody</a> · <a href="https://en.wikipedia.org/wiki/BioDigital" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/BioDigital</a></li>
+<li>LightWave 2026: <a href="https://www.cgchannel.com/2026/06/lightwave-digital-releases-lightwave-2026/" target="_blank" rel="noopener">https://www.cgchannel.com/2026/06/lightwave-digital-releases-lightwave-2026/</a> · <a href="https://discussions.reallusion.com/t/iclone-and-cc5-to-lightwave3d-2025-6/16230" target="_blank" rel="noopener">https://discussions.reallusion.com/t/iclone-and-cc5-to-lightwave3d-2025-6/16230</a><ul>
 <li>3D-Coat glTF exporter class: https://3dcoat.com/files/docs/classgltf_1_1gltfExporter-members.html</li>
 <li>Blender glTF: https://docs.blender.org/manual/en/latest/addons/scene_gltf2.html</li>
 <li>glTF Transform CLI: https://gltf-transform.dev/cli</li>
 <li>Khronos realtime asset guidelines: https://github.com/mlimper/3DC-Asset-Creation/blob/main/asset-creation-guidelines/RealtimeAssetCreationGuidelines.md</li>
 </ul>
-<footer>Source: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/3d-pipeline">docs/3d-pipeline</a> on GitHub.</footer>
+</li>
+</ul>
+<footer>ต้นฉบับ: <a href="https://github.com/jedt3d/3D-Anatomy/tree/main/docs/3d-pipeline">docs/3d-pipeline</a> บน GitHub</footer>
 </main>
 </body>
 </html>
