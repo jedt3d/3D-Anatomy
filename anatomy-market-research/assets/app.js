@@ -1,5 +1,8 @@
 (function () {
   const S = window.SOURCES, C = window.COMPETITORS;
+  const TH = (document.documentElement.lang || "").startsWith("th");
+  const TT = TH ? { fc: "คาดการณ์", health: "สุขภาพ", artist: "ศิลปิน", free: "ฟรี–$3", xaxis: "≈ ดอลลาร์สหรัฐต่อปี (สเกล log)", yaxis: "ความลึกของเนื้อหา (ประเมิน)", target: "เป้าหมายเรา: $5–20, ภาษาท้องถิ่น, ใช้ออฟไลน์", hc: "สุขภาพ", wt: "น้ำหนัก", names: { size: "ขนาดตลาด", wtp: "กำลังจ่าย", gap: "ช่องว่างการแข่งขัน", home: "ความได้เปรียบเจ้าถิ่น", ipad: "ความเหมาะกับ iPad" } }
+               : { fc: "forecast", health: "Health", artist: "Artist", free: "Free–$3", xaxis: "≈ US$ per year (log)", yaxis: "Content depth (est.)", target: "Our target: $5–20, local language, offline", hc: "Healthcare", wt: "Weights", names: { size: "Size", wtp: "Willingness to pay", gap: "Competitive gap", home: "Home advantage", ipad: "iPad fit" } };
   const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[m]));
   const keys = Object.keys(S);
   const num = k => keys.indexOf(k) + 1;
@@ -14,7 +17,7 @@
   document.getElementById("marketBars").innerHTML = M.map(m => `
     <div style="margin:10px 0 16px"><b>${esc(m.name)}</b> <span class="src">${cite([m.src])}</span>
       <div class="barrow"><span>${m.baseYr}</span><div class="bar" style="width:${Math.max(0.6, m.base / max * 100)}%"></div><span>$${m.base >= 1000 ? (m.base / 1000).toFixed(2) + "B" : m.base + "M"}</span></div>
-      <div class="barrow"><span>${m.fcYr} forecast</span><div class="bar" style="opacity:.55;width:${m.fc / max * 100}%"></div><span>$${m.fc >= 1000 ? (m.fc / 1000).toFixed(2) + "B" : m.fc + "M"}</span></div>
+      <div class="barrow"><span>${m.fcYr} ${TT.fc}</span><div class="bar" style="opacity:.55;width:${m.fc / max * 100}%"></div><span>$${m.fc >= 1000 ? (m.fc / 1000).toFixed(2) + "B" : m.fc + "M"}</span></div>
       <div class="meta">CAGR ${m.cagr} · ${esc(m.note)}</div></div>`).join("");
 
   // Competitor table
@@ -31,7 +34,7 @@
     });
     tbody.innerHTML = rows.map(c => `<tr>
       <td><b>${esc(c.name)}</b><div class="meta">${esc(c.co)}</div></td>
-      <td><span class="tag ${c.seg}">${c.seg === "med" ? "Health" : "Artist"}</span></td>
+      <td><span class="tag ${c.seg}">${c.seg === "med" ? TT.health : TT.artist}</span></td>
       <td>${esc(c.price)}<div class="meta">${esc(c.model)}</div></td>
       <td class="num">${c.priceUSDyr == null ? "—" : "$" + c.priceUSDyr}</td>
       <td>${esc(c.platforms)}</td>
@@ -53,23 +56,23 @@
   const xs = v => L + (Math.log10(Math.max(v, 3)) - Math.log10(3)) / (Math.log10(400) - Math.log10(3)) * (W - L - R);
   const ys = d => H - B - (d - 1) / 4 * (H - T - B);
   let g = "";
-  [3, 10, 30, 100, 300].forEach(v => { g += `<line x1="${xs(v)}" x2="${xs(v)}" y1="${T}" y2="${H - B}" stroke="currentColor" opacity=".12"/><text x="${xs(v)}" y="${H - B + 16}" text-anchor="middle">${v === 3 ? "Free–$3" : "$" + v}</text>`; });
+  [3, 10, 30, 100, 300].forEach(v => { g += `<line x1="${xs(v)}" x2="${xs(v)}" y1="${T}" y2="${H - B}" stroke="currentColor" opacity=".12"/><text x="${xs(v)}" y="${H - B + 16}" text-anchor="middle">${v === 3 ? TT.free : "$" + v}</text>`; });
   [1, 2, 3, 4, 5].forEach(d => { g += `<line x1="${L}" x2="${W - R}" y1="${ys(d)}" y2="${ys(d)}" stroke="currentColor" opacity=".12"/><text x="${L - 8}" y="${ys(d) + 4}" text-anchor="end">${d}</text>`; });
-  g += `<text x="${(W + L) / 2}" y="${H - 10}" text-anchor="middle">≈ US$ per year (log)</text><text transform="translate(14 ${(H) / 2}) rotate(-90)" text-anchor="middle">Content depth (est.)</text>`;
+  g += `<text x="${(W + L) / 2}" y="${H - 10}" text-anchor="middle">${TT.xaxis}</text><text transform="translate(14 ${(H) / 2}) rotate(-90)" text-anchor="middle">${TT.yaxis}</text>`;
   // target zone
-  g += `<rect x="${xs(5)}" y="${ys(4.3)}" width="${xs(20) - xs(5)}" height="${ys(3.3) - ys(4.3)}" fill="none" stroke="#2e7d4f" stroke-width="2" stroke-dasharray="6 4"/><text x="${xs(5) + 4}" y="${ys(4.3) - 6}" style="font-weight:700;fill:#2e7d4f">Our target: $5–20, local language, offline</text>`;
+  g += `<rect x="${xs(5)}" y="${ys(4.3)}" width="${xs(20) - xs(5)}" height="${ys(3.3) - ys(4.3)}" fill="none" stroke="#2e7d4f" stroke-width="2" stroke-dasharray="6 4"/><text x="${xs(5) + 4}" y="${ys(4.3) - 6}" style="font-weight:700;fill:#2e7d4f">${TT.target}</text>`;
   C.filter(c => c.priceUSDyr != null).forEach((c, i) => {
     const x = xs(c.priceUSDyr), y = ys(c.depth), col = c.seg === "med" ? "#2f6db4" : "#b4472f";
     g += `<circle cx="${x}" cy="${y}" r="6" fill="${col}" opacity=".85"><title>${esc(c.name)} — ${esc(c.price)}</title></circle><text x="${x > W - 120 ? x - 8 : x + 8}" text-anchor="${x > W - 120 ? "end" : "start"}" y="${y + (i % 2 ? 12 : -4)}">${esc(c.name.split(" (")[0].split(" –")[0])}</text>`;
   });
-  g += `<circle cx="${W - 170}" cy="${T + 8}" r="5" fill="#2f6db4"/><text x="${W - 160}" y="${T + 12}">Healthcare</text><circle cx="${W - 90}" cy="${T + 8}" r="5" fill="#b4472f"/><text x="${W - 80}" y="${T + 12}">Artist</text>`;
+  g += `<circle cx="${W - 170}" cy="${T + 8}" r="5" fill="#2f6db4"/><text x="${W - 160}" y="${T + 12}">${TT.hc}</text><circle cx="${W - 90}" cy="${T + 8}" r="5" fill="#b4472f"/><text x="${W - 80}" y="${T + 12}">${TT.artist}</text>`;
   svg.innerHTML = g;
 
   // Country scoring
   const Wt = Object.assign({}, window.WEIGHTS), dims = ["size", "wtp", "gap", "home", "ipad"];
-  const names = { size: "Size", wtp: "Willingness to pay", gap: "Competitive gap", home: "Home advantage", ipad: "iPad fit" };
+  const names = TT.names;
   const wbox = document.getElementById("weights");
-  wbox.innerHTML = '<b style="width:100%">Weights</b>' + dims.map(d => `<label style="font-size:13px">${names[d]} <input type="range" min="0" max="0.5" step="0.05" value="${Wt[d]}" data-d="${d}" style="width:110px;vertical-align:middle"> <output>${Wt[d]}</output></label>`).join("");
+  wbox.innerHTML = '<b style="width:100%">' + TT.wt + '</b>' + dims.map(d => `<label style="font-size:13px">${names[d]} <input type="range" min="0" max="0.5" step="0.05" value="${Wt[d]}" data-d="${d}" style="width:110px;vertical-align:middle"> <output>${Wt[d]}</output></label>`).join("");
   wbox.querySelectorAll("input").forEach(i => i.oninput = () => { Wt[i.dataset.d] = +i.value; i.nextElementSibling.textContent = i.value; renderCty(); });
   function renderCty() {
     const sum = dims.reduce((a, d) => a + Wt[d], 0) || 1;

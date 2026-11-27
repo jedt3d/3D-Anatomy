@@ -1,5 +1,5 @@
-title: 3D Anatomy — Reports
-description: Research and planning reports for the 3D Anatomy app (artists + healthcare).
+title: รายงาน 3D Anatomy
+description: งานวิจัยและการวางแผนสำหรับแอปกายวิภาค 3D (ศิลปิน + สายสุขภาพ)
 markdown: kramdown
 plugins:
   - jekyll-relative-links

@@ -1,6 +1,6 @@
 # 3D Anatomy Market Review (local site)
 
-A static review website: market size, competitors, killer features, a positioning map, country prioritisation, pricing, go-to-market by market, a revenue model and risks. Every fact links to its source (accessed 2026-11-27). Estimates are tagged.
+A static review website (Thai by default; English at `en.html`): market size, competitors, killer features, a positioning map, country prioritisation, pricing, go-to-market by market, a revenue model and risks. Every fact links to its source (accessed 2026-11-27). Estimates are tagged.
 
 ## Run locally
 
